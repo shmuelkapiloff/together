@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { createOrder } from "../services/orders.service"
 import Header from "../components/Header";
+import { createOrder } from "../services/orders.service";
 
 interface Address {
+  fullName: string;
+  phone: string;
   street: string;
   city: string;
   postalCode: string;
@@ -10,155 +12,212 @@ interface Address {
 }
 
 export default function PaymentPage() {
+
   const [loading, setLoading] = useState(false);
+  const [sameAsShipping, setSameAsShipping] = useState(true);
 
   const [shippingAddress, setShippingAddress] = useState<Address>({
+    fullName: "",
+    phone: "",
     street: "",
     city: "",
     postalCode: "",
-    country: "",
+    country: "Israel",
   });
 
   const [billingAddress, setBillingAddress] = useState<Address>({
+    fullName: "",
+    phone: "",
     street: "",
     city: "",
     postalCode: "",
-    country: "",
+    country: "Israel",
   });
 
   const [notes, setNotes] = useState("");
 
-  const   handleSubmit = async (e: React.FormEvent) => {
+  const handleShippingChange = (field: string, value: string) => {
+    setShippingAddress({
+      ...shippingAddress,
+      [field]: value,
+    });
+  };
+
+  const handleBillingChange = (field: string, value: string) => {
+    setBillingAddress({
+      ...billingAddress,
+      [field]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!shippingAddress.fullName || !shippingAddress.phone) {
+      alert("Please enter name and phone");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await createOrder({
+
+      const orderData = {
         shippingAddress,
-        billingAddress,
+        billingAddress: sameAsShipping ? { ...shippingAddress } : billingAddress,
         paymentMethod: "stripe",
         notes,
-      });
+      };
 
-      // הפניה ל-Stripe
-      window.location.href = res.data.payment.checkoutUrl;
+      const res = await createOrder(orderData);
 
-    } catch (err) {
-      console.error("Order failed:", err);
+      const checkoutUrl = res.data.payment.checkoutUrl;
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+
+    } catch (err: any) {
+      console.error(err);
+      alert("Failed to create order");
     } finally {
       setLoading(false);
     }
   };
 
-  return (<>
-  <Header />
-    <div style={{ maxWidth: 600, margin: "auto" }}>
-      <h2>Checkout</h2>
+  return (
+    <>
+      <Header />
 
-      <form onSubmit={handleSubmit}>
-        <h3>Shipping Address</h3>
+      <div style={{
+        maxWidth: "600px",
+        margin: "auto",
+        padding: "20px"
+      }}>
 
-        <input
-          placeholder="Street"
-          value={shippingAddress.street}
-          onChange={(e) =>
-            setShippingAddress({
-              ...shippingAddress,
-              street: e.target.value,
-            })
-          }
-        />
+        <h2>Checkout</h2>
 
-        <input
-          placeholder="City"
-          value={shippingAddress.city}
-          onChange={(e) =>
-            setShippingAddress({
-              ...shippingAddress,
-              city: e.target.value,
-            })
-          }
-        />
+        <form onSubmit={handleSubmit}>
 
-        <input
-          placeholder="Postal Code"
-          value={shippingAddress.postalCode}
-          onChange={(e) =>
-            setShippingAddress({
-              ...shippingAddress,
-              postalCode: e.target.value,
-            })
-          }
-        />
+          <h3>Shipping Address</h3>
 
-        <input
-          placeholder="Country"
-          value={shippingAddress.country}
-          onChange={(e) =>
-            setShippingAddress({
-              ...shippingAddress,
-              country: e.target.value,
-            })
-          }
-        />
+          <input
+            placeholder="Full Name"
+            value={shippingAddress.fullName}
+            onChange={(e) => handleShippingChange("fullName", e.target.value)}
+            required
+          />
 
-        <h3>Billing Address</h3>
+          <input
+            placeholder="Phone"
+            value={shippingAddress.phone}
+            onChange={(e) => handleShippingChange("phone", e.target.value)}
+            required
+          />
 
-        <input
-          placeholder="Street"
-          value={billingAddress.street}
-          onChange={(e) =>
-            setBillingAddress({
-              ...billingAddress,
-              street: e.target.value,
-            })
-          }
-        />
+          <input
+            placeholder="Street"
+            value={shippingAddress.street}
+            onChange={(e) => handleShippingChange("street", e.target.value)}
+            required
+          />
 
-        <input
-          placeholder="City"
-          value={billingAddress.city}
-          onChange={(e) =>
-            setBillingAddress({
-              ...billingAddress,
-              city: e.target.value,
-            })
-          }
-        />
+          <input
+            placeholder="City"
+            value={shippingAddress.city}
+            onChange={(e) => handleShippingChange("city", e.target.value)}
+            required
+          />
 
-        <input
-          placeholder="Postal Code"
-          value={billingAddress.postalCode}
-          onChange={(e) =>
-            setBillingAddress({
-              ...billingAddress,
-              postalCode: e.target.value,
-            })
-          }
-        />
+          <input
+            placeholder="Postal Code"
+            value={shippingAddress.postalCode}
+            onChange={(e) => handleShippingChange("postalCode", e.target.value)}
+            required
+          />
 
-        <input
-          placeholder="Country"
-          value={billingAddress.country}
-          onChange={(e) =>
-            setBillingAddress({
-              ...billingAddress,
-              country: e.target.value,
-            })
-          }
-        />
+          <input
+            placeholder="Country"
+            value={shippingAddress.country}
+            onChange={(e) => handleShippingChange("country", e.target.value)}
+          />
 
-        <textarea
-          placeholder="Order notes (optional)"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        />
+          <div style={{ marginTop: "15px" }}>
+            <label>
+              <input
+                type="checkbox"
+                checked={sameAsShipping}
+                onChange={() => setSameAsShipping(!sameAsShipping)}
+              />
+              Billing address same as shipping
+            </label>
+          </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Processing..." : "Pay Now"}
-        </button>
-      </form>
-    </div>
+          {!sameAsShipping && (
+            <>
+              <h3>Billing Address</h3>
+
+              <input
+                placeholder="Full Name"
+                value={billingAddress.fullName}
+                onChange={(e) => handleBillingChange("fullName", e.target.value)}
+              />
+
+              <input
+                placeholder="Phone"
+                value={billingAddress.phone}
+                onChange={(e) => handleBillingChange("phone", e.target.value)}
+              />
+
+              <input
+                placeholder="Street"
+                value={billingAddress.street}
+                onChange={(e) => handleBillingChange("street", e.target.value)}
+              />
+
+              <input
+                placeholder="City"
+                value={billingAddress.city}
+                onChange={(e) => handleBillingChange("city", e.target.value)}
+              />
+
+              <input
+                placeholder="Postal Code"
+                value={billingAddress.postalCode}
+                onChange={(e) => handleBillingChange("postalCode", e.target.value)}
+              />
+
+              <input
+                placeholder="Country"
+                value={billingAddress.country}
+                onChange={(e) => handleBillingChange("country", e.target.value)}
+              />
+            </>
+          )}
+
+          <h3>Notes</h3>
+
+          <textarea
+            placeholder="Order notes (optional)"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              marginTop: "20px",
+              padding: "12px",
+              width: "100%",
+              fontSize: "16px"
+            }}
+          >
+            {loading ? "Redirecting to payment..." : "Pay with Stripe"}
+          </button>
+
+        </form>
+      </div>
     </>
   );
 }

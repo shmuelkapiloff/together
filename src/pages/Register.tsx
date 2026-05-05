@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { register } from "../services/auth.service";
+import { register, type User } from "../services/auth.service";
 import { toast } from "react-toastify";
-import Header from "../components/Header";
-
-export default function Register() {
+import GoogleConnectBtn from "../components/GoogleConnectBtn";
+// import Header from "../components/Header/Header";
+type RegisterProps = {
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+};
+export default function Register({ setUser }: RegisterProps) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +46,7 @@ export default function Register() {
 
   return (
     <>
-    <Header/>
+    {/* <Header/> */}
     <div>
       <h2>הרשמה</h2>
 
@@ -79,6 +82,8 @@ export default function Register() {
       <p>
         כבר יש לך חשבון? <Link to="/login">התחברות</Link>
       </p>
+      <p>או</p>
+      <GoogleConnectBtn setUser={setUser}/>
     </div>
     </>
   );

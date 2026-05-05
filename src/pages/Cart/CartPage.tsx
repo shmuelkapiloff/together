@@ -1,27 +1,29 @@
-import "../styles.css";
+import "./CartPage.css"
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { removeOneFromCart, clearCart } from "../Features/cartSlice";
-// import { useAppSelector } from "../hooks";
-import Header from "../components/Header";
-// import type { RootState } from "../store";
-// import { decrement, resetCounter } from "../Features/counterSlice";
-import { useEffect, useState } from "react";
-import type { Cart } from "../types/cart";
-import { getCart, updateCartItem } from "../services/auth.service";
-import RemoveFromCartButton from "../components/RemoveFromCartButton";
-import QuantityUpdate from "../components/QuantityUpdate";
-import ClearAllBtn from "../components/ClearAllBtn";
-import LogoutButton from "../components/LogoutButton";
-// import type { Product } from "../types";
-function CartPage() {
+// import Header from "../../components/Header/Header";
+import { useEffect} from "react";
+import type { Cart } from "../../types/cart";
+import { getCart, updateCartItem, type User } from "../../services/auth.service";
+import RemoveFromCartButton from "../../components/RemoveFromCartButton";
+import QuantityUpdate from "../../components/QuantityUpdate";
+import ClearAllBtn from "../../components/ClearAllBtn";
+// import LogoutButton from "../../components/LogoutButton";
+import HomePageBtn from "../../components/HomePageBtn";
+
+type CartPageProps = {
+  cart: Cart | null;
+  setCart: React.Dispatch<React.SetStateAction<Cart | null>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
+function CartPage({ cart, setCart }: CartPageProps) {
   const navigate = useNavigate();
     const handleCheckout = () => {
     navigate("/payment");
   };
 
-  const [cart, setCart] = useState<Cart | null>(null);
+  // const [cart, setCart] = useState<Cart | null>(null);
 
   const increaseQty = async (productId: string, currentQty: number) => {
   const updatedCart = await updateCartItem(
@@ -58,36 +60,36 @@ useEffect(() => {
   };
 
   fetchCart();
-}, []);
+}, [navigate, setCart]);
 
-  if (!cart) return <p>טוען עגלה...</p>;
+  if (!cart) return <p>טוען...</p>
   
 
   return (
     <>
-      <Header />
-      <LogoutButton />
+      {/* <Header /> */}
+      {/* <LogoutButton setUser={setUser}/> */}
 
       <h2>העגלה שלי</h2>
 
-      <h3>סה״כ לתשלום: ₪{cart.total}</h3>
 
-      <div className="container">
+      <div className="cart-container">
 
       {cart.items.map((item) => (
         <div key={item.product._id} className="cardd">
-          <p>{item.product.name}</p>
+          <h3>{item.product.name}</h3>
           <p>כמות: {item.quantity}</p>
-          <p>מחיר: ₪{item.product.price}</p>
           <QuantityUpdate quantity={item.quantity} 
           onIncrease={() => increaseQty(item.product._id, item.quantity)}
-      onDecrease={() => decreaseQty(item.product._id, item.quantity)}/>
+          onDecrease={() => decreaseQty(item.product._id, item.quantity)} />
+          <p>מחיר: ₪{item.product.price}</p>
           <RemoveFromCartButton product={item.product} onRemoved={handleRemoved} />
         </div>
       ))}
-      
       {cart.items.length > 0 && <ClearAllBtn onCleared={setCart}/>}
-      {cart.items.length > 0 && <button onClick={handleCheckout}>התחל תהליך תשלום</button>}
+      <h3 className="cart-total">סה״כ לתשלום: ₪{cart.total}</h3>
+      {cart.items.length > 0 && <button id="checkout-btn" onClick={handleCheckout}>התחל תהליך תשלום</button>}
+      {cart.items.length < 1 && <HomePageBtn />}
       
 
       </div>

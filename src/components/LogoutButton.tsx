@@ -1,10 +1,15 @@
 import { toast } from "react-toastify";
-import { logout } from "../services/auth.service";
+import { logout, type User } from "../services/auth.service";
 
-const LogoutButton = () => {
+type LogoutProps = {
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
+const LogoutButton = ({ setUser }: LogoutProps) => {
   const handleLogout = async () => {
     try {
       await logout();
+      setUser(null);
       // ניתוב מחדש / ניקוי state
       toast.success("התנתקת בהצלחה")
       window.location.href = "/login";

@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../services/auth.service";
+import { login, verifyUser } from "../services/auth.service";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Header from "../components/Header";
+// import Header from "../components/Header/Header";
+import type { User } from "../services/auth.service";
+import GoogleConnectBtn from "../components/GoogleConnectBtn";
 
-export default function Login() {
+type LoginProps = {
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
+export default function Login({ setUser }: LoginProps) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +27,9 @@ export default function Login() {
   const res = await login({ email, password });
 
   localStorage.setItem("token", res.data.token);
+  const currentUser = await verifyUser();
+  setUser(currentUser);
+
   console.log("The token isss : ",res.data.token);
   console.log("TOKEN:", localStorage.getItem("token"));
 
@@ -48,7 +57,7 @@ export default function Login() {
 
   return (
     <>
-    <Header/>
+    {/* <Header/> */}
     <div>
       <h2>התחברות</h2>
 
@@ -77,6 +86,8 @@ export default function Login() {
       <p>
         אין לך חשבון? <Link to="/register">הרשמה</Link>
       </p>
+      <p>או</p>
+      <GoogleConnectBtn setUser={setUser}/>
     </div>
     </>
   );

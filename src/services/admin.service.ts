@@ -11,9 +11,9 @@ export const getAdminProducts = async () => {
 };
 
 // POST /api/admin/products
-export const createProduct = async (payload: any) => {
-  const res = await api.post("/api/admin/products", payload);
-  return res.data;
+export const createProduct = async (productData: any) => {
+  const res = await api.post("/api/admin/products", productData);
+  return res.data.data.product; // 🔥 חשוב
 };
 
 // PUT /api/admin/products/:id
@@ -25,7 +25,7 @@ export const updateProduct = async (id: string, payload: any) => {
 // DELETE /api/admin/products/:id (soft delete)
 export const deleteProduct = async (id: string) => {
   const res = await api.delete(`/api/admin/products/${id}`);
-  return res.data;
+  return res.data.data.product; // זה מה שהשרת מחזיר
 };
 
 /* =========================
@@ -41,7 +41,8 @@ export const getAdminUsers = async () => {
 // PUT /api/admin/users/:id/role
 export const updateUserRole = async (id: string, role: string) => {
   const res = await api.put(`/api/admin/users/${id}/role`, { role });
-  return res.data;
+  console.log(res)
+  return res.data.data.user;
 };
 
 /* =========================

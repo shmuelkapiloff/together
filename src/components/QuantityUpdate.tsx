@@ -8,9 +8,9 @@ type Props = {
 function QuantityUpdate({ quantity, onIncrease, onDecrease }: Props) {
   return (
     <>
-      <Button onClick={onIncrease}>+</Button>
+      <Button onClick={onIncrease} className="updateQuantityBtn">+</Button>
       <span>{quantity}</span>
-      <Button onClick={onDecrease}>-</Button>
+      <Button onClick={onDecrease} className="updateQuantityBtn">-</Button>
     </>
   );
 }

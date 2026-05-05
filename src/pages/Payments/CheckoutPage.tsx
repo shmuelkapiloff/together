@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { fetchOrder } from "../services/orders.service"; // לבדוק סטטוס order
+import { fetchOrder } from "../../services/orders.service"; // לבדוק סטטוס order
+import "./PaymentPage.css"
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
@@ -19,7 +20,7 @@ export default function CheckoutPage() {
         try {
           const order = await fetchOrder(orderId);
 
-          if (order.status === "confirmed") {
+          if (order.status === "pending payment") {
             setStatusMessage("Payment successful! 🎉 Your order is confirmed.");
             setOrderConfirmed(true);
             // clearCart();
@@ -44,11 +45,15 @@ export default function CheckoutPage() {
   }, [paymentStatus, orderId, navigate]);
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto", textAlign: "center", padding: 20 }}>
-      <h2>Checkout Status</h2>
-      <p>{statusMessage}</p>
+    <div className="checkout-status">
+  <h2>Checkout Status</h2>
+  <p className={orderConfirmed ? "success" : ""}>
+    {statusMessage}
+  </p>
 
-      {orderConfirmed && <p>You will be redirected to home in 5 seconds...</p>}
-    </div>
+  {orderConfirmed && (
+    <p>You will be redirected to home in 5 seconds...</p>
+  )}
+</div>
   );
 }

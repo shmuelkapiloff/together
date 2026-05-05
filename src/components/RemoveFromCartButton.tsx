@@ -31,7 +31,7 @@ function RemoveFromCartButton({ product, onRemoved}: Props) {
   
   
 
-  return <Button  variant="contained" startIcon={<DeleteIcon />} onClick={handleRemove}>הסר מהעגלה</Button>;
+  return <Button id="deleteBtn"  variant="contained" startIcon={<DeleteIcon />} onClick={handleRemove}>הסר מהעגלה</Button>;
 }
 
 export default RemoveFromCartButton;

@@ -1,0 +1,91 @@
+
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 20px;
+
+}
+
+/* רספונסיבי */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* כרטיס */
+.card {
+  background: white;
+  /* width: 290px; */
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  /* cursor: pointer; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* hover מקצועי */
+/* .card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+} */
+
+/* תמונה */
+.images {
+  /* width: 80%;
+  height: 80%; */
+  height: 200px;
+  width: 300px;
+  object-fit: cover;
+}
+
+/* תוכן */
+.card h3 {
+  font-size: 1.1rem;
+  margin: 12px;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0 12px 10px;
+}
+
+/* מחיר */
+.card h2 {
+  color: fffff;
+  font-size: 1.2rem;
+  margin: 0 12px 10px;
+}
+
+/* כפתור */
+.card button {
+  margin: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+  background: #0b498c;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card button:hover {
+  background: #0b498c;
+}

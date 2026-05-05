@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import { createOrder } from "../services/orders.service";
+import { createOrder } from "../../services/orders.service";
+import "./PaymentPage.css"
 
 interface Address {
   fullName: string;
@@ -87,17 +87,13 @@ export default function PaymentPage() {
 
   return (
     <>
-      <Header />
 
-      <div style={{
-        maxWidth: "600px",
-        margin: "auto",
-        padding: "20px"
-      }}>
+      <div className="payment-container">
 
         <h2>Checkout</h2>
+        <div className="payment-layout">
 
-        <form onSubmit={handleSubmit}>
+        <form className="payment-form" onSubmit={handleSubmit}>
 
           <h3>Shipping Address</h3>
 
@@ -142,7 +138,7 @@ export default function PaymentPage() {
             onChange={(e) => handleShippingChange("country", e.target.value)}
           />
 
-          <div style={{ marginTop: "15px" }}>
+          <div>
             <label>
               <input
                 type="checkbox"
@@ -205,18 +201,12 @@ export default function PaymentPage() {
 
           <button
             type="submit"
-            disabled={loading}
-            style={{
-              marginTop: "20px",
-              padding: "12px",
-              width: "100%",
-              fontSize: "16px"
-            }}
-          >
+            disabled={loading}>
             {loading ? "Redirecting to payment..." : "Pay with Stripe"}
           </button>
 
         </form>
+        </div>
       </div>
     </>
   );

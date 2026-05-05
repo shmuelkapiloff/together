@@ -37,8 +37,8 @@ function OrdersTable() {
   return (<>
 
     <h2>Orders</h2>
-
-    <table border={1} cellPadding={5} cellSpacing={0}>
+<div className="admin-table-container">
+    <table className="admin-table">
       <thead>
         <tr>
           <th>לקוח</th>
@@ -61,6 +61,7 @@ function OrdersTable() {
         ))}
       </tbody>
     </table>
+    </div>
     </>
   );
 }

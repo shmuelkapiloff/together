@@ -33,30 +33,33 @@ function StatsCards() {
 
   if (!stats) return <div>No stats available</div>;
 
-  return (<>
+return (
+  <div className="admin-stats">
+    <h2 className="admin-stats-title">סיכום</h2>
 
-  <h2>סיכום</h2>
-    
-    <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
-      <div style={{ border: '1px solid #ccc', padding: '10px', flex: 1 }}>
+    <div className="stats-container">
+      <div className="stat-card">
         <h3>משתמשים</h3>
         <p>{stats.stats.users.total}</p>
       </div>
-      <div style={{ border: '1px solid #ccc', padding: '10px', flex: 1 }}>
+
+      <div className="stat-card">
         <h3>הזמנות</h3>
         <p>{stats.stats.orders.open}</p>
       </div>
-      <div style={{ border: '1px solid #ccc', padding: '10px', flex: 1 }}>
+
+      <div className="stat-card">
         <h3>סה"כ מכירות</h3>
         <p>₪ {stats.stats.sales.total}</p>
       </div>
-      <div style={{ border: '1px solid #ccc', padding: '10px', flex: 1 }}>
+
+      <div className="stat-card">
         <h3>מוצרים בחנות</h3>
         <p>{stats.stats.inventory.activeProducts}</p>
       </div>
     </div>
-    </>
-  );
+  </div>
+);
 }
 
 export default StatsCards;

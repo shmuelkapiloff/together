@@ -11,12 +11,15 @@ export type RegisterData = {
 
 export type AuthResponse = {
   success: boolean;
+  message?: string; 
   data: {
     token: string;
+    refreshToken: string;
     user: {
       _id: string;
       email: string;
       name: string;
+      
     };
   };
 };

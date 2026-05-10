@@ -34,7 +34,7 @@ jobs:
   client-build:
     name: Client Build
     needs: detect-changes
-    if: needs.detect-changes.outputs.client == 'true' || needs.detect-changes.outputs.root == 'true'
+    if: needs.detect-changes.outputs.client == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -59,7 +59,7 @@ jobs:
   server-build:
     name: Server Build
     needs: detect-changes
-    if: needs.detect-changes.outputs.server == 'true' || needs.detect-changes.outputs.root == 'true'
+    if: needs.detect-changes.outputs.server == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:

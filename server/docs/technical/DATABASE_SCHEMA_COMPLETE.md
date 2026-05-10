@@ -1,0 +1,595 @@
+# 📊 Database Schema Documentation
+
+## 🏗️ Database Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      SIMPLE SHOP DATABASE                    │
+└─────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│   ┌─────────────┐      ┌─────────────┐      ┌─────────────┐    │
+│   │    USER     │      │   PRODUCT   │      │    CART     │    │
+│   │ (משתמש)     │      │  (מוצר)     │      │  (עגלה)     │    │
+│   └─────────────┘      └─────────────┘      └─────────────┘    │
+│        │                      │                      │          │
+│        │                      │                      │          │
+│        └──────────────────────┼──────────────────────┘          │
+│                               │                                 │
+│                               ▼                                 │
+│                         ┌──────────────┐                        │
+│                         │    ORDER     │                        │
+│                         │  (הזמנה)     │                        │
+│                         └──────────────┘                        │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 👤 1. USER Model (משתמש)
+
+**תיאור:** מאחסן מידע על המשתמשים של החנות.
+
+```typescript
+user = {
+  _id: "507f1f77bcf86cd799439011",           // אוטומטי - מזהה ייחודי
+  email: "user@example.com",                  // ייחודי - אימייל
+  password: "$2a$10$encrypted...",            // מוצפן (bcrypt)
+  name: "יוסי כהן",                           // שם המשתמש
+  phone: "+972-50-1234567",                   // אופציונלי - טלפון
+  role: "user",                               // "user" או "admin"
+  resetPasswordToken: "token123abc",          // אופציונלי - עבור שחזור סיסמה
+  resetPasswordExpires: "2024-12-17T10:30:00Z", // תוקף הטוקן
+  isActive: true,                             // האם חשבון פעיל
+  lastLogin: "2024-12-16T10:30:00Z",          // מתי התחבר לאחרונה
+  createdAt: "2024-01-15T10:00:00Z",          // אוטומטי - תאריך יצירה
+  updatedAt: "2024-12-16T14:30:00Z"           // אוטומטי - תאריך עדכון
+}
+```
+
+### User Fields:
+| שדה | סוג | חובה | תיאור |
+|-----|-----|------|-------|
+| `_id` | ObjectId | ✅ | מזהה ייחודי אוטומטי |
+| `email` | String | ✅ | אימייל ייחודי בתחום |
+| `password` | String | ✅ | סיסמה מוצפנת (bcrypt) |
+| `name` | String | ✅ | שם המשתמש (2-50 תווים) |
+| `phone` | String | ❌ | טלפון אופציונלי |
+| `role` | String | ✅ | "user" או "admin" (ברירת מחדל: "user") |
+| `resetPasswordToken` | String | ❌ | טוקן לשחזור סיסמה |
+| `resetPasswordExpires` | Date | ❌ | תוקף טוקן שחזור סיסמה |
+| `isActive` | Boolean | ❌ | ברירת מחדל: true |
+| `lastLogin` | Date | ❌ | מתי התחבר בפעם האחרונה |
+| `createdAt` | Date | ✅ | אוטומטי |
+| `updatedAt` | Date | ✅ | אוטומטי |
+
+**שימוש:**
+- ✅ התחברות ויצירת חשבון
+- ✅ זיהוי משתמש ל-JWT
+- ✅ תיוג הזמנות וערים
+- ✅ שמירת עגלות של משתמש מחובר
+
+---
+
+## 📦 2. PRODUCT Model (מוצר)
+
+**תיאור:** מאחסן מידע על כל המוצרים בחנות.
+
+```typescript
+product = {
+  _id: "507f1f77bcf86cd799439021",           // אוטומטי
+  sku: "SHIRT-BLU-M",                        // ייחודי - מזהה עסקי
+  name: "חולצה כחולה",                       // שם המוצר
+  description: "חולצת כותנה איכותית...",     // תיאור מפורט
+  price: 99.90,                              // המחיר הנוכחי! ← חשוב לעגלה
+  category: "בגדים",                        // קטגוריה (לסינון)
+  image: "https://cdn.shop.com/shirt.jpg",  // URL של התמונה
+  featured: true,                            // מוצר מומלץ (בעמוד בית)
+  stock: 25,                                 // כמות במלאי
+  rating: 4.5,                               // דירוג ממוצע (0-5)
+  isActive: true,                            // מוצג בחנות (true) או מוסתר (false)
+  createdAt: "2024-01-15T10:00:00Z",         // אוטומטי
+  updatedAt: "2024-12-16T14:30:00Z"          // אוטומטי
+}
+```
+
+### Product Fields:
+| שדה | סוג | חובה | ייחודי | תיאור |
+|-----|-----|------|--------|-------|
+| `_id` | ObjectId | ✅ | כן | מזהה אוטומטי |
+| `sku` | String | ✅ | כן | Stock Keeping Unit - מזהה עסקי |
+| `name` | String | ✅ | לא | שם המוצר |
+| `description` | String | ✅ | לא | תיאור מפורט |
+| `price` | Number | ✅ | לא | **המחיר הנוכחי** - משמש לעגלה |
+| `category` | String | ✅ | לא | קטגוריה (לחיפוש/סינון) |
+| `image` | String | ✅ | לא | URL או emoji |
+| `featured` | Boolean | ❌ | לא | ברירת מחדל: false |
+| `stock` | Number | ❌ | לא | ברירת מחדל: 0 |
+| `rating` | Number | ❌ | לא | ברירת מחדל: 0 |
+| `isActive` | Boolean | ❌ | לא | ברירת מחדל: true |
+| `createdAt` | Date | ✅ | לא | אוטומטי |
+| `updatedAt` | Date | ✅ | לא | אוטומטי |
+
+**שימוש:**
+- ✅ הצגת רשימת מוצרים בחנות
+- ✅ חיפוש וסינון לפי קטגוריה
+- ✅ קריאת המחיר הנוכחי לעגלה
+- ✅ בדיקת מלאי אם הוספה לעגלה
+- ✅ הפחתת מלאי בעת יצירת הזמנה
+
+---
+
+## 🛒 3. CART Model (עגלת קניות)
+
+**תיאור:** מאחסן עגלות קניות של משתמשים מחוברים בלבד.
+
+**⚠️ חשוב:** העגלה דורשת אימות. אין תמיכה באורחים.
+
+```typescript
+cart = {
+  _id: "507f1f77bcf86cd799439031",           // אוטומטי
+  userId: "507f1f77bcf86cd799439011",        // ObjectId של משתמש (חובה, ייחודי)
+  items: [
+    {
+      product: "507f1f77bcf86cd799439021",  // ObjectId של מוצר
+      quantity: 2,                           // כמות
+      price: 99.90                           // מחיר יחידה
+    },
+    {
+      product: "507f1f77bcf86cd799439022",
+      quantity: 1,
+      price: 149.00
+    }
+  ],
+  total: 348.80,                             // סכום כולל מחושב
+  createdAt: "2024-12-16T10:00:00Z",         // אוטומטי
+  updatedAt: "2024-12-16T14:30:00Z"          // אוטומטי
+}
+```
+
+### Cart Fields:
+| שדה | סוג | חובה | תיאור |
+|-----|-----|------|-------|
+| `_id` | ObjectId | ✅ | אוטומטי |
+| `userId` | ObjectId | ✅ | מזהה משתמש (ייחודי, indexed) |
+| `items[]` | Array | ✅ | מערך של פריטים בעגלה |
+| `items[].product` | ObjectId | ✅ | קישור ל-Product |
+| `items[].quantity` | Number | ✅ | כמות (min: 1) |
+| `items[].price` | Number | ✅ | מחיר יחידה (מתעדכן מהמוצר) |
+| `total` | Number | ❌ | סכום כולל מחושב |
+| `createdAt` | Date | ✅ | אוטומטי |
+| `updatedAt` | Date | ✅ | אוטומטי |
+
+### ⚙️ Cart Logic:
+```
+מגבלות:
+• עגלה אחת למשתמש (userId unique)
+• דורש אימות JWT לכל פעולות עגלה
+• אין תמיכה באורחים - חובה להירשם
+
+סכום כולל:
+total = Σ (item.price × item.quantity)
+
+⚠️ חשוב: המחיר מתעדכן מהמוצר בכל פעם!
+```
+
+**שימוש:**
+- ✅ שמירת פריטים למשתמש מחובר (userId)
+- ✅ הצגת עגלה עדכנית עם מחירים עדכניים
+- ✅ חישוב סכום כולל
+- ✅ עגלה אחת למשתמש
+
+---
+
+## 📋 4. ORDER Model (הזמנה)
+
+**תיאור:** מאחסן הזמנות שהושלמו של משתמשים.
+
+```typescript
+order = {
+  _id: "507f1f77bcf86cd799439041",           // אוטומטי
+  user: "507f1f77bcf86cd799439011",          // ObjectId של משתמש
+  orderNumber: "ORD-2024-12-16-001",         // ייחודי - מספר הזמנה
+  items: [
+    {
+      product: "507f1f77bcf86cd799439021",   // ObjectId של מוצר
+      name: "חולצה כחולה",                    // שם המוצר (snapshot)
+      price: 99.90,                           // מחיר ברגע ההזמנה (נעול!)
+      quantity: 2,                            // כמות
+      image: "https://cdn.shop.com/shirt.jpg" // URL (optional)
+    }
+  ],
+  totalAmount: 199.80,                       // סכום סופי של ההזמנה
+  status: "pending",                         // pending | processing | shipped | delivered | cancelled
+  paymentMethod: "stripe",                   // stripe | credit_card | paypal | cash_on_delivery (default: stripe)
+  paymentStatus: "pending",                  // pending | paid | failed | refunded
+  shippingAddress: {
+    street: "רחוב הרצל 10",
+    city: "תל אביב",
+    postalCode: "67890",
+    country: "Israel"
+  },
+  billingAddress: {                          // אופציונלי - אם לא סופק נשתמש ב-shipping
+    street: "רחוב הרצל 10",
+    city: "תל אביב",
+    postalCode: "67890",
+    country: "Israel"
+  },
+  notes: "שלח בעדיפות גבוהה",                // הערות אופציונליות
+  estimatedDelivery: "2024-12-20T23:59:59Z", // תאריך משוער
+  trackingHistory: [                         // מעקב סטטוס ההזמנה
+    {
+      status: "pending",
+      timestamp: "2024-12-16T10:00:00Z",
+      note: "ההזמנה נוצרה"
+    },
+    {
+      status: "confirmed",
+      timestamp: "2024-12-16T10:30:00Z",
+      note: "התשלום אושר"
+    }
+  ],
+  createdAt: "2024-12-16T10:00:00Z",         // אוטומטי
+  updatedAt: "2024-12-16T14:30:00Z"          // אוטומטי
+}
+```
+
+### Order Fields:
+| שדה | סוג | חובה | ייחודי | תיאור |
+|-----|-----|------|--------|-------|
+| `_id` | ObjectId | ✅ | כן | אוטומטי |
+| `user` | ObjectId | ✅ | לא | קישור ל-User |
+| `orderNumber` | String | ✅ | כן | מספר הזמנה ייחודי |
+| `items[]` | Array | ✅ | לא | פריטים בהזמנה |
+| `items[].product` | ObjectId | ✅ | לא | קישור ל-Product |
+| `items[].name` | String | ✅ | לא | שם המוצר (snapshot) |
+| `items[].price` | Number | ✅ | לא | **מחיר נעול** ברגע ההזמנה |
+| `items[].quantity` | Number | ✅ | לא | כמות (min: 1) |
+| `items[].image` | String | ❌ | לא | URL או emoji |
+| `totalAmount` | Number | ✅ | לא | סכום כולל סופי |
+| `status` | String | ✅ | לא | pending/confirmed/processing/shipped/delivered/cancelled |
+| `paymentMethod` | String | ✅ | לא | stripe/credit_card/paypal/cash_on_delivery |
+| `paymentStatus` | String | ✅ | לא | pending/paid/failed/refunded |
+| `shippingAddress` | Object | ✅ | לא | כתובת משלוח |
+| `billingAddress` | Object | ❌ | לא | כתובת לחיוב (אופציונלי, ברירת מחדל כמו shipping) |
+| `notes` | String | ❌ | לא | הערות אופציונליות |
+| `estimatedDelivery` | Date | ❌ | לא | תאריך משוער |
+| `trackingHistory[]` | Array | ❌ | לא | מעקב שינויי סטטוס |
+| `trackingHistory[].status` | String | ✅ | לא | סטטוס ברגע זה |
+| `trackingHistory[].timestamp` | Date | ✅ | לא | מתי השינוי אירע |
+| `trackingHistory[].note` | String | ❌ | לא | הערה על השינוי |
+| `createdAt` | Date | ✅ | לא | אוטומטי |
+| `updatedAt` | Date | ✅ | לא | אוטומטי |
+
+### ⚠️ Order Rules:
+```
+✅ יוצרים Order מ-Cart:
+  1. קוראים את Cart הנוכחית
+  2. לוקחים את product.price העדכני
+  3. שומרים ב-Order.items[].price (LOCKED!)
+  4. בדוקים מלאי לכל פריט
+  5. מעדכנים Product.stock
+
+📌 Order.items[].price = SNAPSHOT של המחיר בזמן ההזמנה
+   לא משתנה כשהמחיר בחנות משתנה!
+```
+
+**שימוש:**
+- ✅ יצירת הזמנה מעגלה
+- ✅ עקוב אחרי הזמנה
+- ✅ ניהול משלוח ותשלום
+- ✅ היסטוריה של הזמנות
+
+---
+
+## � 5. ADDRESS Model (כתובת)
+
+**תיאור:** מאחסן כתובות משלוח של משתמשים.
+
+```typescript
+address = {
+  _id: "507f1f77bcf86cd799439051",           // אוטומטי
+  userId: "507f1f77bcf86cd799439011",        // ObjectId של משתמש
+  label: "home",                              // home | work | other
+  street: "רחוב הרצל 10",                     // רחוב ומספר
+  city: "תל אביב",                            // עיר
+  postalCode: "67890",                        // מיקוד
+  country: "Israel",                          // מדינה
+  isDefault: true,                            // כתובת ברירת מחדל
+  createdAt: "2024-12-16T10:00:00Z",         // אוטומטי
+  updatedAt: "2024-12-16T14:30:00Z"          // אוטומטי
+}
+```
+
+### Address Fields:
+| שדה | סוג | חובה | תיאור |
+|-----|-----|------|-------|
+| `_id` | ObjectId | ✅ | אוטומטי |
+| `userId` | ObjectId | ✅ | קישור ל-User |
+| `label` | String | ✅ | home/work/other |
+| `street` | String | ✅ | כתובת רחוב |
+| `city` | String | ✅ | עיר |
+| `postalCode` | String | ✅ | מיקוד |
+| `country` | String | ✅ | מדינה |
+| `isDefault` | Boolean | ❌ | ברירת מחדל: false |
+| `createdAt` | Date | ✅ | אוטומטי |
+| `updatedAt` | Date | ✅ | אוטומטי |
+
+**שימוש:**
+- ✅ שמירת כתובות משתמש
+- ✅ בחירת כתובת משלוח בהזמנה
+- ✅ ניהול מספר כתובות למשתמש
+- ✅ כתובת ברירת מחדל
+
+---
+
+## �🔗 Relationships (קשרים בין מודלים)
+
+```
+┌─────────────┐
+│    USER     │
+│ (משתמש)     │
+└──────┬──────┘
+       │ 1:N (משתמש אחד → הרבה הזמנות)
+       │
+       ▼
+┌─────────────┐
+│    ORDER    │
+│  (הזמנה)    │
+└──────┬──────┘
+       │ items[].product → Product
+       │
+       ▼
+┌─────────────┐
+│   PRODUCT   │
+│  (מוצר)     │
+└─────────────┘
+       ▲
+       │ items[].product → Product
+       │ 1:N (מוצר אחד → הרבה עגלות)
+       │
+┌──────┴──────┐
+│    CART     │
+│  (עגלה)     │
+└──────┬──────┘
+     │ (חובה: userId - Guest mode הוסר)
+       │
+       ▼
+   USER (required)
+```
+
+### Relationship Details:
+
+#### 🔹 USER → ORDER (1:N)
+```javascript
+// משתמש אחד יכול להיות לו הרבה הזמנות
+User._id = "user123"
+Order.user = "user123" ← קישור
+Order.user = "user123" ← קישור
+```
+
+#### 🔹 PRODUCT → ORDER (N:M דרך Order.items)
+```javascript
+// מוצר אחד יכול להיות בהרבה הזמנות
+Product._id = "prod1"
+Order1.items[].product = "prod1"
+Order2.items[].product = "prod1"
+Order3.items[].product = "prod1"
+```
+
+#### 🔹 USER → CART (1:1)
+```javascript
+// משתמש מחובר אחד יכול להיות לו Cart אחד (Guest mode הוסר)
+User._id = "user123"
+Cart.userId = "user123"
+```
+
+#### 🔹 PRODUCT → CART (N:M דרך Cart.items)
+```javascript
+// מוצר אחד יכול להיות בהרבה עגלות
+Product._id = "prod1"
+Cart1.items[].product = "prod1"
+Cart2.items[].product = "prod1"
+```
+
+---
+
+## 📊 Entity-Relationship Diagram (ERD)
+
+```
+                    ┌──────────────┐
+                    │     USER     │
+                    │              │
+                    │ • _id (PK)   │
+                    │ • email      │
+                    │ • password   │
+                    │ • name       │
+                    │ • isActive   │
+                    └────┬────┬────┘
+                         │    │
+                    1:N  │    │ 0:1
+                         │    │
+            ┌────────────┘    └──────────────┐
+            │                                │
+            ▼                                ▼
+       ┌────────────┐                ┌──────────────┐
+       │   ORDER    │                │     CART     │
+       │            │                │              │
+      │ • _id (PK) │                │ • _id (PK)   │
+      │ • user(FK) │                │ • userId(FK) │
+      │ • items[]  │                │ • items[]    │
+      │ • total    │                │ • total      │
+      │ • status   │                │              │
+       └────┬───────┘                └──────────────┘
+            │                             │
+            │ N:M (דרך items)            │ N:M (דרך items)
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │   PRODUCT    │
+                    │              │
+                    │ • _id (PK)   │
+                    │ • sku(UNIQUE)│
+                    │ • name       │
+                    │ • price      │◄── חשוב: זה המחיר העדכני
+                    │ • stock      │
+                    │ • featured   │
+                    │ • isActive   │
+                    └──────────────┘
+
+Legend:
+PK = Primary Key (מזהה ראשי)
+FK = Foreign Key (מזהה חוץ)
+N:M = Many-to-Many (הרבה לרבה)
+1:N = One-to-Many (אחד לרבה)
+0:1 = Zero-or-One (אפס או אחד)
+```
+
+---
+
+## 🔄 Data Flow Example: "הוספת מוצר לעגלה"
+
+```
+1. לקוח בחנות:
+   GET /api/products → קובל מוצרים מ-Product Model
+   
+2. Product מחזיר:
+   {
+     _id: "prod1",
+     name: "חולצה",
+     price: 99.90,  ◄── המחיר הנוכחי
+     stock: 25
+   }
+
+3. לקוח לוחץ "הוסף לעגלה":
+   POST /api/cart/items
+   {
+     userId: "user123",  // נדרש JWT
+     productId: "prod1",
+     quantity: 2
+   }
+
+4. Server בודק:
+   ✅ Product.stock >= 2? YES
+   ✅ Product.isActive? YES
+
+5. Server מוסיף ל-Cart:
+   cart.items.push({
+     product: "prod1",
+     quantity: 2,
+     lockedPrice: null  ◄── null = משתמש בחנות
+   })
+
+6. Server חושב סכום:
+   item.price = item.lockedPrice ?? product.price
+   item.price = null ?? 99.90 = 99.90
+   total += 99.90 * 2 = 199.80
+
+7. לקוח רואה:
+   Cart: [{חולצה × 2 = 199.80}]
+```
+
+---
+
+## 🔄 Data Flow Example: "יצירת הזמנה"
+
+```
+1. לקוח לוחץ "קנה":
+   POST /api/orders
+   {
+     shippingAddress: {...},
+     paymentMethod: "credit_card"
+   }
+
+2. Server קובל Cart הנוכחית:
+   GET Cart where userId = user._id
+
+3. לכל פריט בעגלה:
+   product = findById(item.product)
+   price = product.price  ◄── מחיר עדכני!
+   
+   order.items.push({
+     product: product._id,
+     name: product.name,
+     price: price,         ◄── LOCKED!
+     quantity: item.quantity
+   })
+   
+   total += price * quantity
+   Product.stock -= quantity  ◄── עדכון מלאי
+
+4. Order נוצרת:
+   Order.totalAmount = total
+   Order.status = "pending"
+   Order.paymentStatus = "pending"
+
+5. Cart נמחקת:
+   Cart.deleteOne({userId: user._id})
+
+6. לקוח רואה:
+   Order Number: ORD-2024-12-16-001
+   Items: [{חולצה × 2 = 199.80}]
+   Status: Pending
+```
+
+---
+
+## 📌 Key Takeaways
+
+### ✅ Product.price
+- זה המחיר ה**עדכני** של המוצר בחנות
+- משמש לחישוב סכום בעגלה
+- משמש ליצירת Order (נעול שם!)
+
+### ✅ Cart.items[].lockedPrice
+- `null` = משתמש בחנות (price עדכני)
+- `value` = מחיר נעול (עבור עדיפות בעתיד)
+- זה דיזיין עתידי להנעול מחירים
+
+### ✅ Order.items[].price
+- **SNAPSHOT** של המחיר בזמן ההזמנה
+- לא משתנה כשהמחיר בחנות משתנה
+- זה "החוזה" בין חנות ללקוח
+
+### ✅ Relationships
+- User ↔ Order (1:N)
+- User ↔ Cart (0:1)
+- Product ↔ Order (N:M דרך items)
+- Product ↔ Cart (N:M דרך items)
+
+---
+
+## 🚀 Queries Examples
+
+### קבל עגלה למשתמש מחובר:
+```javascript
+Cart.findOne({ userId: user._id }).populate('items.product')
+```
+
+### קבל הזמנות של משתמש:
+```javascript
+Order.find({ user: user._id }).populate('items.product')
+```
+
+### בדוק מלאי של מוצר:
+```javascript
+const product = await Product.findById(productId);
+if (product.stock < requestedQuantity) {
+  throw new Error("מלאי לא מספיק");
+}
+```
+
+### עדכן מלאי אחרי הזמנה:
+```javascript
+await Product.findByIdAndUpdate(
+  productId,
+  { $inc: { stock: -quantity } }
+);
+```
+
+---
+
+**שאלות? 🤔**

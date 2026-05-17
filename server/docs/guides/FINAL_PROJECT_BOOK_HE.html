@@ -1,4 +1,69 @@
-<!-- 
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ספר פרויקט גמר - Simple Shop</title>
+    <style>
+        * { direction: rtl; }
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 { 
+            page-break-before: always;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+            color: #0066cc;
+            margin-top: 40px;
+        }
+        h1:first-of-type { page-break-before: avoid; }
+        h2 { color: #0066cc; margin-top: 25px; }
+        code { 
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #0066cc;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th {
+            background: #0066cc;
+            color: white;
+            padding: 10px;
+            text-align: right;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        a { color: #0066cc; text-decoration: none; }
+        blockquote {
+            border-left: 4px solid #0066cc;
+            padding-left: 12px;
+            color: #666;
+            margin-left: 0;
+        }
+        hr { border: none; border-top: 2px solid #0066cc; margin: 30px 0; }
+    </style>
+</head>
+<body>
+<p><!-- 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;700&display=swap');
 
 <style>
@@ -57,76 +122,76 @@
 </style>
 -->
 
-# ספר פרויקט גמר - Simple Shop
+<h1>ספר פרויקט גמר - Simple Shop</h1>
 
 ---
 
-## עמוד שער
+<h2>עמוד שער</h2>
 
-**שם המכללה:** [שם המכללה]  
-**סמליל (לוגו):** [לוגו המכללה] | [לוגו מה"ט]  
-**שם מגמה:** הנדסת תוכנה  
-**מסלול הכשרה:** הנדסאי  
+<strong>שם המכללה:</strong> [שם המכללה]  
+<strong>סמליל (לוגו):</strong> [לוגו המכללה] | [לוגו מה"ט]  
+<strong>שם מגמה:</strong> הנדסת תוכנה  
+<strong>מסלול הכשרה:</strong> הנדסאי  
 
-**נושא הפרויקט:**  
-# מערכת E-Commerce מלאה לניהול חנות אונליין  
-### עם תשלומים מאובטחים, ניהול מלאי בזמן אמת, ולוח ניהול מתקדם
+<strong>נושא הפרויקט:</strong>  
+<h1>מערכת E-Commerce מלאה לניהול חנות אונליין  </h1>
+<h3>עם תשלומים מאובטחים, ניהול מלאי בזמן אמת, ולוח ניהול מתקדם</h3>
 
-**שמות הסטודנטים:**
-- **[שם סטודנט 1]** – צד שרת (Backend API)
-- **[שם סטודנט 2]** – צד לקוח (Frontend Application)
+<strong>שמות הסטודנטים:</strong>
+- <strong>[שם סטודנט 1]</strong> – צד שרת (Backend API)
+- <strong>[שם סטודנט 2]</strong> – צד לקוח (Frontend Application)
 
-**שם המנחה האישי:** [שם המנחה]  
-**תאריך מסירה:** 10/05/2026
-
----
-
-## תוכן עניינים
-
-### חלק א' - מבוא והצגת הפרויקט
-1. [תיאור ורקע כללי](#131-תיאור-ורקע-כללי)
-2. [מטרות המערכת](#132-מטרות-המערכת)
-3. [סקירת מצב קיים בשוק](#133-סקירת-מצב-קיים-בשוק)
-4. [מה הפרויקט מחדש ומשפר](#134-מה-הפרויקט-מחדש-ומשפר)
-
-### חלק ב' - ליבה טכנית (Server)
-5. [דרישות מערכת ופונקציונאליות](#135-דרישות-מערכת-ופונקציונאליות)
-6. [בעיות צפויות ופתרונות](#136-בעיות-צפויות-ופתרונות)
-7. [פתרון טכנולוגי נבחר](#137-פתרון-טכנולוגי-נבחר)
-8. [מבני נתונים וארגון קבצים](#138-מבני-נתונים-וארגון-קבצים)
-9. [תרשימי מערכת](#139-תרשימי-מערכת)
-10. [מרכיב אלגוריתמי](#1310-מרכיב-אלגוריתמי)
-11. [אבטחת מידע](#1311-אבטחת-מידע)
-
-### חלק ג' - ליבה טכנית (Client)
-12. [צד לקוח - סקירה](#2-צד-לקוח-frontend)
-
-### חלק ד' - ניהול פרויקט
-13. [משאבים נדרשים](#1312-משאבים-נדרשים)
-14. [תכנית עבודה](#1313-תכנית-עבודה)
-15. [תכנון בדיקות](#1314-תכנון-בדיקות)
-16. [בקרת גרסאות](#1315-בקרת-גרסאות)
-17. [תכנית הפקה סופית לספר](#1316-תכנית-הפקה-סופית-לספר-מבוסס-קוד-מקור)
-18. [קטעי קוד מומלצים להטמעה](#1317-קטעי-קוד-מומלצים-להטמעה)
-
-### חלק ה' - סיכום
-19. [מה למדנו](#סיכום---מה-למדנו)
+<strong>שם המנחה האישי:</strong> [שם המנחה]  
+<strong>תאריך מסירה:</strong> 10/05/2026
 
 ---
 
-# חלק א' - מבוא והצגת הפרויקט
+<h2>תוכן עניינים</h2>
+
+<h3>חלק א' - מבוא והצגת הפרויקט</h3>
+1. <a href="#131-תיאור-ורקע-כללי">תיאור ורקע כללי</a>
+2. <a href="#132-מטרות-המערכת">מטרות המערכת</a>
+3. <a href="#133-סקירת-מצב-קיים-בשוק">סקירת מצב קיים בשוק</a>
+4. <a href="#134-מה-הפרויקט-מחדש-ומשפר">מה הפרויקט מחדש ומשפר</a>
+
+<h3>חלק ב' - ליבה טכנית (Server)</h3>
+5. <a href="#135-דרישות-מערכת-ופונקציונאליות">דרישות מערכת ופונקציונאליות</a>
+6. <a href="#136-בעיות-צפויות-ופתרונות">בעיות צפויות ופתרונות</a>
+7. <a href="#137-פתרון-טכנולוגי-נבחר">פתרון טכנולוגי נבחר</a>
+8. <a href="#138-מבני-נתונים-וארגון-קבצים">מבני נתונים וארגון קבצים</a>
+9. <a href="#139-תרשימי-מערכת">תרשימי מערכת</a>
+10. <a href="#1310-מרכיב-אלגוריתמי">מרכיב אלגוריתמי</a>
+11. <a href="#1311-אבטחת-מידע">אבטחת מידע</a>
+
+<h3>חלק ג' - ליבה טכנית (Client)</h3>
+12. <a href="#2-צד-לקוח-frontend">צד לקוח - סקירה</a>
+
+<h3>חלק ד' - ניהול פרויקט</h3>
+13. <a href="#1312-משאבים-נדרשים">משאבים נדרשים</a>
+14. <a href="#1313-תכנית-עבודה">תכנית עבודה</a>
+15. <a href="#1314-תכנון-בדיקות">תכנון בדיקות</a>
+16. <a href="#1315-בקרת-גרסאות">בקרת גרסאות</a>
+17. <a href="#1316-תכנית-הפקה-סופית-לספר-מבוסס-קוד-מקור">תכנית הפקה סופית לספר</a>
+18. <a href="#1317-קטעי-קוד-מומלצים-להטמעה">קטעי קוד מומלצים להטמעה</a>
+
+<h3>חלק ה' - סיכום</h3>
+19. <a href="#סיכום---מה-למדנו">מה למדנו</a>
+
+---
+
+<h1>חלק א' - מבוא והצגת הפרויקט</h1>
 
 <!-- סגנון כתיבה: אקדמי - תיאורי, ענייני ומבוסס -->
 
-## 1.3.1 תיאור ורקע כללי
+<h2>1.3.1 תיאור ורקע כללי</h2>
 
-### רקע והקשר
+<h3>רקע והקשר</h3>
 
 עם התרחבות תחום המסחר האלקטרוני, עסקים קטנים ובינוניים נדרשים להציע חוויית רכישה מקוונת אמינה, מאובטחת ונוחה לשימוש. במקרים רבים, הפתרונות הקיימים בשוק הם יקרים, מורכבים לתחזוקה, או מגבילים מבחינת התאמה לצרכים מקומיים וספציפיים של העסק.
 
-פרויקט **Simple Shop** פותח כמענה לצורך זה, מתוך מטרה לבנות מערכת מסחר אלקטרוני מלאה המדגימה תכנון נכון, אבטחת מידע, חלוקת אחריות בין צד שרת וצד לקוח, ושילוב שירותים חיצוניים בסביבת ייצור.
+פרויקט <strong>Simple Shop</strong> פותח כמענה לצורך זה, מתוך מטרה לבנות מערכת מסחר אלקטרוני מלאה המדגימה תכנון נכון, אבטחת מידע, חלוקת אחריות בין צד שרת וצד לקוח, ושילוב שירותים חיצוניים בסביבת ייצור.
 
-### תיאור המערכת
+<h3>תיאור המערכת</h3>
 
 Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת רכיבי ליבה הנדרשים להפעלת חנות מקוונת:
 
@@ -137,7 +202,7 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 - ממשק ניהולי למוצרים, הזמנות וסטטיסטיקות
 - שכבות אבטחה להגנה על תהליכי התחברות, תשלום וצריכת API
 
-### חשיבות הפרויקט
+<h3>חשיבות הפרויקט</h3>
 
 > "בשנת 2025, 21% מכלל הרכישות בעולם בוצעו אונליין. עד 2027, המספר צפוי לעלות ל-25%."  
 > — Statista, E-commerce Worldwide Report
@@ -146,26 +211,26 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 
 ---
 
-## 1.3.2 מטרות המערכת
+<h2>1.3.2 מטרות המערכת</h2>
 
-### מטרת העל
+<h3>מטרת העל</h3>
 
 מטרת העל של הפרויקט היא לפתח מערכת חנות מקוונת עבור עסק קטן או בינוני, תוך שמירה על שלושה עקרונות מרכזיים:
 - פשטות תפעולית למשתמש הקצה ולמנהל המערכת
 - אבטחה מספקת עבור תהליכי אימות, רכישה ותשלום
 - גמישות ארכיטקטונית המאפשרת תחזוקה והרחבה עתידית
 
-### מטרות מדידות
+<h3>מטרות מדידות</h3>
 
 | מטרה | יעד | מדד הצלחה |
 |------|-----|-----------|
-| **מהירות תגובה** | < 100ms | 95% מהבקשות |
-| **זמינות** | 99.9% | uptime שנתי |
-| **אבטחה** | 0 פרצות | penetration testing |
-| **קלות שימוש** | < 5 דקות | זמן ללמוד את המערכת |
-| **כיסוי בדיקות** | > 85% | test coverage |
+| <strong>מהירות תגובה</strong> | < 100ms | 95% מהבקשות |
+| <strong>זמינות</strong> | 99.9% | uptime שנתי |
+| <strong>אבטחה</strong> | 0 פרצות | penetration testing |
+| <strong>קלות שימוש</strong> | < 5 דקות | זמן ללמוד את המערכת |
+| <strong>כיסוי בדיקות</strong> | > 85% | test coverage |
 
-### מטרות למידה
+<h3>מטרות למידה</h3>
 
 מעבר למימוש הפונקציונלי של המערכת, הוגדרו גם מטרות למידה מקצועיות:
 
@@ -177,38 +242,38 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 
 ---
 
-## 1.3.3 סקירת מצב קיים בשוק
+<h2>1.3.3 סקירת מצב קיים בשוק</h2>
 
-### מצב קיים
+<h3>מצב קיים</h3>
 
 עסקים קטנים המעוניינים למכור באינטרנט ניצבים בפני מספר חלופות עיקריות:
 
 | אפשרות | יתרון | חיסרון |
 |--------|-------|--------|
-| **Shopify / Wix** | מוכן מהקופסה | עלות חודשית גבוהה (₪100-500) + עמלות |
-| **WooCommerce** | חינמי, גמיש | דורש ידע טכני, איטי, פגיע לפריצות |
-| **Magento** | עוצמתי, מלא תכונות | מורכב מאוד, דורש שרת חזק |
-| **בנייה מאפס** | שליטה מלאה | זמן פיתוח עצום, סיכון לשגיאות |
+| <strong>Shopify / Wix</strong> | מוכן מהקופסה | עלות חודשית גבוהה (₪100-500) + עמלות |
+| <strong>WooCommerce</strong> | חינמי, גמיש | דורש ידע טכני, איטי, פגיע לפריצות |
+| <strong>Magento</strong> | עוצמתי, מלא תכונות | מורכב מאוד, דורש שרת חזק |
+| <strong>בנייה מאפס</strong> | שליטה מלאה | זמן פיתוח עצום, סיכון לשגיאות |
 
-### פער מזוהה
+<h3>פער מזוהה</h3>
 
 קיים פער בין פלטפורמות מסחר מוכנות אך יקרות ומוגבלות, לבין פיתוח עצמאי מלא המצריך השקעת זמן ומשאבים רבים. הפרויקט נועד להדגים פתרון ביניים: מערכת מודולרית, מבוססת קוד, הניתנת ללמידה, התאמה והרחבה.
 
 ---
 
-## 1.3.4 מה הפרויקט מחדש ומשפר
+<h2>1.3.4 מה הפרויקט מחדש ומשפר</h2>
 
-### נקודות הייחוד של הפרויקט
+<h3>נקודות הייחוד של הפרויקט</h3>
 
 | תכונה | מה קיים בשוק | מה עשינו |
 |-------|-------------|----------|
-| **מניעת Overselling** | רוב המערכות לא מטפלות | MongoDB Transactions אטומיות |
-| **אבטחת Login** | רק סיסמה | Account Lockout + Rate Limiting + tokenVersion |
-| **Webhook Reliability** | "fire and forget" | Idempotency + DB Tracking + Retry Logic |
-| **Instant Logout** | Token נשאר תקף | tokenVersion - ביטול מיידי של כל הטוקנים |
-| **תיעוד** | לרוב חסר | OpenAPI Spec + Postman Collection מלאה |
+| <strong>מניעת Overselling</strong> | רוב המערכות לא מטפלות | MongoDB Transactions אטומיות |
+| <strong>אבטחת Login</strong> | רק סיסמה | Account Lockout + Rate Limiting + tokenVersion |
+| <strong>Webhook Reliability</strong> | "fire and forget" | Idempotency + DB Tracking + Retry Logic |
+| <strong>Instant Logout</strong> | Token נשאר תקף | tokenVersion - ביטול מיידי של כל הטוקנים |
+| <strong>תיעוד</strong> | לרוב חסר | OpenAPI Spec + Postman Collection מלאה |
 
-### תרומת הפרויקט
+<h3>תרומת הפרויקט</h3>
 
 לפרויקט תרומה במספר מישורים:
 
@@ -221,143 +286,143 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 <!-- ========== SERVER-SECTION-START ========== -->
 <!-- להסרת חלק השרת, בקש: "הסר את כל סעיפי השרת מהספר" -->
 
-# חלק ב' - ליבה טכנית: צד שרת (Backend)
+<h1>חלק ב' - ליבה טכנית: צד שרת (Backend)</h1>
 
 <!-- סגנון כתיבה: טכני - כמו CTO שמסביר למתכנתים -->
 
-## 1.3.5 דרישות מערכת ופונקציונאליות
+<h2>1.3.5 דרישות מערכת ופונקציונאליות</h2>
 
-### 1.3.5.1 דרישות מערכת (Non-Functional)
+<h3>1.3.5.1 דרישות מערכת (Non-Functional)</h3>
 
 | קטגוריה | דרישה | פירוט |
 |---------|-------|-------|
-| **סביבה** | Node.js 22.x | Runtime environment |
+| <strong>סביבה</strong> | Node.js 22.x | Runtime environment |
 | | MongoDB 8.x | Primary database |
 | | Redis 5.x | Caching & sessions |
-| **ביצועים** | Latency < 100ms | 95th percentile |
+| <strong>ביצועים</strong> | Latency < 100ms | 95th percentile |
 | | Throughput 100+ RPS | Requests per second |
 | | Concurrent users 500+ | Simultaneous connections |
-| **שרידות** | Graceful shutdown | No lost requests on restart |
+| <strong>שרידות</strong> | Graceful shutdown | No lost requests on restart |
 | | Auto-reconnect | DB/Redis connection recovery |
 | | Health checks | Liveness & readiness probes |
-| **עומסים** | Rate limiting | Per-user & per-IP |
+| <strong>עומסים</strong> | Rate limiting | Per-user & per-IP |
 | | Connection pooling | DB connection reuse |
 | | Response caching | Redis-based caching |
 
-### 1.3.5.2 דרישות פונקציונאליות
+<h3>1.3.5.2 דרישות פונקציונאליות</h3>
 
 #### מודול Authentication
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| הרשמה | `POST /auth/register` | יצירת חשבון חדש |
-| התחברות | `POST /auth/login` | אימות + JWT token |
-| התחברות עם Google | `POST /auth/google` | אימות OAuth וקבלת טוקנים |
-| התנתקות | `POST /auth/logout` | ביטול כל הטוקנים (tokenVersion) |
-| רענון טוקן | `POST /auth/refresh` | קבלת access token חדש |
-| אימות | `GET /auth/verify` | בדיקת תקינות הטוקן |
-| בקשת איפוס סיסמה | `POST /auth/forgot-password` | יצירת תהליך איפוס סיסמה |
-| איפוס סיסמה בפועל | `POST /auth/reset-password/:token` | הגדרת סיסמה חדשה |
-| פרופיל משתמש | `GET/PUT /auth/profile` | שליפה ועדכון פרופיל |
-| שינוי סיסמה | `POST /auth/change-password` | שינוי סיסמה למשתמש מחובר |
+| הרשמה | <code>POST /auth/register</code> | יצירת חשבון חדש |
+| התחברות | <code>POST /auth/login</code> | אימות + JWT token |
+| התחברות עם Google | <code>POST /auth/google</code> | אימות OAuth וקבלת טוקנים |
+| התנתקות | <code>POST /auth/logout</code> | ביטול כל הטוקנים (tokenVersion) |
+| רענון טוקן | <code>POST /auth/refresh</code> | קבלת access token חדש |
+| אימות | <code>GET /auth/verify</code> | בדיקת תקינות הטוקן |
+| בקשת איפוס סיסמה | <code>POST /auth/forgot-password</code> | יצירת תהליך איפוס סיסמה |
+| איפוס סיסמה בפועל | <code>POST /auth/reset-password/:token</code> | הגדרת סיסמה חדשה |
+| פרופיל משתמש | <code>GET/PUT /auth/profile</code> | שליפה ועדכון פרופיל |
+| שינוי סיסמה | <code>POST /auth/change-password</code> | שינוי סיסמה למשתמש מחובר |
 
 #### מודול Products
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| רשימת מוצרים | `GET /products` | עם סינון וחיפוש |
-| רשימת קטגוריות | `GET /products/categories/list` | שליפת קטגוריות מוצרים |
-| מוצר בודד | `GET /products/:id` | פרטי מוצר מלאים |
+| רשימת מוצרים | <code>GET /products</code> | עם סינון וחיפוש |
+| רשימת קטגוריות | <code>GET /products/categories/list</code> | שליפת קטגוריות מוצרים |
+| מוצר בודד | <code>GET /products/:id</code> | פרטי מוצר מלאים |
 
 #### מודול Cart
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| צפייה בעגלה | `GET /cart` | פריטים + סכום |
-| הוספת פריט | `POST /cart/add` | עם בדיקת מלאי |
-| עדכון כמות | `PUT /cart/update` | עם בדיקת מלאי |
-| הסרת פריט | `DELETE /cart/remove` | הסרה מהעגלה |
-| ריקון עגלה | `DELETE /cart/clear` | הסרת כל הפריטים |
+| צפייה בעגלה | <code>GET /cart</code> | פריטים + סכום |
+| הוספת פריט | <code>POST /cart/add</code> | עם בדיקת מלאי |
+| עדכון כמות | <code>PUT /cart/update</code> | עם בדיקת מלאי |
+| הסרת פריט | <code>DELETE /cart/remove</code> | הסרה מהעגלה |
+| ריקון עגלה | <code>DELETE /cart/clear</code> | הסרת כל הפריטים |
 
 #### מודול Orders
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| יצירת הזמנה | `POST /orders` | מהעגלה + כתובת |
-| רשימת הזמנות | `GET /orders` | הזמנות המשתמש |
-| הזמנה בודדת | `GET /orders/:id` | פרטים מלאים |
-| ביטול | `POST /orders/:id/cancel` | לפני שילוח בלבד |
-| מעקב פומבי | `GET /orders/track/:orderId` | מעקב הזמנה ללא login |
+| יצירת הזמנה | <code>POST /orders</code> | מהעגלה + כתובת |
+| רשימת הזמנות | <code>GET /orders</code> | הזמנות המשתמש |
+| הזמנה בודדת | <code>GET /orders/:id</code> | פרטים מלאים |
+| ביטול | <code>POST /orders/:id/cancel</code> | לפני שילוח בלבד |
+| מעקב פומבי | <code>GET /orders/track/:orderId</code> | מעקב הזמנה ללא login |
 
 #### מודול Addresses
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| כל הכתובות | `GET /addresses` | ספר כתובות של המשתמש |
-| ברירת מחדל | `GET /addresses/default` | כתובת ברירת מחדל |
-| כתובת בודדת | `GET /addresses/:addressId` | שליפת כתובת לפי מזהה |
-| יצירה | `POST /addresses` | הוספת כתובת חדשה |
-| עדכון | `PUT /addresses/:addressId` | עדכון כתובת קיימת |
-| מחיקה | `DELETE /addresses/:addressId` | מחיקת כתובת |
-| קביעת ברירת מחדל | `POST /addresses/:addressId/set-default` | סימון כתובת כברירת מחדל |
+| כל הכתובות | <code>GET /addresses</code> | ספר כתובות של המשתמש |
+| ברירת מחדל | <code>GET /addresses/default</code> | כתובת ברירת מחדל |
+| כתובת בודדת | <code>GET /addresses/:addressId</code> | שליפת כתובת לפי מזהה |
+| יצירה | <code>POST /addresses</code> | הוספת כתובת חדשה |
+| עדכון | <code>PUT /addresses/:addressId</code> | עדכון כתובת קיימת |
+| מחיקה | <code>DELETE /addresses/:addressId</code> | מחיקת כתובת |
+| קביעת ברירת מחדל | <code>POST /addresses/:addressId/set-default</code> | סימון כתובת כברירת מחדל |
 
 #### מודול Payments
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| יצירת Checkout | `POST /payments/create-intent` | Stripe session |
-| Alias ל-checkout | `POST /payments/checkout` | נקודת קצה חלופית ליצירת תשלום |
-| סטטוס תשלום | `GET /payments/:orderId/status` | סטטוס התשלום להזמנה |
-| Webhook | `POST /payments/webhook` | קבלת אירועים מ-Stripe |
+| יצירת Checkout | <code>POST /payments/create-intent</code> | Stripe session |
+| Alias ל-checkout | <code>POST /payments/checkout</code> | נקודת קצה חלופית ליצירת תשלום |
+| סטטוס תשלום | <code>GET /payments/:orderId/status</code> | סטטוס התשלום להזמנה |
+| Webhook | <code>POST /payments/webhook</code> | קבלת אירועים מ-Stripe |
 
 #### מודול Admin
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| סטטיסטיקות | `GET /admin/stats/summary` | מכירות, הזמנות, מלאי |
-| מוצרים | `GET /admin/products` | רשימת מוצרים מלאה לאדמין |
-| יצירת מוצר | `POST /admin/products` | יצירת מוצר חדש |
-| עדכון מוצר | `PUT /admin/products/:id` | עדכון מוצר |
-| מחיקת מוצר | `DELETE /admin/products/:id` | Soft delete לאדמין |
-| משתמשים | `GET /admin/users` | רשימת כל המשתמשים |
-| שינוי role | `PUT /admin/users/:id/role` | user ↔ admin |
-| כל ההזמנות | `GET /admin/orders` | עם פילטרים |
-| עדכון סטטוס | `PUT /admin/orders/:id/status` | שינוי סטטוס הזמנה |
+| סטטיסטיקות | <code>GET /admin/stats/summary</code> | מכירות, הזמנות, מלאי |
+| מוצרים | <code>GET /admin/products</code> | רשימת מוצרים מלאה לאדמין |
+| יצירת מוצר | <code>POST /admin/products</code> | יצירת מוצר חדש |
+| עדכון מוצר | <code>PUT /admin/products/:id</code> | עדכון מוצר |
+| מחיקת מוצר | <code>DELETE /admin/products/:id</code> | Soft delete לאדמין |
+| משתמשים | <code>GET /admin/users</code> | רשימת כל המשתמשים |
+| שינוי role | <code>PUT /admin/users/:id/role</code> | user ↔ admin |
+| כל ההזמנות | <code>GET /admin/orders</code> | עם פילטרים |
+| עדכון סטטוס | <code>PUT /admin/orders/:id/status</code> | שינוי סטטוס הזמנה |
 
 #### מודול Health & Metrics
 | פעולה | Endpoint | תיאור |
 |-------|----------|-------|
-| Health root | `GET /health` | בדיקת readiness בסיסית |
-| Health API | `GET /api/health` , `GET /api/health/ping` | בדיקות בריאות API |
-| Prometheus scrape | `GET /metrics` | endpoint גלובלי ל-scraping |
-| Payment metrics | `GET /metrics/payment` | מדדי תשלומים למשתמש מאומת |
-| Webhook metrics | `GET /metrics/webhook` | מדדי webhook למשתמש מאומת |
-| Export metrics | `GET /metrics/all` | ייצוא כל המדדים |
+| Health root | <code>GET /health</code> | בדיקת readiness בסיסית |
+| Health API | <code>GET /api/health</code> , <code>GET /api/health/ping</code> | בדיקות בריאות API |
+| Prometheus scrape | <code>GET /metrics</code> | endpoint גלובלי ל-scraping |
+| Payment metrics | <code>GET /metrics/payment</code> | מדדי תשלומים למשתמש מאומת |
+| Webhook metrics | <code>GET /metrics/webhook</code> | מדדי webhook למשתמש מאומת |
+| Export metrics | <code>GET /metrics/all</code> | ייצוא כל המדדים |
 
 ---
 
-## 1.3.6 בעיות צפויות ופתרונות
+<h2>1.3.6 בעיות צפויות ופתרונות</h2>
 
-### 1.3.6.1 תיאור הבעיות
+<h3>1.3.6.1 תיאור הבעיות</h3>
 
 | בעיה | תיאור | חומרה | השלכות |
 |------|-------|-------|--------|
-| **Race Conditions** | שני לקוחות קונים את המוצר האחרון בו-זמנית | 🔴 קריטי | Overselling, הפסד כספי |
-| **Brute Force** | ניסיונות login חוזרים לפריצת סיסמה | 🔴 קריטי | גניבת חשבונות |
-| **Webhook Replay** | Stripe שולח webhook פעמיים | 🟠 גבוה | חיוב כפול |
-| **Token Theft** | גניבת JWT token | 🟠 גבוה | התחזות למשתמש |
-| **DDoS** | הצפת השרת בבקשות | 🟡 בינוני | השבתת השירות |
+| <strong>Race Conditions</strong> | שני לקוחות קונים את המוצר האחרון בו-זמנית | 🔴 קריטי | Overselling, הפסד כספי |
+| <strong>Brute Force</strong> | ניסיונות login חוזרים לפריצת סיסמה | 🔴 קריטי | גניבת חשבונות |
+| <strong>Webhook Replay</strong> | Stripe שולח webhook פעמיים | 🟠 גבוה | חיוב כפול |
+| <strong>Token Theft</strong> | גניבת JWT token | 🟠 גבוה | התחזות למשתמש |
+| <strong>DDoS</strong> | הצפת השרת בבקשות | 🟡 בינוני | השבתת השירות |
 
-### 1.3.6.2 פתרונות שנבחרו
+<h3>1.3.6.2 פתרונות שנבחרו</h3>
 
 | בעיה | פתרונות אפשריים | הפתרון שבחרנו | סיבה |
 |------|-----------------|---------------|------|
-| **Race Conditions** | 1. Optimistic locking<br>2. Pessimistic locking<br>3. **MongoDB Transactions** | MongoDB Transactions | אטומיות מלאה, rollback אוטומטי |
-| **Brute Force** | 1. CAPTCHA<br>2. **Account Lockout + Rate Limit**<br>3. 2FA | Account Lockout + Rate Limiting | UX טוב יותר מ-CAPTCHA, פשוט יותר מ-2FA |
-| **Webhook Replay** | 1. **Idempotency Keys**<br>2. Event sourcing | Idempotency + DB Tracking | פשוט, אמין, מאפשר auditing |
-| **Token Theft** | 1. Short expiry<br>2. **tokenVersion**<br>3. Token blacklist | tokenVersion | ביטול מיידי, ללא DB lookup בכל בקשה |
-| **DDoS** | 1. **Rate Limiting**<br>2. WAF<br>3. CDN | Rate Limiting per IP/User | פשוט, יעיל, לא דורש שירות חיצוני |
+| <strong>Race Conditions</strong> | 1. Optimistic locking<br>2. Pessimistic locking<br>3. <strong>MongoDB Transactions</strong> | MongoDB Transactions | אטומיות מלאה, rollback אוטומטי |
+| <strong>Brute Force</strong> | 1. CAPTCHA<br>2. <strong>Account Lockout + Rate Limit</strong><br>3. 2FA | Account Lockout + Rate Limiting | UX טוב יותר מ-CAPTCHA, פשוט יותר מ-2FA |
+| <strong>Webhook Replay</strong> | 1. <strong>Idempotency Keys</strong><br>2. Event sourcing | Idempotency + DB Tracking | פשוט, אמין, מאפשר auditing |
+| <strong>Token Theft</strong> | 1. Short expiry<br>2. <strong>tokenVersion</strong><br>3. Token blacklist | tokenVersion | ביטול מיידי, ללא DB lookup בכל בקשה |
+| <strong>DDoS</strong> | 1. <strong>Rate Limiting</strong><br>2. WAF<br>3. CDN | Rate Limiting per IP/User | פשוט, יעיל, לא דורש שירות חיצוני |
 
 ---
 
-## 1.3.7 פתרון טכנולוגי נבחר
+<h2>1.3.7 פתרון טכנולוגי נבחר</h2>
 
-### 1.3.7.1 טופולוגיית הפתרון
+<h3>1.3.7.1 טופולוגיית הפתרון</h3>
 
-```
+<pre><code>
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CLIENTS                                   │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
@@ -400,40 +465,40 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 │ • Orders         │  │ • Cart cache     │  │ • Refunds        │
 │ • Payments       │  │                  │  │                  │
 └──────────────────┘  └──────────────────┘  └──────────────────┘
-```
+</code></pre>
 
-### 1.3.7.2 טכנולוגיות בשימוש
+<h3>1.3.7.2 טכנולוגיות בשימוש</h3>
 
 | שכבה | טכנולוגיה | גרסה | תפקיד |
 |------|-----------|------|-------|
-| **Runtime** | Node.js | 22.x | JavaScript execution engine |
-| **Framework** | Express.js | 4.19+ | HTTP server & routing |
-| **Language** | TypeScript | 5.x | Type-safe JavaScript |
-| **Database** | MongoDB | 8.x | NoSQL document database |
-| **ODM** | Mongoose | 8.x | MongoDB object modeling |
-| **Cache** | Redis | 5.x | In-memory data store |
-| **Auth** | JWT | - | Stateless authentication |
-| **Payments** | Stripe | 20.x | Payment processing |
-| **Validation** | Zod | 3.x | Runtime type validation |
-| **Logging** | Pino | 9.x | Structured JSON logging |
-| **Testing** | Jest | 29.x | Unit & integration tests |
-| **Metrics** | prom-client | 15.x | Prometheus metrics |
-| **API Docs** | Swagger UI + swagger-jsdoc | 5.x / 6.x | OpenAPI documentation |
+| <strong>Runtime</strong> | Node.js | 22.x | JavaScript execution engine |
+| <strong>Framework</strong> | Express.js | 4.19+ | HTTP server & routing |
+| <strong>Language</strong> | TypeScript | 5.x | Type-safe JavaScript |
+| <strong>Database</strong> | MongoDB | 8.x | NoSQL document database |
+| <strong>ODM</strong> | Mongoose | 8.x | MongoDB object modeling |
+| <strong>Cache</strong> | Redis | 5.x | In-memory data store |
+| <strong>Auth</strong> | JWT | - | Stateless authentication |
+| <strong>Payments</strong> | Stripe | 20.x | Payment processing |
+| <strong>Validation</strong> | Zod | 3.x | Runtime type validation |
+| <strong>Logging</strong> | Pino | 9.x | Structured JSON logging |
+| <strong>Testing</strong> | Jest | 29.x | Unit & integration tests |
+| <strong>Metrics</strong> | prom-client | 15.x | Prometheus metrics |
+| <strong>API Docs</strong> | Swagger UI + swagger-jsdoc | 5.x / 6.x | OpenAPI documentation |
 
-### 1.3.7.3 שפות הפיתוח
+<h3>1.3.7.3 שפות הפיתוח</h3>
 
 | שפה | שימוש | סיבה |
 |-----|-------|------|
-| **TypeScript** | קוד השרת כולו | Type safety, autocomplete, תחזוקתיות |
-| **JavaScript ES2023** | Runtime (compiled) | Node.js native support |
-| **JSON** | Configuration, API | Standard data format |
-| **YAML** | Docker, CI/CD | Human-readable config |
+| <strong>TypeScript</strong> | קוד השרת כולו | Type safety, autocomplete, תחזוקתיות |
+| <strong>JavaScript ES2023</strong> | Runtime (compiled) | Node.js native support |
+| <strong>JSON</strong> | Configuration, API | Standard data format |
+| <strong>YAML</strong> | Docker, CI/CD | Human-readable config |
 
-### 1.3.7.4 תיאור הארכיטקטורה
+<h3>1.3.7.4 תיאור הארכיטקטורה</h3>
 
-**Pattern: Layered Architecture + MVC**
+<strong>Pattern: Layered Architecture + MVC</strong>
 
-```
+<pre><code>
 ┌─────────────────────────────────────────────────┐
 │                   Routes Layer                   │
 │  • מגדיר URL patterns                           │
@@ -461,20 +526,20 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 │  • Database queries                             │
 │  • Data validation                              │
 └─────────────────────────────────────────────────┘
-```
+</code></pre>
 
-**למה בחרנו בארכיטקטורה זו?**
+<strong>למה בחרנו בארכיטקטורה זו?</strong>
 
 | יתרון | הסבר |
 |-------|------|
-| **Separation of Concerns** | כל שכבה אחראית לדבר אחד |
-| **Testability** | אפשר לבדוק כל שכבה בנפרד |
-| **Maintainability** | קל למצוא ולתקן באגים |
-| **Scalability** | אפשר להחליף שכבות בלי לשנות אחרות |
+| <strong>Separation of Concerns</strong> | כל שכבה אחראית לדבר אחד |
+| <strong>Testability</strong> | אפשר לבדוק כל שכבה בנפרד |
+| <strong>Maintainability</strong> | קל למצוא ולתקן באגים |
+| <strong>Scalability</strong> | אפשר להחליף שכבות בלי לשנות אחרות |
 
-### 1.3.7.5 חלוקה לתכניות ומודולים
+<h3>1.3.7.5 חלוקה לתכניות ומודולים</h3>
 
-```
+<pre><code>
 server/
 ├── src/
 │   ├── app.ts                    # Express app configuration
@@ -564,7 +629,7 @@ server/
 │   │   ├── express.ts
 │   │   └── express-session.d.ts
 │   │
-│   └── __tests__/                # Test files
+│   └── <strong>tests</strong>/                # Test files
 │       ├── auth.test.ts
 │       ├── auth.test.google.ts
 │       ├── products.test.ts
@@ -583,110 +648,110 @@ server/
 ├── package.json
 ├── jest.config.js
 └── tsconfig.json
-```
+</code></pre>
 
-### 1.3.7.6 סביבת השרת
+<h3>1.3.7.6 סביבת השרת</h3>
 
 | סביבה | שירות | תיאור |
 |-------|-------|-------|
-| **Production** | Render.com | PaaS, auto-deploy from GitHub |
-| **Database** | MongoDB Atlas | Managed MongoDB cluster |
-| **Cache** | Redis Cloud | Managed Redis instance |
-| **Development** | Local | Node.js + MongoDB/Redis לפי הגדרות env |
-| **Testing** | Mongo Memory Server | Jest against compiled `dist/__tests__` |
+| <strong>Production</strong> | Render.com | PaaS, auto-deploy from GitHub |
+| <strong>Database</strong> | MongoDB Atlas | Managed MongoDB cluster |
+| <strong>Cache</strong> | Redis Cloud | Managed Redis instance |
+| <strong>Development</strong> | Local | Node.js + MongoDB/Redis לפי הגדרות env |
+| <strong>Testing</strong> | Mongo Memory Server | Jest against compiled <code>dist/<strong>tests</strong></code> |
 
-**API Base URL:** מוגדר דרך `process.env.API_URL`; ברירת מחדל מקומית ב-Swagger היא `http://localhost:4001`.
+<strong>API Base URL:</strong> מוגדר דרך <code>process.env.API_URL</code>; ברירת מחדל מקומית ב-Swagger היא <code>http://localhost:4001</code>.
 
-**Docs & Health Endpoints:**
-- `/api/docs` - Swagger UI
-- `/api/docs.json` - OpenAPI JSON
-- `/health` - root health endpoint
-- `/metrics` - Prometheus scrape endpoint
+<strong>Docs & Health Endpoints:</strong>
+- <code>/api/docs</code> - Swagger UI
+- <code>/api/docs.json</code> - OpenAPI JSON
+- <code>/health</code> - root health endpoint
+- <code>/metrics</code> - Prometheus scrape endpoint
 
-### 1.3.7.7 ממשק משתמש (GUI)
+<h3>1.3.7.7 ממשק משתמש (GUI)</h3>
 
-**הממשק מפותח בנפרד על ידי צד הלקוח** - ראה [חלק ג'](#2-צד-לקוח-frontend).
+<strong>הממשק מפותח בנפרד על ידי צד הלקוח</strong> - ראה <a href="#2-צד-לקוח-frontend">חלק ג'</a>.
 
-### 1.3.7.8 ממשקים למערכות אחרות (API)
+<h3>1.3.7.8 ממשקים למערכות אחרות (API)</h3>
 
 #### External APIs
 
-**1. Stripe API** - תשלומים
-```
+<strong>1. Stripe API</strong> - תשלומים
+<pre><code>
 POST https://api.stripe.com/v1/checkout/sessions
   → יצירת session לתשלום
   
 Webhook: POST /api/payments/webhook
   → קבלת אירועים (payment.succeeded, payment.failed)
-```
+</code></pre>
 
 #### Internal API - User / Public Endpoints
 
 | Method | Endpoint | Auth | Input (main) | Output (main) | Typical errors |
 |--------|----------|------|--------------|---------------|----------------|
-| POST | `/api/auth/register` | No | `{ name, email, password }` | `{ success, data: { user, token, refreshToken } }` | 409 (email exists), 400 (validation) |
-| POST | `/api/auth/login` | No | `{ email, password }` | `{ success, data: { user, token, refreshToken } }` | 401, 423 (account locked), 429 |
-| POST | `/api/auth/google` | No | `{ idToken }` | `{ success, data: { user, token, refreshToken } }` | 400, 403, 429 |
-| POST | `/api/auth/forgot-password` | No | `{ email }` | `{ success, message }` | 400, 429 |
-| POST | `/api/auth/reset-password/:token` | No | `{ password, confirmPassword }` | `{ success, message }` | 400 |
-| POST | `/api/auth/refresh` | No | `{ refreshToken }` | `{ success, data: { token, refreshToken } }` | 400, 401, 429 |
-| GET | `/api/auth/verify` | Bearer | header `Authorization` | `{ success, data: { user } }` | 401 |
-| GET | `/api/auth/profile` | Bearer | header `Authorization` | `{ success, data: { user } }` | 401 |
-| PUT | `/api/auth/profile` | Bearer | `{ name?, email? }` | `{ success, data: { user }, message }` | 400, 401 |
-| POST | `/api/auth/change-password` | Bearer | `{ currentPassword, newPassword, confirmPassword }` | `{ success, message }` | 400, 401 |
-| POST | `/api/auth/logout` | Bearer | header `Authorization` | `{ success, message }` | 401 |
-| GET | `/api/products` | No | query `category,minPrice,maxPrice,search,featured,sort` | `{ success, data: Product[] }` | 400 |
-| GET | `/api/products/categories/list` | No | - | `{ success, data: string[] }` | 400 |
-| GET | `/api/products/:id` | No | path `id` (ObjectId) | `{ success, data: Product }` | 400, 404 |
-| GET | `/api/cart` | Bearer | header `Authorization` | `{ success, data: Cart }` | 401 |
-| GET | `/api/cart/count` | Bearer | header `Authorization` | `{ success, data: { count } }` | 401 |
-| POST | `/api/cart/add` | Bearer | `{ productId, quantity }` | `{ success, data: Cart, message }` | 400, 401 |
-| PUT | `/api/cart/update` | Bearer | `{ productId, quantity }` | `{ success, data: Cart, message }` | 400, 401, 404 |
-| DELETE | `/api/cart/remove` | Bearer | `{ productId }` | `{ success, data: Cart, message }` | 400, 401, 404 |
-| DELETE | `/api/cart/clear` | Bearer | header `Authorization` | `{ success, data: { userId, items: [], total: 0 }, message }` | 401, 500 |
-| POST | `/api/orders` | Bearer + idempotency | `{ shippingAddress, billingAddress?, paymentMethod?, notes? }` | `{ success, data: { order, payment }, message }` | 400, 401 |
-| GET | `/api/orders` | Bearer | query `status?` | `{ success, data: { orders } }` | 401 |
-| GET | `/api/orders/:orderId` | Bearer | path `orderId` | `{ success, data: { order } }` | 400, 401, 404 |
-| POST | `/api/orders/:orderId/cancel` | Bearer | path `orderId` | `{ success, data: { order }, message }` | 400, 401, 404 |
-| GET | `/api/orders/track/:orderId` | No | path `orderId` | `{ success, data: TrackingResponse }` | 400, 404, 429 |
-| GET | `/api/addresses` | Bearer | header `Authorization` | `{ success, data: Address[] }` | 401 |
-| GET | `/api/addresses/default` | Bearer | header `Authorization` | `{ success, data: Address }` | 401, 404 |
-| GET | `/api/addresses/:addressId` | Bearer | path `addressId` | `{ success, data: Address }` | 400, 401, 404 |
-| POST | `/api/addresses` | Bearer | `{ fullName, phone, street, city, postalCode, country, isDefault? }` | `{ success, data: Address, message }` | 400, 401 |
-| PUT | `/api/addresses/:addressId` | Bearer | partial address fields | `{ success, data: Address, message }` | 400, 401, 404 |
-| DELETE | `/api/addresses/:addressId` | Bearer | path `addressId` | `204 No Content` | 400, 401, 404 |
-| POST | `/api/addresses/:addressId/set-default` | Bearer | path `addressId` | `{ success, data: Address, message }` | 400, 401, 404 |
-| POST | `/api/payments/create-intent` | Bearer | `{ orderId }` | `{ success, data: { payment, status, clientSecret, checkoutUrl }, message }` | 400, 401, 404 |
-| POST | `/api/payments/checkout` | Bearer | `{ orderId }` | `{ success, data: { payment, status, clientSecret, checkoutUrl }, message }` | 400, 401, 404 |
-| GET | `/api/payments/:orderId/status` | Bearer | path `orderId` | `{ success, data: { orderPaymentStatus, paymentStatus, ... }, message }` | 400, 401, 404 |
-| POST | `/api/payments/webhook` | No (Stripe signature) | raw body + `stripe-signature` header | `{ received: true }` | 400 |
-| GET | `/api/health` | No | - | `{ success, data: { status, mongodb, redis, webhooks, uptime } }` | 500 |
-| GET | `/api/health/ping` | No | - | `{ success, message: "pong", data: { time } }` | 500 |
-| GET | `/api/metrics/payment` | Bearer | query `lastN?` | `{ success, data: PaymentMetrics }` | 401 |
-| GET | `/api/metrics/webhook` | Bearer | query `lastN?` | `{ success, data: WebhookMetrics }` | 401 |
-| GET | `/api/metrics/all` | Bearer | - | `{ success, data: ExportedMetrics }` | 401 |
+| POST | <code>/api/auth/register</code> | No | <code>{ name, email, password }</code> | <code>{ success, data: { user, token, refreshToken } }</code> | 409 (email exists), 400 (validation) |
+| POST | <code>/api/auth/login</code> | No | <code>{ email, password }</code> | <code>{ success, data: { user, token, refreshToken } }</code> | 401, 423 (account locked), 429 |
+| POST | <code>/api/auth/google</code> | No | <code>{ idToken }</code> | <code>{ success, data: { user, token, refreshToken } }</code> | 400, 403, 429 |
+| POST | <code>/api/auth/forgot-password</code> | No | <code>{ email }</code> | <code>{ success, message }</code> | 400, 429 |
+| POST | <code>/api/auth/reset-password/:token</code> | No | <code>{ password, confirmPassword }</code> | <code>{ success, message }</code> | 400 |
+| POST | <code>/api/auth/refresh</code> | No | <code>{ refreshToken }</code> | <code>{ success, data: { token, refreshToken } }</code> | 400, 401, 429 |
+| GET | <code>/api/auth/verify</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: { user } }</code> | 401 |
+| GET | <code>/api/auth/profile</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: { user } }</code> | 401 |
+| PUT | <code>/api/auth/profile</code> | Bearer | <code>{ name?, email? }</code> | <code>{ success, data: { user }, message }</code> | 400, 401 |
+| POST | <code>/api/auth/change-password</code> | Bearer | <code>{ currentPassword, newPassword, confirmPassword }</code> | <code>{ success, message }</code> | 400, 401 |
+| POST | <code>/api/auth/logout</code> | Bearer | header <code>Authorization</code> | <code>{ success, message }</code> | 401 |
+| GET | <code>/api/products</code> | No | query <code>category,minPrice,maxPrice,search,featured,sort</code> | <code>{ success, data: Product[] }</code> | 400 |
+| GET | <code>/api/products/categories/list</code> | No | - | <code>{ success, data: string[] }</code> | 400 |
+| GET | <code>/api/products/:id</code> | No | path <code>id</code> (ObjectId) | <code>{ success, data: Product }</code> | 400, 404 |
+| GET | <code>/api/cart</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: Cart }</code> | 401 |
+| GET | <code>/api/cart/count</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: { count } }</code> | 401 |
+| POST | <code>/api/cart/add</code> | Bearer | <code>{ productId, quantity }</code> | <code>{ success, data: Cart, message }</code> | 400, 401 |
+| PUT | <code>/api/cart/update</code> | Bearer | <code>{ productId, quantity }</code> | <code>{ success, data: Cart, message }</code> | 400, 401, 404 |
+| DELETE | <code>/api/cart/remove</code> | Bearer | <code>{ productId }</code> | <code>{ success, data: Cart, message }</code> | 400, 401, 404 |
+| DELETE | <code>/api/cart/clear</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: { userId, items: [], total: 0 }, message }</code> | 401, 500 |
+| POST | <code>/api/orders</code> | Bearer + idempotency | <code>{ shippingAddress, billingAddress?, paymentMethod?, notes? }</code> | <code>{ success, data: { order, payment }, message }</code> | 400, 401 |
+| GET | <code>/api/orders</code> | Bearer | query <code>status?</code> | <code>{ success, data: { orders } }</code> | 401 |
+| GET | <code>/api/orders/:orderId</code> | Bearer | path <code>orderId</code> | <code>{ success, data: { order } }</code> | 400, 401, 404 |
+| POST | <code>/api/orders/:orderId/cancel</code> | Bearer | path <code>orderId</code> | <code>{ success, data: { order }, message }</code> | 400, 401, 404 |
+| GET | <code>/api/orders/track/:orderId</code> | No | path <code>orderId</code> | <code>{ success, data: TrackingResponse }</code> | 400, 404, 429 |
+| GET | <code>/api/addresses</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: Address[] }</code> | 401 |
+| GET | <code>/api/addresses/default</code> | Bearer | header <code>Authorization</code> | <code>{ success, data: Address }</code> | 401, 404 |
+| GET | <code>/api/addresses/:addressId</code> | Bearer | path <code>addressId</code> | <code>{ success, data: Address }</code> | 400, 401, 404 |
+| POST | <code>/api/addresses</code> | Bearer | <code>{ fullName, phone, street, city, postalCode, country, isDefault? }</code> | <code>{ success, data: Address, message }</code> | 400, 401 |
+| PUT | <code>/api/addresses/:addressId</code> | Bearer | partial address fields | <code>{ success, data: Address, message }</code> | 400, 401, 404 |
+| DELETE | <code>/api/addresses/:addressId</code> | Bearer | path <code>addressId</code> | <code>204 No Content</code> | 400, 401, 404 |
+| POST | <code>/api/addresses/:addressId/set-default</code> | Bearer | path <code>addressId</code> | <code>{ success, data: Address, message }</code> | 400, 401, 404 |
+| POST | <code>/api/payments/create-intent</code> | Bearer | <code>{ orderId }</code> | <code>{ success, data: { payment, status, clientSecret, checkoutUrl }, message }</code> | 400, 401, 404 |
+| POST | <code>/api/payments/checkout</code> | Bearer | <code>{ orderId }</code> | <code>{ success, data: { payment, status, clientSecret, checkoutUrl }, message }</code> | 400, 401, 404 |
+| GET | <code>/api/payments/:orderId/status</code> | Bearer | path <code>orderId</code> | <code>{ success, data: { orderPaymentStatus, paymentStatus, ... }, message }</code> | 400, 401, 404 |
+| POST | <code>/api/payments/webhook</code> | No (Stripe signature) | raw body + <code>stripe-signature</code> header | <code>{ received: true }</code> | 400 |
+| GET | <code>/api/health</code> | No | - | <code>{ success, data: { status, mongodb, redis, webhooks, uptime } }</code> | 500 |
+| GET | <code>/api/health/ping</code> | No | - | <code>{ success, message: "pong", data: { time } }</code> | 500 |
+| GET | <code>/api/metrics/payment</code> | Bearer | query <code>lastN?</code> | <code>{ success, data: PaymentMetrics }</code> | 401 |
+| GET | <code>/api/metrics/webhook</code> | Bearer | query <code>lastN?</code> | <code>{ success, data: WebhookMetrics }</code> | 401 |
+| GET | <code>/api/metrics/all</code> | Bearer | - | <code>{ success, data: ExportedMetrics }</code> | 401 |
 
 #### Internal API - Admin Only Endpoints
 
-כל המסלולים תחת `/api/admin/*` דורשים `requireAdmin`.
+כל המסלולים תחת <code>/api/admin/*</code> דורשים <code>requireAdmin</code>.
 
 | Method | Endpoint | Input (main) | Output (main) | Typical errors |
 |--------|----------|--------------|---------------|----------------|
-| GET | `/api/admin/stats/summary` | - | `{ success, data: { stats } }` | 401, 403 |
-| GET | `/api/admin/products` | query `includeInactive?` | `{ success, data: { products } }` | 401, 403 |
-| POST | `/api/admin/products` | product payload | `{ success, data: { product } }` | 400, 401, 403 |
-| PUT | `/api/admin/products/:id` | path `id`, patch payload | `{ success, data: { product } }` | 400, 401, 403, 404 |
-| DELETE | `/api/admin/products/:id` | path `id` | `{ success, data: { product }, message }` | 400, 401, 403, 404 |
-| GET | `/api/admin/users` | query `page?,limit?` | `{ success, data: { users, total, page, pages } }` | 401, 403 |
-| PUT | `/api/admin/users/:id/role` | path `id`, body `{ role }` | `{ success, data: { user } }` | 400, 401, 403, 404 |
-| GET | `/api/admin/orders` | query `status?,userId?` | `{ success, data: { orders } }` | 401, 403 |
-| PUT | `/api/admin/orders/:id/status` | path `id`, body `{ status, message? }` | `{ success, data: { order } }` | 400, 401, 403, 404 |
+| GET | <code>/api/admin/stats/summary</code> | - | <code>{ success, data: { stats } }</code> | 401, 403 |
+| GET | <code>/api/admin/products</code> | query <code>includeInactive?</code> | <code>{ success, data: { products } }</code> | 401, 403 |
+| POST | <code>/api/admin/products</code> | product payload | <code>{ success, data: { product } }</code> | 400, 401, 403 |
+| PUT | <code>/api/admin/products/:id</code> | path <code>id</code>, patch payload | <code>{ success, data: { product } }</code> | 400, 401, 403, 404 |
+| DELETE | <code>/api/admin/products/:id</code> | path <code>id</code> | <code>{ success, data: { product }, message }</code> | 400, 401, 403, 404 |
+| GET | <code>/api/admin/users</code> | query <code>page?,limit?</code> | <code>{ success, data: { users, total, page, pages } }</code> | 401, 403 |
+| PUT | <code>/api/admin/users/:id/role</code> | path <code>id</code>, body <code>{ role }</code> | <code>{ success, data: { user } }</code> | 400, 401, 403, 404 |
+| GET | <code>/api/admin/orders</code> | query <code>status?,userId?</code> | <code>{ success, data: { orders } }</code> | 401, 403 |
+| PUT | <code>/api/admin/orders/:id/status</code> | path <code>id</code>, body <code>{ status, message? }</code> | <code>{ success, data: { order } }</code> | 400, 401, 403, 404 |
 
 #### Response Format
 
-רוב ה-endpoints מחזירים מעטפת בסגנון הבא, אך לא כל ה-routes זהים לחלוטין. לדוגמה, `/health` מחזיר `success/status/timestamp`, בעוד ש-error responses עשויים לכלול גם `errors` ו-`code`.
+רוב ה-endpoints מחזירים מעטפת בסגנון הבא, אך לא כל ה-routes זהים לחלוטין. לדוגמה, <code>/health</code> מחזיר <code>success/status/timestamp</code>, בעוד ש-error responses עשויים לכלול גם <code>errors</code> ו-<code>code</code>.
 
-```typescript
+<pre><code>typescript
 // Success
 {
   success: true,
@@ -701,62 +766,62 @@ Webhook: POST /api/payments/webhook
   errors?: [...],
   code?: "ERROR_CODE"
 }
-```
+</code></pre>
 
-### 1.3.7.9 שימוש בחבילות תוכנה
+<h3>1.3.7.9 שימוש בחבילות תוכנה</h3>
 
 #### Production Dependencies
 
 | חבילה | גרסה | תפקיד |
 |-------|------|-------|
-| `express` | ^4.19 | HTTP server framework |
-| `ioredis` | ^5.4 | Redis client |
-| `stripe` | ^20.1 | Payment processing |
-| `jsonwebtoken` | ^9.0 | JWT creation & verification |
-| `google-auth-library` | ^10.x | Google OAuth token verification |
-| `bcryptjs` | ^3.0 | Password hashing |
-| `helmet` | ^8.1 | Security headers |
-| `cors` | ^2.8 | Cross-origin support |
-| `zod` | ^3.25 | Schema validation |
-| `pino` | ^9.x | Structured logging |
-| `prom-client` | ^15.0 | Prometheus metrics |
+| <code>express</code> | ^4.19 | HTTP server framework |
+| <code>ioredis</code> | ^5.4 | Redis client |
+| <code>stripe</code> | ^20.1 | Payment processing |
+| <code>jsonwebtoken</code> | ^9.0 | JWT creation & verification |
+| <code>google-auth-library</code> | ^10.x | Google OAuth token verification |
+| <code>bcryptjs</code> | ^3.0 | Password hashing |
+| <code>helmet</code> | ^8.1 | Security headers |
+| <code>cors</code> | ^2.8 | Cross-origin support |
+| <code>zod</code> | ^3.25 | Schema validation |
+| <code>pino</code> | ^9.x | Structured logging |
+| <code>prom-client</code> | ^15.0 | Prometheus metrics |
 
 #### Dev Dependencies
 
 | חבילה | גרסה | תפקיד |
 |-------|------|-------|
-| `mongoose` | ^8.x | MongoDB ODM (used by the app) |
-| `typescript` | ^5.4 | Type checking |
-| `jest` | ^29.7 | Testing framework |
-| `supertest` | ^7.1 | HTTP testing |
-| `ts-node` | ^10.9 | TypeScript execution |
-| `ts-node-dev` | ^2.0 | Development auto-restart |
-| `@types/*` | various | TypeScript definitions |
+| <code>mongoose</code> | ^8.x | MongoDB ODM (used by the app) |
+| <code>typescript</code> | ^5.4 | Type checking |
+| <code>jest</code> | ^29.7 | Testing framework |
+| <code>supertest</code> | ^7.1 | HTTP testing |
+| <code>ts-node</code> | ^10.9 | TypeScript execution |
+| <code>ts-node-dev</code> | ^2.0 | Development auto-restart |
+| <code>@types/*</code> | various | TypeScript definitions |
 
-### 1.3.7.10 פונקציות מרכזיות
+<h3>1.3.7.10 פונקציות מרכזיות</h3>
 
 | פונקציה | קובץ | תיאור |
 |---------|------|-------|
-| `AuthService.login()` | `server/src/services/auth.service.ts` | אימות משתמש, בדיקת נעילה, יצירת JWT |
-| `AuthService.logout()` | `server/src/services/auth.service.ts` | הגדלת tokenVersion לביטול כל הטוקנים |
-| `AuthService.register()` | `server/src/services/auth.service.ts` | יצירת משתמש, hash סיסמה |
-| `OrderService.createOrder()` | `server/src/services/order.service.ts` | יצירת הזמנה מעגלה |
-| `PaymentService.createPaymentIntent()` | `server/src/services/payment.service.ts` | יצירת Stripe session |
-| `PaymentService.handleWebhook()` | `server/src/services/payment.service.ts` | עיבוד webhook, idempotency, amount verification |
-| `CartService.addToCart()` | `server/src/services/cart.service.ts` | הוספה לעגלה עם בדיקת מלאי |
-| `ProductService.getProducts()` | `server/src/services/product.service.ts` | שליפה עם סינון |
-| `AdminService.getStatsSummary()` | `server/src/services/admin.service.ts` | סטטיסטיקות מכירות ומלאי |
-| `AuthMiddleware.requireAuth()` | `server/src/middlewares/auth.middleware.ts` | אימות JWT + tokenVersion |
-| `authRateLimiter` | `server/src/middlewares/rate-limiter.middleware.ts` | הגנה מ-brute force |
+| <code>AuthService.login()</code> | <code>server/src/services/auth.service.ts</code> | אימות משתמש, בדיקת נעילה, יצירת JWT |
+| <code>AuthService.logout()</code> | <code>server/src/services/auth.service.ts</code> | הגדלת tokenVersion לביטול כל הטוקנים |
+| <code>AuthService.register()</code> | <code>server/src/services/auth.service.ts</code> | יצירת משתמש, hash סיסמה |
+| <code>OrderService.createOrder()</code> | <code>server/src/services/order.service.ts</code> | יצירת הזמנה מעגלה |
+| <code>PaymentService.createPaymentIntent()</code> | <code>server/src/services/payment.service.ts</code> | יצירת Stripe session |
+| <code>PaymentService.handleWebhook()</code> | <code>server/src/services/payment.service.ts</code> | עיבוד webhook, idempotency, amount verification |
+| <code>CartService.addToCart()</code> | <code>server/src/services/cart.service.ts</code> | הוספה לעגלה עם בדיקת מלאי |
+| <code>ProductService.getProducts()</code> | <code>server/src/services/product.service.ts</code> | שליפה עם סינון |
+| <code>AdminService.getStatsSummary()</code> | <code>server/src/services/admin.service.ts</code> | סטטיסטיקות מכירות ומלאי |
+| <code>AuthMiddleware.requireAuth()</code> | <code>server/src/middlewares/auth.middleware.ts</code> | אימות JWT + tokenVersion |
+| <code>authRateLimiter</code> | <code>server/src/middlewares/rate-limiter.middleware.ts</code> | הגנה מ-brute force |
 
 ---
 
-## 1.3.8 מבני נתונים וארגון קבצים
+<h2>1.3.8 מבני נתונים וארגון קבצים</h2>
 
-### 1.3.8.1 פירוט מבני הנתונים
+<h3>1.3.8.1 פירוט מבני הנתונים</h3>
 
 #### User Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   email: string,              // unique, indexed
@@ -776,10 +841,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### Product Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   sku: string,                // unique
@@ -797,10 +862,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### Cart Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   userId: ObjectId,           // ref: User, unique
@@ -813,10 +878,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### Address Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   user: string,
@@ -830,10 +895,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### Order Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   orderNumber: string,        // unique, format: ORD-YYYYMMDD-XXX
@@ -848,7 +913,7 @@ Webhook: POST /api/payments/webhook
   totalAmount: number,
   status: "pending" | "pending_payment" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled",
   paymentStatus: "pending" | "paid" | "failed" | "refunded",
-  paymentMethod: "credit_card" | "paypal" | "cash_on_delivery" | "stripe",
+  paymentMethod: "credit<em>card" | "paypal" | "cash</em>on_delivery" | "stripe",
   shippingAddress: {
     fullName: string,
     phone: string,
@@ -875,10 +940,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### Payment Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   order: string,              // ref: Order
@@ -895,10 +960,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### WebhookEvent Schema (Idempotency)
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   eventId: string,            // unique, from Stripe
@@ -909,10 +974,10 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
 #### FailedWebhook Schema
-```typescript
+<pre><code>typescript
 {
   _id: ObjectId,
   eventId: string,
@@ -928,21 +993,21 @@ Webhook: POST /api/payments/webhook
   createdAt: Date,
   updatedAt: Date
 }
-```
+</code></pre>
 
-### 1.3.8.2 שיטת האחסון
+<h3>1.3.8.2 שיטת האחסון</h3>
 
 | סוג מידע | טכנולוגיה | סיבה |
 |----------|----------|------|
-| **Primary Data** | MongoDB Atlas | Document-based, scalable, transactions |
-| **Sessions/Cache** | Redis Cloud | Fast, in-memory, TTL support |
-| **Files/Images** | External URLs | לא מאחסנים קבצים, רק URLs |
-| **Logs** | Pino → stdout | Render.com collects automatically |
+| <strong>Primary Data</strong> | MongoDB Atlas | Document-based, scalable, transactions |
+| <strong>Sessions/Cache</strong> | Redis Cloud | Fast, in-memory, TTL support |
+| <strong>Files/Images</strong> | External URLs | לא מאחסנים קבצים, רק URLs |
+| <strong>Logs</strong> | Pino → stdout | Render.com collects automatically |
 
-### 1.3.8.3 מנגנוני התאוששות
+<h3>1.3.8.3 מנגנוני התאוששות</h3>
 
 #### Startup Recovery Strategy
-```typescript
+<pre><code>typescript
 try {
   await connectMongo();
 } catch (err) {
@@ -954,10 +1019,10 @@ try {
 } catch (err) {
   logger.warn({ err }, "Continuing without Redis connection for health readiness");
 }
-```
+</code></pre>
 
 #### Transaction Rollback
-```typescript
+<pre><code>typescript
 // Atomic stock reduction - all or nothing
 const session = await mongoose.startSession();
 session.startTransaction();
@@ -972,10 +1037,10 @@ try {
   await session.abortTransaction();
   throw error;
 }
-```
+</code></pre>
 
 #### Webhook Retry Logic
-```typescript
+<pre><code>typescript
 // Idempotency - prevent duplicate processing
 const existing = await WebhookEvent.findOne({ eventId });
 if (existing) {
@@ -983,15 +1048,15 @@ if (existing) {
 }
 // Process and save eventId
 await WebhookEvent.create({ eventId, processedAt: new Date() });
-```
+</code></pre>
 
 ---
 
-## 1.3.9 תרשימי מערכת
+<h2>1.3.9 תרשימי מערכת</h2>
 
-### 1.3.9.1 Use Case Diagram
+<h3>1.3.9.1 Use Case Diagram</h3>
 
-```
+<pre><code>
 ┌─────────────────────────────────────────────────────────────────┐
 │                         Simple Shop                              │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1051,11 +1116,11 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 │                         └────────────────────┘                  │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
-```
+</code></pre>
 
-### 1.3.9.2 Sequence Diagram - Checkout Flow
+<h3>1.3.9.2 Sequence Diagram - Checkout Flow</h3>
 
-```
+<pre><code>
 ┌────────┐     ┌────────┐     ┌────────┐     ┌────────┐     ┌────────┐
 │ Client │     │ Server │     │ MongoDB│     │ Stripe │     │  User  │
 └───┬────┘     └───┬────┘     └───┬────┘     └───┬────┘     └───┬────┘
@@ -1116,11 +1181,11 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
     │ Redirect to success page    │              │              │
     │◄─────────────────────────────────────────────              │
     │              │              │              │              │
-```
+</code></pre>
 
-### 1.3.9.3 Data Flow Diagram
+<h3>1.3.9.3 Data Flow Diagram</h3>
 
-```
+<pre><code>
 ┌─────────────────────────────────────────────────────────────────┐
 │                    LEVEL 0 - CONTEXT                             │
 │                                                                  │
@@ -1172,11 +1237,11 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 │  └─────────────────────────────────────────────────────────┘   │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
-```
+</code></pre>
 
-### 1.3.9.4 תרשים Login עם tokenVersion
+<h3>1.3.9.4 תרשים Login עם tokenVersion</h3>
 
-```
+<pre><code>
 ┌────────────────────────────────────────────────────────────────┐
 │                     LOGIN FLOW                                  │
 ├────────────────────────────────────────────────────────────────┤
@@ -1254,11 +1319,11 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 │   200 OK { token, user }                                       │
 │                                                                 │
 └────────────────────────────────────────────────────────────────┘
-```
+</code></pre>
 
-### 1.3.9.5 Sequence Diagram - Detailed Webhook Security Flow
+<h3>1.3.9.5 Sequence Diagram - Detailed Webhook Security Flow</h3>
 
-```
+<pre><code>
 ┌────────┐     ┌──────────────┐     ┌─────────────────┐     ┌──────────────┐
 │ Stripe │     │ API Endpoint │     │ Payment Service │     │   MongoDB    │
 └───┬────┘     └──────┬───────┘     └────────┬────────┘     └──────┬───────┘
@@ -1308,11 +1373,11 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
   │◄────────────────│ 200 { received: true }                   │
   │                 │                      │                     │
   │  (on failure may return 400; failed payload saved for retry)
-```
+</code></pre>
 
-### 1.3.9.5 תרשים Logout עם tokenVersion
+<h3>1.3.9.5 תרשים Logout עם tokenVersion</h3>
 
-```
+<pre><code>
 ┌────────────────────────────────────────────────────────────────┐
 │                     LOGOUT FLOW                                 │
 │                  (Instant Token Revocation)                     │
@@ -1348,28 +1413,28 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 │   200 OK { message: "Logged out successfully" }                │
 │                                                                 │
 └────────────────────────────────────────────────────────────────┘
-```
+</code></pre>
 
 ---
 
-## 1.3.10 מרכיב אלגוריתמי
+<h2>1.3.10 מרכיב אלגוריתמי</h2>
 
-### 1.3.10.1 בעיות ופתרונות אלגוריתמיים
+<h3>1.3.10.1 בעיות ופתרונות אלגוריתמיים</h3>
 
 #### בעיה 1: Race Condition במכירת מוצרים
 
-**הבעיה:**
-```
+<strong>הבעיה:</strong>
+<pre><code>
 Time    User A              User B              Stock
 ─────────────────────────────────────────────────────
 T1      Read stock (1)                          1
 T2                          Read stock (1)      1
 T3      Buy (stock--)                           0
 T4                          Buy (stock--)       -1 ❌
-```
+</code></pre>
 
-**הפתרון: MongoDB Atomic Update**
-```typescript
+<strong>הפתרון: MongoDB Atomic Update</strong>
+<pre><code>typescript
 // במקום:
 const product = await Product.findById(id);
 if (product.stock >= quantity) {
@@ -1392,28 +1457,28 @@ const result = await Product.findOneAndUpdate(
 if (!result) {
   throw new Error('Insufficient stock');
 }
-```
+</code></pre>
 
-**סיבוכיות:** O(1) - single atomic operation
+<strong>סיבוכיות:</strong> O(1) - single atomic operation
 
 ---
 
 #### בעיה 2: ביטול מיידי של כל הטוקנים (Logout)
 
-**הבעיה:**  
+<strong>הבעיה:</strong>  
 משתמש מתנתק, אבל JWT tokens שכבר הופקו עדיין תקפים עד שיפוגו.
 
-**פתרונות אפשריים:**
+<strong>פתרונות אפשריים:</strong>
 
 | פתרון | יתרון | חיסרון |
 |-------|-------|--------|
 | Token Blacklist | פשוט | DB lookup בכל בקשה |
 | Short Expiry | פשוט | UX רע (login תכוף) |
-| **tokenVersion** | מהיר, ללא DB lookup נוסף | צריך לשמור version |
+| <strong>tokenVersion</strong> | מהיר, ללא DB lookup נוסף | צריך לשמור version |
 
-**הפתרון שבחרנו: tokenVersion**
+<strong>הפתרון שבחרנו: tokenVersion</strong>
 
-```typescript
+<pre><code>typescript
 // ב-User Schema:
 tokenVersion: { type: Number, default: 0 }
 
@@ -1434,20 +1499,20 @@ const user = await User.findById(decoded.userId);
 if (decoded.tokenVersion !== user.tokenVersion) {
   throw new Error('Token revoked');  // 5 !== 6
 }
-```
+</code></pre>
 
-**סיבוכיות:** O(1) - comparison operation
+<strong>סיבוכיות:</strong> O(1) - comparison operation
 
 ---
 
 #### בעיה 3: Webhook Replay Attack
 
-**הבעיה:**  
+<strong>הבעיה:</strong>  
 Stripe שולח webhook פעמיים (network issue, retry) → חיוב כפול / stock כפול
 
-**הפתרון: Idempotency Tracking + Duplicate Guard**
+<strong>הפתרון: Idempotency Tracking + Duplicate Guard</strong>
 
-```typescript
+<pre><code>typescript
 async function handleWebhook(req: Request) {
   const result = await provider.handleWebhook(req); // signature verified
 
@@ -1457,7 +1522,7 @@ async function handleWebhook(req: Request) {
   });
 
   if (existingEvent) {
-    throw new Error(`Webhook event ${result.providerPaymentId} already processed`);
+    throw new Error(<code>Webhook event ${result.providerPaymentId} already processed</code>);
   }
 
   // payment lookup + amount verification + fulfillment flow...
@@ -1469,15 +1534,15 @@ async function handleWebhook(req: Request) {
     metadata: result.raw,
   });
 }
-```
+</code></pre>
 
-ב-`PaymentController.webhook` כפילות מזוהה מוחזרת כ-`200` עם הודעת `Duplicate event ignored`, כך ש-Stripe לא ימשיך לנסות לעבד את אותו אירוע שוב ושוב.
+ב-<code>PaymentController.webhook</code> כפילות מזוהה מוחזרת כ-<code>200</code> עם הודעת <code>Duplicate event ignored</code>, כך ש-Stripe לא ימשיך לנסות לעבד את אותו אירוע שוב ושוב.
 
-**סיבוכיות:** O(1) lookup + O(1) insert (עם אינדקס על `eventId`/provider)
+<strong>סיבוכיות:</strong> O(1) lookup + O(1) insert (עם אינדקס על <code>eventId</code>/provider)
 
 ---
 
-### 1.3.10.2 איסוף מידע וסטטיסטיקות
+<h3>1.3.10.2 איסוף מידע וסטטיסטיקות</h3>
 
 #### Metrics נאספים
 
@@ -1491,7 +1556,7 @@ async function handleWebhook(req: Request) {
 
 #### Admin Stats Endpoint
 
-```typescript
+<pre><code>typescript
 // GET /api/admin/stats/summary
 {
   sales: {
@@ -1513,11 +1578,11 @@ async function handleWebhook(req: Request) {
     total: 150
   }
 }
-```
+</code></pre>
 
 #### Logging Format (Structured)
 
-```json
+<pre><code>json
 {
   "level": "info",
   "time": 1709308800000,
@@ -1530,35 +1595,35 @@ async function handleWebhook(req: Request) {
   "duration_ms": 45,
   "status": "success"
 }
-```
+</code></pre>
 
 ---
 
-## 1.3.11 אבטחת מידע
+<h2>1.3.11 אבטחת מידע</h2>
 
-### אזורים הדורשים הגנה
+<h3>אזורים הדורשים הגנה</h3>
 
 | אזור | איומים | הגנות |
 |------|--------|-------|
-| **Authentication** | Brute force, Credential stuffing | Rate limit, Account lockout, bcrypt |
-| **Sessions** | Token theft, Session fixation | JWT, tokenVersion, HTTPS only |
-| **API** | Injection, XSS, CSRF | Zod validation, Helmet, CORS |
-| **Database** | SQL injection, Data leak | Mongoose ODM, select: false |
-| **Payments** | Webhook spoofing, Replay | HMAC verification, Idempotency |
+| <strong>Authentication</strong> | Brute force, Credential stuffing | Rate limit, Account lockout, bcrypt |
+| <strong>Sessions</strong> | Token theft, Session fixation | JWT, tokenVersion, HTTPS only |
+| <strong>API</strong> | Injection, XSS, CSRF | Zod validation, Helmet, CORS |
+| <strong>Database</strong> | SQL injection, Data leak | Mongoose ODM, select: false |
+| <strong>Payments</strong> | Webhook spoofing, Replay | HMAC verification, Idempotency |
 
-### מנגנוני ההגנה המיושמים
+<h3>מנגנוני ההגנה המיושמים</h3>
 
 #### 1. Password Security
-```typescript
+<pre><code>typescript
 // Hash with bcrypt (12 rounds = ~250ms)
 const hash = await bcrypt.hash(password, 12);
 
 // Verify
 const isValid = await bcrypt.compare(password, hash);
-```
+</code></pre>
 
 #### 2. JWT with tokenVersion
-```typescript
+<pre><code>typescript
 // Token payload
 {
   userId: "507f1f77bcf86cd799439011",
@@ -1571,13 +1636,13 @@ const isValid = await bcrypt.compare(password, hash);
 if (decoded.tokenVersion !== user.tokenVersion) {
   throw new UnauthorizedError('Token revoked');
 }
-```
+</code></pre>
 
 #### 3. Rate Limiting
-```typescript
+<pre><code>typescript
 // Auth endpoints: 5 requests per 15 minutes per user
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 15 <em> 60 </em> 1000,
   max: 5,
   keyGenerator: (req) => req.body.email || req.ip
 });
@@ -1587,28 +1652,28 @@ const apiLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 100
 });
-```
+</code></pre>
 
 #### 4. Account Lockout
-```typescript
+<pre><code>typescript
 if (user.failedLoginAttempts >= 5) {
-  user.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+  user.lockedUntil = new Date(Date.now() + 15 <em> 60 </em> 1000);
   throw new Error('Account locked for 15 minutes');
 }
-```
+</code></pre>
 
 #### 5. Webhook Signature Verification
-```typescript
+<pre><code>typescript
 const signature = req.headers['stripe-signature'];
 const event = stripe.webhooks.constructEvent(
   req.body,
   signature,
-  process.env.STRIPE_WEBHOOK_SECRET
+  process.env.STRIPE<em>WEBHOOK</em>SECRET
 );
 // Throws if signature invalid
-```
+</code></pre>
 
-### 5 תרחישי התקפה ותגובה
+<h3>5 תרחישי התקפה ותגובה</h3>
 
 | # | התקפה | תגובה | קוד שגיאה |
 |---|-------|-------|-----------|
@@ -1627,46 +1692,46 @@ const event = stripe.webhooks.constructEvent(
 <!-- ========== CLIENT-SECTION-START ========== -->
 <!-- להסרת חלק הלקוח, בקש: "הסר את כל סעיפי הלקוח מהספר" -->
 
-# חלק ג' - ליבה טכנית: צד לקוח (Frontend)
+<h1>חלק ג' - ליבה טכנית: צד לקוח (Frontend)</h1>
 
 <!-- סגנון כתיבה: טכני - כמו CTO שמסביר למתכנתים -->
 
-## 2. צד לקוח (Frontend)
+<h2>2. צד לקוח (Frontend)</h2>
 
-### 2.1 סקירה כללית
+<h3>2.1 סקירה כללית</h3>
 
-צד הלקוח הוא אפליקציית **React** מודרנית המבוססת על Vite ו- TypeScript, ומיועדת לתקשר עם ה-API של השרת.
+צד הלקוח הוא אפליקציית <strong>React</strong> מודרנית המבוססת על Vite ו- TypeScript, ומיועדת לתקשר עם ה-API של השרת.
 
-בבדיקת הקוד הקיים בפועל ב-`client/src` נמצא כי קיימת תצורת בסיס טובה שניתנת להרחבה בשלבים:
-- קיימים קבצי הליבה של האפליקציה (`App.tsx`, `main.tsx`, `store.ts`, `hooks.ts`, `api/axios.ts`) ורכיבי UI מרכזיים.
+בבדיקת הקוד הקיים בפועל ב-<code>client/src</code> נמצא כי קיימת תצורת בסיס טובה שניתנת להרחבה בשלבים:
+- קיימים קבצי הליבה של האפליקציה (<code>App.tsx</code>, <code>main.tsx</code>, <code>store.ts</code>, <code>hooks.ts</code>, <code>api/axios.ts</code>) ורכיבי UI מרכזיים.
 - קיימים רכיבי admin ורכיבי עגלה/אימות בסיסיים.
-- ב-`App.tsx` וב-`store.ts` יש ייבואים לתיקיות `pages/`, `services/`, `types/`, `Features/` וכן `components/Header/`.
+- ב-<code>App.tsx</code> וב-<code>store.ts</code> יש ייבואים לתיקיות <code>pages/</code>, <code>services/</code>, <code>types/</code>, <code>Features/</code> וכן <code>components/Header/</code>.
 - חלק מהמודולים עדיין נמצאים בתהליך הרחבה, בהתאם לחלוקת העבודה בין המפתחים.
 
 | היבט | מימוש |
 |------|-------|
-| **ביצועים** | Vite כבסיס build עם תשתית מתאימה להמשך הרחבה |
-| **עיצוב** | MUI (Material UI) + CSS מקומי |
-| **State** | Redux Toolkit + React useState |
-| **Routing** | react-router-dom v7 דרך `App.tsx` |
-| **שילוב API** | Axios instance עם Bearer token מתוך `localStorage` |
+| <strong>ביצועים</strong> | Vite כבסיס build עם תשתית מתאימה להמשך הרחבה |
+| <strong>עיצוב</strong> | MUI (Material UI) + CSS מקומי |
+| <strong>State</strong> | Redux Toolkit + React useState |
+| <strong>Routing</strong> | react-router-dom v7 דרך <code>App.tsx</code> |
+| <strong>שילוב API</strong> | Axios instance עם Bearer token מתוך <code>localStorage</code> |
 
-### 2.2 טכנולוגיות
+<h3>2.2 טכנולוגיות</h3>
 
 | טכנולוגיה | גרסה | תפקיד |
 |-----------|------|-------|
-| **React** | 19.x | UI Library |
-| **Vite** | 7.x | Build tool |
-| **TypeScript** | 5.8.x | Type safety |
-| **Redux Toolkit** | 2.x | Global state management |
-| **Material UI (MUI)** | 7.x | UI component library |
-| **React Router DOM** | 7.x | Client-side routing |
-| **Axios** | 1.x | HTTP client |
-| **React Toastify** | 11.x | Notifications |
+| <strong>React</strong> | 19.x | UI Library |
+| <strong>Vite</strong> | 7.x | Build tool |
+| <strong>TypeScript</strong> | 5.8.x | Type safety |
+| <strong>Redux Toolkit</strong> | 2.x | Global state management |
+| <strong>Material UI (MUI)</strong> | 7.x | UI component library |
+| <strong>React Router DOM</strong> | 7.x | Client-side routing |
+| <strong>Axios</strong> | 1.x | HTTP client |
+| <strong>React Toastify</strong> | 11.x | Notifications |
 
-### 2.3 מבנה קבצים
+<h3>2.3 מבנה קבצים</h3>
 
-```
+<pre><code>
 client/
 ├── src/
 │   ├── App.tsx                     # Router ראשי + state של user/cart
@@ -1708,27 +1773,27 @@ client/
 ├── tsconfig.json
 ├── tsconfig.app.json
 └── tsconfig.node.json
-```
+</code></pre>
 
-**הערה תכנונית:** קיימים ייבואים לשכבות נוספות (`pages/`, `services/`, `types/`, `Features/`, `components/Header/`) כחלק מכיוון ההרחבה של הלקוח.
+<strong>הערה תכנונית:</strong> קיימים ייבואים לשכבות נוספות (<code>pages/</code>, <code>services/</code>, <code>types/</code>, <code>Features/</code>, <code>components/Header/</code>) כחלק מכיוון ההרחבה של הלקוח.
 
-### 2.4 קומפוננטות מרכזיות
+<h3>2.4 קומפוננטות מרכזיות</h3>
 
 | קומפוננטה | תפקיד | Props |
 |-----------|-------|-------|
-| `AddToCartButton` | הוספת מוצר לעגלה דרך `addToCart()` ואז ריענון העגלה עם `getCart()` | `product`, `setCart` |
-| `QuantityUpdate` | כפתורי הגדלה/הקטנה של כמות | `quantity`, `onIncrease`, `onDecrease` |
-| `RemoveFromCartButton` | הסרת מוצר מהעגלה דרך `removeFromCart()` | `product`, `onRemoved` |
-| `LogoutButton` | התנתקות ועדכון user state | `setUser` |
-| `GoogleConnectBtn` | טעינת Google Identity Services, התחברות עם Google, ושמירת `token` ו-`refreshToken` | `setUser` |
-| `Card` | הצגת מוצר והעברת הפעולה ל-`AddToCartButton` | `product`, `setCart` |
-| `ProductsTable` | טבלת ניהול מוצרים לאדמין | ללא props משמעותיים |
-| `StatsCards` | תצוגת נתוני dashboard למנהל | ללא props משמעותיים |
-| `Footer` | אזור תחתון גלובלי של האפליקציה | ללא props |
+| <code>AddToCartButton</code> | הוספת מוצר לעגלה דרך <code>addToCart()</code> ואז ריענון העגלה עם <code>getCart()</code> | <code>product</code>, <code>setCart</code> |
+| <code>QuantityUpdate</code> | כפתורי הגדלה/הקטנה של כמות | <code>quantity</code>, <code>onIncrease</code>, <code>onDecrease</code> |
+| <code>RemoveFromCartButton</code> | הסרת מוצר מהעגלה דרך <code>removeFromCart()</code> | <code>product</code>, <code>onRemoved</code> |
+| <code>LogoutButton</code> | התנתקות ועדכון user state | <code>setUser</code> |
+| <code>GoogleConnectBtn</code> | טעינת Google Identity Services, התחברות עם Google, ושמירת <code>token</code> ו-<code>refreshToken</code> | <code>setUser</code> |
+| <code>Card</code> | הצגת מוצר והעברת הפעולה ל-<code>AddToCartButton</code> | <code>product</code>, <code>setCart</code> |
+| <code>ProductsTable</code> | טבלת ניהול מוצרים לאדמין | ללא props משמעותיים |
+| <code>StatsCards</code> | תצוגת נתוני dashboard למנהל | ללא props משמעותיים |
+| <code>Footer</code> | אזור תחתון גלובלי של האפליקציה | ללא props |
 
-### 2.5 Hooks ו-State
+<h3>2.5 Hooks ו-State</h3>
 
-```typescript
+<pre><code>typescript
 // Redux typed hooks
 const dispatch = useAppDispatch();
 const cart = useAppSelector((state) => state.cart);
@@ -1742,49 +1807,49 @@ reducer: {
 // Local React state in App.tsx
 const [cart, setCart] = useState<Cart | null>(null);
 const [user, setUser] = useState<User | null>(null);
-```
+</code></pre>
 
-בפועל, `App.tsx` מבצע `useEffect` לטעינת משתמש מחובר (`verifyUser`) ולטעינת העגלה (`getCart`).
+בפועל, <code>App.tsx</code> מבצע <code>useEffect</code> לטעינת משתמש מחובר (<code>verifyUser</code>) ולטעינת העגלה (<code>getCart</code>).
 
-**הערה חשובה:** ה-store מפנה ל-`Features/cartSlice` ו-`Features/counterSlice`, מה שמעיד על כיוון ברור לארגון state מתקדם בצד לקוח.
+<strong>הערה חשובה:</strong> ה-store מפנה ל-<code>Features/cartSlice</code> ו-<code>Features/counterSlice</code>, מה שמעיד על כיוון ברור לארגון state מתקדם בצד לקוח.
 
-### 2.6 Data Flow
+<h3>2.6 Data Flow</h3>
 
-```
+<pre><code>
 ┌─────────────┐       ┌─────────────┐       ┌─────────────┐
 │ Component   │──────►│ api/axios   │──────►│   Server    │
 │ / App.tsx   │◄──────│ interceptor │◄──────│             │
 └─────────────┘       └─────────────┘       └─────────────┘
  useState + Redux      Bearer token         REST API
-```
+</code></pre>
 
 בקוד שנמצא כיום:
-- `api/axios.ts` מגדיר `baseURL` קשיח ל-Render.
-- request interceptor מוסיף `Authorization: Bearer <token>` מתוך `localStorage`.
-- שכבת `services/` מתוכננת ומיובאת ב-`App.tsx`, אך קבצי השירות עצמם אינם קיימים כרגע.
-- `GoogleConnectBtn.tsx` משתמש גם ב-`refreshToken` ושומר אותו ב-`localStorage` לאחר התחברות Google.
+- <code>api/axios.ts</code> מגדיר <code>baseURL</code> קשיח ל-Render.
+- request interceptor מוסיף <code>Authorization: Bearer <token></code> מתוך <code>localStorage</code>.
+- שכבת <code>services/</code> מתוכננת ומיובאת ב-<code>App.tsx</code>, אך קבצי השירות עצמם אינם קיימים כרגע.
+- <code>GoogleConnectBtn.tsx</code> משתמש גם ב-<code>refreshToken</code> ושומר אותו ב-<code>localStorage</code> לאחר התחברות Google.
 
-### 2.7 דפי האפליקציה
+<h3>2.7 דפי האפליקציה</h3>
 
-הנתיבים הבאים **מוגדרים ב-`App.tsx`** ומשקפים את מבנה ה-flow שתוכנן בצד לקוח:
+הנתיבים הבאים <strong>מוגדרים ב-<code>App.tsx</code></strong> ומשקפים את מבנה ה-flow שתוכנן בצד לקוח:
 
 | דף | נתיב | סטטוס תכנון |
 |----|------|-------------|
-| Home | `/` | מוגדר ב-router |
-| Cart | `/cart` | מוגדר ב-router |
-| Register | `/register` | מוגדר ב-router |
-| Login | `/login` | מוגדר ב-router |
-| Payment | `/payment` | מוגדר ב-router |
-| Checkout | `/checkout` | מוגדר ב-router |
-| Admin | `/admin` | מוגדר ב-router |
-| Admin Products | `/admin/products` | מוגדר ומחובר ל-`ProductsTable` |
-| Admin Product Create | `/admin/products/new` | מוגדר ומחובר ל-`AddProduct` |
+| Home | <code>/</code> | מוגדר ב-router |
+| Cart | <code>/cart</code> | מוגדר ב-router |
+| Register | <code>/register</code> | מוגדר ב-router |
+| Login | <code>/login</code> | מוגדר ב-router |
+| Payment | <code>/payment</code> | מוגדר ב-router |
+| Checkout | <code>/checkout</code> | מוגדר ב-router |
+| Admin | <code>/admin</code> | מוגדר ב-router |
+| Admin Products | <code>/admin/products</code> | מוגדר ומחובר ל-<code>ProductsTable</code> |
+| Admin Product Create | <code>/admin/products/new</code> | מוגדר ומחובר ל-<code>AddProduct</code> |
 
-### 2.8 תרשים זרימת משתמש
+<h3>2.8 תרשים זרימת משתמש</h3>
 
 התרשים הבא מתאר את ה-flow העסקי שתוכנן בצד הלקוח בהתאם לתצורת ה-routing הקיימת.
 
-```
+<pre><code>
 ┌──────────────────────────────────────────────────────────────┐
 │                         HOME                                  │
 │  [סינון] [מוצר 1] [מוצר 2] [מוצר 3] ...                      │
@@ -1821,46 +1886,46 @@ const [user, setUser] = useState<User | null>(null);
                          │ Success/Cancel
                          ▼
                    ORDER CONFIRMED
-```
+</code></pre>
 
-### 2.9 אבטחה בצד לקוח
+<h3>2.9 אבטחה בצד לקוח</h3>
 
 | נושא | מימוש |
 |------|-------|
-| Token Storage | `token` נשמר ב-`localStorage`; בזרימת Google נשמר גם `refreshToken` |
+| Token Storage | <code>token</code> נשמר ב-<code>localStorage</code>; בזרימת Google נשמר גם <code>refreshToken</code> |
 | Authorization Header | מתווסף אוטומטית ב-axios interceptor |
 | Protected Routes | מומלץ ליישם שכבת Route Guard ייעודית בהמשך |
 | XSS Prevention | React escapes by default |
 | Input Validation | מתבצע בשרת; מומלץ להרחיב ולחזק גם ברמת טפסי לקוח |
 
-### 2.10 Environment Variables
+<h3>2.10 Environment Variables</h3>
 
-```env
-# משתנה סביבה מוכח בשימוש:
-# VITE_GOOGLE_CLIENT_ID
+<pre><code>env
+<h1>משתנה סביבה מוכח בשימוש:</h1>
+<h1>VITE<em>GOOGLE</em>CLIENT_ID</h1>
 #
-# אין שימוש מוכח ב-VITE_API_BASE_URL,
-# כי ה-baseURL מוגדר ישירות בתוך src/api/axios.ts
-# ומצביע לשרת Render:
-# https://simple-5-wxv2.onrender.com/
-```
+<h1>אין שימוש מוכח ב-VITE<em>API</em>BASE_URL,</h1>
+<h1>כי ה-baseURL מוגדר ישירות בתוך src/api/axios.ts</h1>
+<h1>ומצביע לשרת Render:</h1>
+<h1>https://simple-5-wxv2.onrender.com/</h1>
+</code></pre>
 
-### 2.11 Scripts
+<h3>2.11 Scripts</h3>
 
-```bash
+<pre><code>bash
 npm run dev      # Development server
 npm run build    # Production build command
 npm run preview  # Preview build
 npm run lint     # ESLint
-```
+</code></pre>
 
-### 2.12 הצעות להמשך (Client Roadmap)
+<h3>2.12 הצעות להמשך (Client Roadmap)</h3>
 
 | נושא | מצב קיים | שיפור מוצע |
 |------|----------|------------|
-| מבנה שכבות לקוח | קיימים רכיבים ו-router | השלמת שכבות `pages/services/types/features` תחת חוזים קבועים |
-| Route Protection | הרשאות נאכפות בעיקר בשרת | הוספת `ProtectedRoute` ו-`AdminRoute` בצד לקוח |
-| ניהול API Base URL | `baseURL` קשיח בקובץ axios | מעבר ל-`VITE_API_BASE_URL` לפי סביבות |
+| מבנה שכבות לקוח | קיימים רכיבים ו-router | השלמת שכבות <code>pages/services/types/features</code> תחת חוזים קבועים |
+| Route Protection | הרשאות נאכפות בעיקר בשרת | הוספת <code>ProtectedRoute</code> ו-<code>AdminRoute</code> בצד לקוח |
+| ניהול API Base URL | <code>baseURL</code> קשיח בקובץ axios | מעבר ל-<code>VITE<em>API</em>BASE_URL</code> לפי סביבות |
 | טיפול שגיאות אחיד | Toasts קיימים בחלק מהזרימות | Error boundary + policy אחיד לשגיאות HTTP |
 | בדיקות לקוח | תשתית בסיסית קיימת | הוספת unit/component tests ל-flows מרכזיים |
 
@@ -1868,11 +1933,11 @@ npm run lint     # ESLint
 
 ---
 
-# חלק ד' - ניהול פרויקט
+<h1>חלק ד' - ניהול פרויקט</h1>
 
-## 1.3.12 משאבים נדרשים
+<h2>1.3.12 משאבים נדרשים</h2>
 
-### 1.3.12.1 חלוקת שעות
+<h3>1.3.12.1 חלוקת שעות</h3>
 
 | משימה | שעות | סטודנט 1 (Server) | סטודנט 2 (Client) |
 |-------|------|-------------------|-------------------|
@@ -1882,9 +1947,9 @@ npm run lint     # ESLint
 | בדיקות | 30 | 20 | 10 |
 | Deployment | 10 | 7 | 3 |
 | תיעוד | 10 | 6 | 4 |
-| **סה"כ** | **300** | **173** | **127** |
+| <strong>סה"כ</strong> | <strong>300</strong> | <strong>173</strong> | <strong>127</strong> |
 
-### 1.3.12.2 ציוד נדרש
+<h3>1.3.12.2 ציוד נדרש</h3>
 
 - מחשב עם 8GB+ RAM
 - חיבור אינטרנט (ל-APIs חיצוניים)
@@ -1893,7 +1958,7 @@ npm run lint     # ESLint
 - חשבון Stripe (test mode)
 - חשבון Render.com (חינם)
 
-### 1.3.12.3 תוכנות נדרשות
+<h3>1.3.12.3 תוכנות נדרשות</h3>
 
 | תוכנה | שימוש |
 |-------|-------|
@@ -1903,7 +1968,7 @@ npm run lint     # ESLint
 | Postman | API testing |
 | Chrome DevTools | Debugging |
 
-### 1.3.12.4 ידע חדש שנלמד
+<h3>1.3.12.4 ידע חדש שנלמד</h3>
 
 | נושא | מקור למידה |
 |------|------------|
@@ -1915,7 +1980,7 @@ npm run lint     # ESLint
 | React + Redux Toolkit | redux-toolkit.js.org |
 | Material UI | mui.com |
 
-### 1.3.12.5 ספרות ומקורות
+<h3>1.3.12.5 ספרות ומקורות</h3>
 
 - Express.js Documentation
 - MongoDB University (free courses)
@@ -1926,24 +1991,24 @@ npm run lint     # ESLint
 
 ---
 
-## 1.3.13 תכנית עבודה
+<h2>1.3.13 תכנית עבודה</h2>
 
-### Sprint Plan
+<h3>Sprint Plan</h3>
 
 | Sprint | שבועות | משימות |
 |--------|--------|--------|
-| **1** | 1-2 | Setup, DB design, User model, Auth |
-| **2** | 3-4 | Products CRUD, Rate limiting, Tests |
-| **3** | 5-6 | Cart, Orders, Transactions |
-| **4** | 7-8 | Stripe integration, Webhooks |
-| **5** | 9-10 | Admin, Metrics, Performance |
-| **6** | 11-12 | Deployment, Docs, Final testing |
+| <strong>1</strong> | 1-2 | Setup, DB design, User model, Auth |
+| <strong>2</strong> | 3-4 | Products CRUD, Rate limiting, Tests |
+| <strong>3</strong> | 5-6 | Cart, Orders, Transactions |
+| <strong>4</strong> | 7-8 | Stripe integration, Webhooks |
+| <strong>5</strong> | 9-10 | Admin, Metrics, Performance |
+| <strong>6</strong> | 11-12 | Deployment, Docs, Final testing |
 
 ---
 
-## 1.3.14 תכנון בדיקות
+<h2>1.3.14 תכנון בדיקות</h2>
 
-### 1.3.14.1 בדיקות תהליכיות (Full Flow)
+<h3>1.3.14.1 בדיקות תהליכיות (Full Flow)</h3>
 
 | # | תרחיש | צעדים | תוצאה צפויה |
 |---|-------|-------|-------------|
@@ -1954,19 +2019,19 @@ npm run lint     # ESLint
 | 5 | Logout | POST /logout → Use old token | 401 Unauthorized |
 | 6 | Webhook | Stripe event → Order update | Payment processed once |
 
-### 1.3.14.2 בדיקות יחידה (Unit Tests)
+<h3>1.3.14.2 בדיקות יחידה (Unit Tests)</h3>
 
 | מודול | בדיקות מתוכננות / קיימות |
 |-------|---------------------------|
-| **Auth Service** | Login, Register, Lockout, tokenVersion, Google auth |
-| **Order Service** | Create, Cancel, Track order, Stock validation |
-| **Payment Service** | Webhook verify, Idempotency, Payment status |
-| **Product Service** | List, Read, Filtering |
-| **Health / Integration** | Health checks, integration flow, performance scenarios |
+| <strong>Auth Service</strong> | Login, Register, Lockout, tokenVersion, Google auth |
+| <strong>Order Service</strong> | Create, Cancel, Track order, Stock validation |
+| <strong>Payment Service</strong> | Webhook verify, Idempotency, Payment status |
+| <strong>Product Service</strong> | List, Read, Filtering |
+| <strong>Health / Integration</strong> | Health checks, integration flow, performance scenarios |
 
-### Test Results
+<h3>Test Results</h3>
 
-```
+<pre><code>
 Test files currently present in the repository:
 - auth.test.ts
 - auth.test.google.ts
@@ -1977,57 +2042,57 @@ Test files currently present in the repository:
 - integration.test.ts
 - performance.test.ts
 
-Jest is configured to run compiled tests from dist/__tests__.
+Jest is configured to run compiled tests from dist/<strong>tests</strong>.
 Coverage collection is configured in jest.config.js, but no exact percentage is asserted here without a fresh test run.
-```
+</code></pre>
 
 ---
 
-## 1.3.15 בקרת גרסאות
+<h2>1.3.15 בקרת גרסאות</h2>
 
-### Git Workflow
+<h3>Git Workflow</h3>
 
-```
+<pre><code>
 main ─────────────────────────────────► Production
   │
   ├─── feat/server/<topic> ───────────► Backend feature branch
   ├─── fix/server/<topic>  ───────────► Backend fix branch
   ├─── feat/client/<topic> ───────────► Frontend feature branch
   └─── chore/root/<topic>  ───────────► Shared/root maintenance
-```
+</code></pre>
 
-### Commit Convention
+<h3>Commit Convention</h3>
 
-```
+<pre><code>
 feat: Add account lockout after 5 failed logins
 fix: Correct race condition in order creation
 docs: Update API documentation
 test: Add tests for payment webhook
 refactor: Extract validation to separate module
-```
+</code></pre>
 
-### Version Numbering
+<h3>Version Numbering</h3>
 
-**Semantic Versioning (SemVer)**
+<strong>Semantic Versioning (SemVer)</strong>
 - Major (X.0.0) – Breaking changes
 - Minor (0.X.0) – New features
 - Patch (0.0.X) – Bug fixes
 
-**Current Version:** 1.1.0
+<strong>Current Version:</strong> 1.1.0
 
 ---
 
-## 1.3.16 תכנית הפקה סופית לספר (מבוסס קוד מקור)
+<h2>1.3.16 תכנית הפקה סופית לספר (מבוסס קוד מקור)</h2>
 
 מטרת פרק זה היא להגדיר תהליך עבודה אחד, מסודר ומדיד, עד לגרסת PDF סופית.
 
-### 1.3.16.1 עקרון מנחה
+<h3>1.3.16.1 עקרון מנחה</h3>
 
 - מקור האמת הוא קוד המקור בריפו.
 - Swagger משמש להצלבה בלבד, לא כתחליף לקריאת קוד.
 - כל טענה בספר חייבת להיתמך בקטע קוד, route, model או service קיים.
 
-### 1.3.16.2 תהליך עבודה מומלץ להגשה
+<h3>1.3.16.2 תהליך עבודה מומלץ להגשה</h3>
 
 | שלב | תוצר | קריטריון סיום |
 |-----|------|----------------|
@@ -2040,13 +2105,13 @@ refactor: Extract validation to separate module
 | 7 | סיכום רפלקטיבי | מה למדנו, אתגרים, הצעות להמשך |
 | 8 | QA לפני PDF | בדיקת עקביות בין הספר, הקוד והמצב בפועל |
 
-### 1.3.16.3 כללי איכות כתיבה (לפי הנחיית מנחה)
+<h3>1.3.16.3 כללי איכות כתיבה (לפי הנחיית מנחה)</h3>
 
 - מבוא: כתיבה יזמית, מדגישה ערך עסקי ומשמעות.
 - גוף מרכזי: כתיבה טכנית בסגנון CTO, מדויקת ועם ראיות מהקוד.
 - סיכום: כתיבה סטודנטיאלית רפלקטיבית, עם תובנות והמלצות.
 
-### 1.3.16.4 כללי הטמעת קוד במסמך
+<h3>1.3.16.4 כללי הטמעת קוד במסמך</h3>
 
 - לא נדרשים צילומי מסך של קוד אם מציגים בלוקי קוד קריאים במסמך.
 - כל קטע קוד יוצג עם כותרת קצרה: "מה הבעיה" ו-"למה זה חשוב".
@@ -2055,51 +2120,51 @@ refactor: Extract validation to separate module
 
 ---
 
-## 1.3.17 קטעי קוד מומלצים להטמעה
+<h2>1.3.17 קטעי קוד מומלצים להטמעה</h2>
 
 הסעיף הבא מבוסס על קבצים שקיימים בפועל בריפו, ומטרתו להבטיח שהספר יישען על מימוש אמיתי.
 
-### 1.3.17.1 Backend - Models
+<h3>1.3.17.1 Backend - Models</h3>
 
 | קובץ | מה להציג | למה זה חשוב |
 |------|----------|-------------|
-| `server/src/models/user.model.ts` | `tokenVersion`, `failedLoginAttempts`, `lockedUntil`, `comparePassword` | מראה אבטחת התחברות ו-logout מיידי |
-| `server/src/models/product.model.ts` | `sku`, `stock`, `isActive` ואינדקסים | תומך במלאי, סינון וביצועים |
-| `server/src/models/order.model.ts` | `status`, `paymentStatus`, `fulfilled`, `trackingHistory` | מציג מחזור חיים של הזמנה |
-| `server/src/models/payment.model.ts` | מזהי ספק תשלום וסטטוסים | תיעוד שכבת תשלומים |
-| `server/src/models/webhook-event.model.ts` | `eventId` ייחודי | הבסיס ל-idempotency ב-webhooks |
+| <code>server/src/models/user.model.ts</code> | <code>tokenVersion</code>, <code>failedLoginAttempts</code>, <code>lockedUntil</code>, <code>comparePassword</code> | מראה אבטחת התחברות ו-logout מיידי |
+| <code>server/src/models/product.model.ts</code> | <code>sku</code>, <code>stock</code>, <code>isActive</code> ואינדקסים | תומך במלאי, סינון וביצועים |
+| <code>server/src/models/order.model.ts</code> | <code>status</code>, <code>paymentStatus</code>, <code>fulfilled</code>, <code>trackingHistory</code> | מציג מחזור חיים של הזמנה |
+| <code>server/src/models/payment.model.ts</code> | מזהי ספק תשלום וסטטוסים | תיעוד שכבת תשלומים |
+| <code>server/src/models/webhook-event.model.ts</code> | <code>eventId</code> ייחודי | הבסיס ל-idempotency ב-webhooks |
 
-### 1.3.17.2 Backend - Services
+<h3>1.3.17.2 Backend - Services</h3>
 
 | קובץ | פונקציה/בלוק מומלץ | למה זה חשוב |
 |------|---------------------|-------------|
-| `server/src/services/auth.service.ts` | `login()` עם lockout + `logout()` עם העלאת `tokenVersion` | מנגנון אבטחה מרכזי |
-| `server/src/services/order.service.ts` | `createOrder()` עם בדיקות מלאי ויצירת `pending_payment` | מפריד בין יצירת הזמנה לאישור תשלום |
-| `server/src/services/payment.service.ts` | `handleWebhook()` (signature/idempotency/amount check) | אמינות תשלום ומניעת חיוב כפול |
-| `server/src/services/payment.service.ts` | בלוק ה-fulfillment עם transaction | מניעת overselling ושמירת עקביות |
-| `server/src/services/cart.service.ts` | `addToCart()` או `clearCart()` | לוגיקת עגלה ומעבר להזמנה |
+| <code>server/src/services/auth.service.ts</code> | <code>login()</code> עם lockout + <code>logout()</code> עם העלאת <code>tokenVersion</code> | מנגנון אבטחה מרכזי |
+| <code>server/src/services/order.service.ts</code> | <code>createOrder()</code> עם בדיקות מלאי ויצירת <code>pending_payment</code> | מפריד בין יצירת הזמנה לאישור תשלום |
+| <code>server/src/services/payment.service.ts</code> | <code>handleWebhook()</code> (signature/idempotency/amount check) | אמינות תשלום ומניעת חיוב כפול |
+| <code>server/src/services/payment.service.ts</code> | בלוק ה-fulfillment עם transaction | מניעת overselling ושמירת עקביות |
+| <code>server/src/services/cart.service.ts</code> | <code>addToCart()</code> או <code>clearCart()</code> | לוגיקת עגלה ומעבר להזמנה |
 
-### 1.3.17.3 Backend - Controllers + Routes
-
-| קובץ | מה להציג | למה זה חשוב |
-|------|----------|-------------|
-| `server/src/routes/auth.routes.ts` | חלוקה ל-public/protected | מיפוי הרשאות ברור |
-| `server/src/routes/order.routes.ts` | `idempotencyMiddleware("order")` + track public | שילוב אמינות עם גישת משתמש |
-| `server/src/routes/payment.routes.ts` | webhook ציבורי מול create-intent מאומת | הפרדת תעבורה חיצונית/פנימית |
-| `server/src/controllers/payment.controller.ts` | כניסה לשכבת webhook/createIntent/getStatus | מיפוי HTTP ל-service |
-| `server/src/controllers/auth.controller.ts` | login/logout/verify | נקודות כניסה לאימות והרשאות |
-
-### 1.3.17.4 Frontend - קטעים רלוונטיים
+<h3>1.3.17.3 Backend - Controllers + Routes</h3>
 
 | קובץ | מה להציג | למה זה חשוב |
 |------|----------|-------------|
-| `client/src/api/axios.ts` | request interceptor עם Bearer token | מראה חיבור מאובטח ל-API |
-| `client/src/App.tsx` | מבנה routes + טעינת user/cart ב-`useEffect` | מראה orchestration של אפליקציה |
-| `client/src/components/GoogleConnectBtn.tsx` | טעינת Google script ו-login callback | דוגמה לשירות חיצוני בצד לקוח |
-| `client/src/components/AddToCartButton.tsx` | הוספה לעגלה וריענון מצב | flow מוצר → עגלה |
-| `client/src/components/admin/ProductsTable.tsx` | ניהול מוצרים בצד admin | דוגמה ליכולות ניהול |
+| <code>server/src/routes/auth.routes.ts</code> | חלוקה ל-public/protected | מיפוי הרשאות ברור |
+| <code>server/src/routes/order.routes.ts</code> | <code>idempotencyMiddleware("order")</code> + track public | שילוב אמינות עם גישת משתמש |
+| <code>server/src/routes/payment.routes.ts</code> | webhook ציבורי מול create-intent מאומת | הפרדת תעבורה חיצונית/פנימית |
+| <code>server/src/controllers/payment.controller.ts</code> | כניסה לשכבת webhook/createIntent/getStatus | מיפוי HTTP ל-service |
+| <code>server/src/controllers/auth.controller.ts</code> | login/logout/verify | נקודות כניסה לאימות והרשאות |
 
-### 1.3.17.5 מבנה מומלץ להצגת כל קטע קוד
+<h3>1.3.17.4 Frontend - קטעים רלוונטיים</h3>
+
+| קובץ | מה להציג | למה זה חשוב |
+|------|----------|-------------|
+| <code>client/src/api/axios.ts</code> | request interceptor עם Bearer token | מראה חיבור מאובטח ל-API |
+| <code>client/src/App.tsx</code> | מבנה routes + טעינת user/cart ב-<code>useEffect</code> | מראה orchestration של אפליקציה |
+| <code>client/src/components/GoogleConnectBtn.tsx</code> | טעינת Google script ו-login callback | דוגמה לשירות חיצוני בצד לקוח |
+| <code>client/src/components/AddToCartButton.tsx</code> | הוספה לעגלה וריענון מצב | flow מוצר → עגלה |
+| <code>client/src/components/admin/ProductsTable.tsx</code> | ניהול מוצרים בצד admin | דוגמה ליכולות ניהול |
+
+<h3>1.3.17.5 מבנה מומלץ להצגת כל קטע קוד</h3>
 
 לכל קטע קוד במסמך:
 
@@ -2109,13 +2174,13 @@ refactor: Extract validation to separate module
 4. הסבר קצר על תרומה לאמינות/אבטחה/ביצועים.
 5. שורת קישור לקובץ המקור בריפו (לבדיקה מהירה).
 
-### 1.3.17.6 קטעי קוד בפועל - Backend
+<h3>1.3.17.6 קטעי קוד בפועל - Backend</h3>
 
 #### קטע 1: User Model - Lockout + Token Version
 
-מקור: `server/src/models/user.model.ts`
+מקור: <code>server/src/models/user.model.ts</code>
 
-```typescript
+<pre><code>typescript
 // Account lockout
 failedLoginAttempts: {
   type: Number,
@@ -2134,15 +2199,15 @@ tokenVersion: {
   type: Number,
   default: 0,
 },
-```
+</code></pre>
 
-הסבר קצר: המודל שומר גם נתוני נעילה נגד brute force וגם `tokenVersion` שמאפשר invalidate מיידי לכל הטוקנים אחרי logout.
+הסבר קצר: המודל שומר גם נתוני נעילה נגד brute force וגם <code>tokenVersion</code> שמאפשר invalidate מיידי לכל הטוקנים אחרי logout.
 
 #### קטע 2: AuthService.login - נעילת חשבון אחרי כשלונות
 
-מקור: `server/src/services/auth.service.ts`
+מקור: <code>server/src/services/auth.service.ts</code>
 
-```typescript
+<pre><code>typescript
 // 🔒 Check if account is locked
 if (user.lockedUntil && new Date() < user.lockedUntil) {
   const remainingMinutes = Math.ceil(
@@ -2150,7 +2215,7 @@ if (user.lockedUntil && new Date() < user.lockedUntil) {
   );
   throw new ApiError(
     423,
-    `Account is locked due to too many failed login attempts. Please try again in ${remainingMinutes} minutes.`,
+    <code>Account is locked due to too many failed login attempts. Please try again in ${remainingMinutes} minutes.</code>,
     undefined,
     "ACCOUNT_LOCKED",
   );
@@ -2162,7 +2227,7 @@ if (!isPasswordValid) {
   user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
 
   if (user.failedLoginAttempts >= 5) {
-    user.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+    user.lockedUntil = new Date(Date.now() + 15 <em> 60 </em> 1000);
     await user.save();
     throw new ApiError(
       423,
@@ -2175,15 +2240,15 @@ if (!isPasswordValid) {
   await user.save();
   throw new UnauthorizedError("Invalid email or password.");
 }
-```
+</code></pre>
 
-הסבר קצר: בתרחישי סיסמה שגויה המערכת צוברת ניסיונות כושלים, נועלת ל-15 דקות אחרי 5 כשלים, ומחזירה `423` במקום להמשיך לאפשר ניסיונות בלתי מוגבלים.
+הסבר קצר: בתרחישי סיסמה שגויה המערכת צוברת ניסיונות כושלים, נועלת ל-15 דקות אחרי 5 כשלים, ומחזירה <code>423</code> במקום להמשיך לאפשר ניסיונות בלתי מוגבלים.
 
 #### קטע 3: Logout + Verify Token Version
 
-מקור: `server/src/services/auth.service.ts`
+מקור: <code>server/src/services/auth.service.ts</code>
 
-```typescript
+<pre><code>typescript
 static async logout(userId: string) {
   const user = await UserModel.findById(userId);
   if (!user) {
@@ -2216,15 +2281,15 @@ static async verifyToken(token: string) {
 
   return this.sanitizeUser(user);
 }
-```
+</code></pre>
 
-הסבר קצר: ה-logout לא שומר blacklist אלא מעלה גרסה (`tokenVersion`), וכל טוקן ישן נכשל מיד ב-`verifyToken`.
+הסבר קצר: ה-logout לא שומר blacklist אלא מעלה גרסה (<code>tokenVersion</code>), וכל טוקן ישן נכשל מיד ב-<code>verifyToken</code>.
 
 #### קטע 4: יצירת Order מנותקת מאישור תשלום
 
-מקור: `server/src/services/order.service.ts`
+מקור: <code>server/src/services/order.service.ts</code>
 
-```typescript
+<pre><code>typescript
 // ✅ Verify stock (but DON'T reduce it yet!)
 const products = await ProductModel.find({ _id: { $in: productIds } });
 
@@ -2232,11 +2297,11 @@ for (const item of cart.items) {
   const product = productMap.get(pid);
 
   if (!product || !product.isActive) {
-    throw new ApiError(400, `Product ${item.product} is not available`);
+    throw new ApiError(400, <code>Product ${item.product} is not available</code>);
   }
 
   if (product.stock < item.quantity) {
-    throw new ApiError(400, `Insufficient stock for ${product.name}`);
+    throw new ApiError(400, <code>Insufficient stock for ${product.name}</code>);
   }
 
   orderItems.push({
@@ -2258,15 +2323,15 @@ const order = await OrderModel.create({
   paymentMethod: orderData.paymentMethod || "stripe",
   shippingAddress: orderData.shippingAddress,
 });
-```
+</code></pre>
 
-הסבר קצר: ההזמנה נוצרת בסטטוס `pending_payment` לאחר בדיקות מלאי, אך הפחתת מלאי מתבצעת רק אחרי אישור תשלום מה-webhook.
+הסבר קצר: ההזמנה נוצרת בסטטוס <code>pending_payment</code> לאחר בדיקות מלאי, אך הפחתת מלאי מתבצעת רק אחרי אישור תשלום מה-webhook.
 
 #### קטע 5: Webhook Controller - Duplicate Handling + Retry Queue
 
-מקור: `server/src/controllers/payment.controller.ts`
+מקור: <code>server/src/controllers/payment.controller.ts</code>
 
-```typescript
+<pre><code>typescript
 try {
   const result = await PaymentService.handleWebhook(req);
   res.status(200).json({ received: true });
@@ -2293,15 +2358,15 @@ try {
 
   res.status(400).json({ received: false, error: error.message });
 }
-```
+</code></pre>
 
-הסבר קצר: אם האירוע כבר עובד בעבר המערכת מחזירה `200` כדי למנוע retries מיותרים; כשל אמיתי נשמר לטבלת `FailedWebhook` כדי לאפשר retry מתוזמן.
+הסבר קצר: אם האירוע כבר עובד בעבר המערכת מחזירה <code>200</code> כדי למנוע retries מיותרים; כשל אמיתי נשמר לטבלת <code>FailedWebhook</code> כדי לאפשר retry מתוזמן.
 
 #### קטע 6: PaymentService - Amount Verification + Atomic Fulfillment
 
-מקור: `server/src/services/payment.service.ts`
+מקור: <code>server/src/services/payment.service.ts</code>
 
-```typescript
+<pre><code>typescript
 const expectedAmountInCents = Math.round(order.totalAmount * 100);
 const receivedAmountInCents = result.amount || 0;
 
@@ -2313,7 +2378,7 @@ if (receivedAmountInCents !== expectedAmountInCents) {
   await order.save();
 
   throw new Error(
-    `Payment amount mismatch: expected ${expectedAmountInCents} cents, received ${receivedAmountInCents} cents`,
+    <code>Payment amount mismatch: expected ${expectedAmountInCents} cents, received ${receivedAmountInCents} cents</code>,
   );
 }
 
@@ -2328,7 +2393,7 @@ for (const item of order.items) {
   );
 
   if (!product || product.stock < 0) {
-    throw new Error(`Insufficient stock for ${item.name}`);
+    throw new Error(<code>Insufficient stock for ${item.name}</code>);
   }
 }
 
@@ -2338,15 +2403,15 @@ order.fulfilledAt = new Date();
 await order.save({ session });
 
 await session.commitTransaction();
-```
+</code></pre>
 
 הסבר קצר: תחילה נעשית בדיקת סכום מחמירה מול ההזמנה בבסיס הנתונים; לאחר מכן הפחתת מלאי וסגירת הזמנה מתבצעות בתוך transaction כדי למנוע מצב ביניים לא עקבי.
 
 #### קטע 7: הפרדת Public ו-Protected במסלולי Auth
 
-מקור: `server/src/routes/auth.routes.ts`
+מקור: <code>server/src/routes/auth.routes.ts</code>
 
-```typescript
+<pre><code>typescript
 // Public routes
 router.post("/register", authRateLimiter, AuthController.register);
 router.post("/login", authRateLimiter, AuthController.login);
@@ -2361,48 +2426,48 @@ router.get("/profile", authenticate, AuthController.getProfile);
 router.put("/profile", authenticate, AuthController.updateProfile);
 router.post("/change-password", authenticate, AuthController.changePassword);
 router.post("/logout", authenticate, AuthController.logout);
-```
+</code></pre>
 
-הסבר קצר: הקובץ מפריד באופן מפורש בין נקודות פתוחות לנקודות שמחייבות token תקף, ומחיל `authRateLimiter` על נתיבי auth רגישים.
+הסבר קצר: הקובץ מפריד באופן מפורש בין נקודות פתוחות לנקודות שמחייבות token תקף, ומחיל <code>authRateLimiter</code> על נתיבי auth רגישים.
 
 ---
 
-# חלק ה' - סיכום
+<h1>חלק ה' - סיכום</h1>
 
 <!-- סגנון כתיבה: אקדמי - מסקנות, תובנות ומגבלות -->
 
-## סיכום - מה למדנו
+<h2>סיכום - מה למדנו</h2>
 
-### מסקנות טכניות
+<h3>מסקנות טכניות</h3>
 
 במהלך הפרויקט נרכש ניסיון מעשי בתכנון ובמימוש מערכת תוכנה רב-שכבתית:
 
-**צד שרת:**
+<strong>צד שרת:</strong>
 - 🔧 ארכיטקטורת Layered Architecture עם הפרדה ברורה בין שכבות
 - 🔒 אבטחה מרובת שכבות: JWT, bcrypt, rate limiting, tokenVersion
 - 💳 אינטגרציה עם Stripe כולל webhooks ו-idempotency
 - 🗄️ MongoDB transactions למניעת race conditions
 - ✅ כתיבת בדיקות אוטומטיות עם Jest
 
-**צד לקוח:**
+<strong>צד לקוח:</strong>
 - ⚛️ React 19 עם TypeScript
 - 🔄 Redux Toolkit + useState לניהול state
 - 🎨 Material UI + CSS לעיצוב responsive
 - 🔐 עבודה עם טוקנים, axios interceptor והפרדת אזורי משתמש/אדמין ברמת ה-routing המתוכנן
 
-### מסקנות תהליכיות
+<h3>מסקנות תהליכיות</h3>
 
 מעבר להיבט הטכנולוגי, הפרויקט חידד גם היבטים תהליכיים ומתודולוגיים:
 
 | נושא | מה למדנו |
 |------|----------|
-| **עבודת צוות** | חלוקת עבודה, Git workflow, code review |
-| **תכנון** | לחשוב קדימה, לצפות בעיות, לתכנן פתרונות |
-| **תיעוד** | הקוד הוא רק חצי מהעבודה - תיעוד חשוב לא פחות |
-| **אבטחה** | לחשוב כמו תוקף, לא לסמוך על קלט מהמשתמש |
-| **Production** | ההבדל בין "עובד על המחשב שלי" ל-production |
+| <strong>עבודת צוות</strong> | חלוקת עבודה, Git workflow, code review |
+| <strong>תכנון</strong> | לחשוב קדימה, לצפות בעיות, לתכנן פתרונות |
+| <strong>תיעוד</strong> | הקוד הוא רק חצי מהעבודה - תיעוד חשוב לא פחות |
+| <strong>אבטחה</strong> | לחשוב כמו תוקף, לא לסמוך על קלט מהמשתמש |
+| <strong>Production</strong> | ההבדל בין "עובד על המחשב שלי" ל-production |
 
-### אתגרים עיקריים
+<h3>אתגרים עיקריים</h3>
 
 | אתגר | איך התמודדנו |
 |------|-------------|
@@ -2411,15 +2476,15 @@ router.post("/logout", authenticate, AuthController.logout);
 | Webhook reliability | הבנו idempotency patterns |
 | TypeScript errors | זיהינו פערים בין מבנה הקליינט בפועל לבין הייבואים והטיפוסים שמוגדרים בו |
 
-### המלצות להמשך ולפרויקטים עתידיים
+<h3>המלצות להמשך ולפרויקטים עתידיים</h3>
 
-1. **תכננו את הארכיטקטורה לפני שמתחילים לקודד** - זה חוסך שעות של refactoring
-2. **כתבו בדיקות מההתחלה** - לא בסוף כשכבר אין זמן
-3. **תעדו תוך כדי** - לא לזכור בסוף מה עשיתם לפני 3 חודשים
-4. **אל תזלזלו באבטחה** - זה לא "נוסיף אחר כך"
-5. **Deploy מוקדם** - תגלו בעיות production לפני שמאוחר מדי
+1. <strong>תכננו את הארכיטקטורה לפני שמתחילים לקודד</strong> - זה חוסך שעות של refactoring
+2. <strong>כתבו בדיקות מההתחלה</strong> - לא בסוף כשכבר אין זמן
+3. <strong>תעדו תוך כדי</strong> - לא לזכור בסוף מה עשיתם לפני 3 חודשים
+4. <strong>אל תזלזלו באבטחה</strong> - זה לא "נוסיף אחר כך"
+5. <strong>Deploy מוקדם</strong> - תגלו בעיות production לפני שמאוחר מדי
 
-### סיכום
+<h3>סיכום</h3>
 
 פרויקט זה שימש כמסגרת ליישום מעשי של עקרונות הנדסת תוכנה בסביבת פיתוח מציאותית יחסית, הכוללת חלוקה בין צד שרת לצד לקוח, אינטגרציה עם שירותים חיצוניים, תיעוד, בדיקות, וניהול גרסאות.
 
@@ -2429,6 +2494,9 @@ router.post("/logout", authenticate, AuthController.logout);
 
 ---
 
-**תאריך עדכון אחרון:** 10/05/2026  
-**מצב:** Final  
-**גרסה:** 1.1.0
+<strong>תאריך עדכון אחרון:</strong> 10/05/2026  
+<strong>מצב:</strong> Final  
+<strong>גרסה:</strong> 1.1.0
+</p>
+</body>
+</html>

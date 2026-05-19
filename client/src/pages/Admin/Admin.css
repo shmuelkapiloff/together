@@ -1,0 +1,184 @@
+.admin-page {
+  padding: 30px;
+}
+
+/* כותרת */
+.admin-title {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* ניווט */
+.admin-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* כפתורים */
+.admin-nav button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.admin-nav button:hover {
+  background: #d1d5db;
+}
+
+/* כפתור פעיל */
+.admin-nav button.active {
+  background: #0ea5a4;
+  color: white;
+}
+
+/* תוכן */
+.admin-content {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  /* border-collapse: collapse; */
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.admin-table thead {
+  display: table-header-group;
+}
+
+/* כותרת */
+.admin-table thead {
+  background: #0ea5a4;
+  color: white;
+}
+.admin-content {
+  padding: 20px;
+
+  overflow: hidden; /* סוגר פינות */
+
+}
+
+.admin-table th {
+  padding: 14px;
+  text-align: left;
+  font-size: 0.9rem;
+   background: transparent;
+}
+.admin-table thead tr {
+  background: #0ea5a4;
+  color: white;
+}
+
+/* שורות */
+.admin-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* zebra */
+.admin-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* hover */
+.admin-table tbody tr:hover {
+  background: #f0fdfa;
+  transition: 0.2s;
+}
+
+/* כפתורים */
+.admin-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* delete */
+.admin-btn-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-btn-delete:hover {
+  background: #dc2626;
+}
+
+/* add */
+.admin-btn-add {
+  background: #0ea5a4;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.admin-btn-add:hover {
+  background: #0b8c87;
+}
+
+/* select */
+.admin-select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+/* ===== סטטיסטיקות ===== */
+
+.admin-stats {
+  margin-bottom: 25px;
+}
+
+.admin-stats-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* קונטיינר */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* כרטיס */
+.stat-card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.2s;
+  border-left: 5px solid #0ea5a4;
+}
+
+/* hover */
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* כותרת */
+.stat-card h3 {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+/* ערך */
+.stat-card p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+}

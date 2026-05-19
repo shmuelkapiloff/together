@@ -26,7 +26,7 @@ function AddToCartButton({ product, setCart }: Props) {
       toast.success("המוצר נוסף לעגלה 🛒");
       console.log("התוסף בהצלחה", freshCart);
     } catch {
-      toast.error("שגיאה בהוספה לעגלה");
+      toast.error("יש להתחבר על מנת להוסיף לעגלה");
     }
   };
 

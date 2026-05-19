@@ -14,7 +14,7 @@ export type User = {
   _id: string;
   name: string;
   email: string;
-  role?: string; // "admin" או "user"
+  role?: string;
   
 };
 export const login = async (data: LoginData): Promise<AuthResponse> => {

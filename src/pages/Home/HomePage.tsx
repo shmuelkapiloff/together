@@ -1,4 +1,3 @@
-// import "../../styles.css";
 import "./HomePage.css";
 import Card from "../../components/Card.tsx";
 import type { Product } from "../../types/types.ts";
@@ -8,7 +7,6 @@ import type { Cart } from "../../types/cart.ts";
 type HomePageProps = {
   setCart: React.Dispatch<React.SetStateAction<Cart | null>>;
 };
-
 function HomePage({ setCart }: HomePageProps) {
   const [products, setProducts] = useState<Product[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -31,21 +29,15 @@ function HomePage({ setCart }: HomePageProps) {
         // setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
   useEffect(() => {
     console.log("products updated:", products);
   }, [products]);
-
-  // if (loading) return <p>טוען...</p>;
   if (error) return <p>{error}</p>;
-  // function HomePage({ products }: HomeProps) {
-  //   const items = useSelector((state:RootState) => state.cart.items)
   return (
     <>
-      {/* <Header /> */}
       <div className="container">
         <div className="product-grid">
           {products.map((product) => (
@@ -53,7 +45,6 @@ function HomePage({ setCart }: HomePageProps) {
           ))}
         </div>
       </div>
-      {/* <Footer /> */}
     </>
   );
 }

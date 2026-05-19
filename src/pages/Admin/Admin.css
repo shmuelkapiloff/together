@@ -182,3 +182,95 @@
   font-weight: 700;
   color: #111827;
 }
+/* ===== Add Product ===== */
+
+.add-product-page {
+  padding: 30px;
+}
+
+/* כרטיס */
+.add-product-card {
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* כותרת */
+.add-product-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+/* טופס */
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* שורה */
+.add-product-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* label */
+.add-product-row label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* input */
+.add-product-form input {
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+  outline: none;
+  background: #f9fafb;
+}
+
+/* focus */
+.add-product-form input:focus {
+  border-color: #0ea5a4;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(14,165,164,0.12);
+}
+
+/* placeholder */
+.add-product-form input::placeholder {
+  color: #9ca3af;
+}
+
+/* submit button */
+.add-product-submit {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #0ea5a4;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* hover */
+.add-product-submit:hover {
+  background: #0b8c87;
+  transform: translateY(-1px);
+}
+
+/* active */
+.add-product-submit:active {
+  transform: scale(0.98);
+}

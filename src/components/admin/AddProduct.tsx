@@ -39,23 +39,90 @@ function AddProduct() {
     }
   };
 
-  return (
-    <div>
-      <h2>Add Product</h2>
+return (
+  <div className="add-product-page">
+    <div className="add-product-card">
+      <h2 className="add-product-title">Add Product</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input name="sku" placeholder="SKU" value={form.sku} onChange={handleChange}/>
-        <input name="name" placeholder="Name" onChange={handleChange} />
-        <input name="description" placeholder="Description" onChange={handleChange}/>
-        <input name="price" placeholder="Price" onChange={handleChange} />
-        <input name="stock" placeholder="Stock" onChange={handleChange} />
-        <input name="category" placeholder="Category" onChange={handleChange} />
-        <input name="image" placeholder="Image URL" onChange={handleChange} />
+      <form className="add-product-form" onSubmit={handleSubmit}>
 
-        <button type="submit">Create</button>
+        <div className="add-product-row">
+          <label>SKU</label>
+          <input
+            name="sku"
+            placeholder="SKU"
+            value={form.sku}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Name</label>
+          <input
+            name="name"
+            placeholder="Product name"
+            value={form.name}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Description</label>
+          <input
+            name="description"
+            placeholder="Description"
+            value={form.description}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Price</label>
+          <input
+            name="price"
+            placeholder="Price"
+            value={form.price}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Stock</label>
+          <input
+            name="stock"
+            placeholder="Stock"
+            value={form.stock}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Category</label>
+          <input
+            name="category"
+            placeholder="Category"
+            value={form.category}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="add-product-row">
+          <label>Image URL</label>
+          <input
+            name="image"
+            placeholder="https://..."
+            value={form.image}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button className="add-product-submit" type="submit">
+          Create Product
+        </button>
       </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default AddProduct;

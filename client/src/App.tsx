@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles.css";
+import PaymentResult from './components/PaymentResult';
 import HomePage from "./pages/Home/HomePage";
 import CartPage from "./pages/Cart/CartPage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Login/Register";
 // import productsData from "./product.json";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,20 +36,6 @@ function App() {
     };
     fetchUser();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const currentUser = await verifyUser(); // GET /auth/verify
-  //       setUserRole(currentUser?.role ?? null); // "admin" או "user"
-  //     } catch {
-  //       setUserRole(null); // לא מחובר
-
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
-
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -83,6 +70,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/products" element={<ProductsTable />} />
           <Route path="/admin/products/new" element={<AddProduct />} />
+          <Route path="/payment-result" element={<PaymentResult />} /> 
         </Routes>
         <Footer />
       </Router>

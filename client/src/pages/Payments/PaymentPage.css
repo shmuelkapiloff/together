@@ -20,11 +20,11 @@ body {
 }
 
 /* ===== פריסה ===== */
-.payment-layout {
+/* .payment-layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 25px;
-}
+} */
 
 /* ===== טופס ===== */
 .payment-form {

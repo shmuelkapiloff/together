@@ -1,9 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import "./Auth.css";
 import { useNavigate, Link } from "react-router-dom";
-import { register, type User } from "../services/auth.service";
+import { register, type User } from "../../services/auth.service";
 import { toast } from "react-toastify";
-import GoogleConnectBtn from "../components/GoogleConnectBtn";
+import GoogleConnectBtn from "../../components/GoogleConnectBtn";
 // import Header from "../components/Header/Header";
 type RegisterProps = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -45,12 +46,11 @@ export default function Register({ setUser }: RegisterProps) {
   };
 
   return (
-    <>
-    {/* <Header/> */}
-    <div>
+  <div className="auth-container">
+    <div className="auth-card">
       <h2>הרשמה</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
           placeholder="שם"
           value={name}
@@ -74,17 +74,21 @@ export default function Register({ setUser }: RegisterProps) {
           required
         />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="auth-error">{error}</p>}
 
-        <button disabled={loading}>{loading ? "נרשם..." : "הירשם"}</button>
+        <button disabled={loading}>
+          {loading ? "נרשם..." : "הירשם"}
+        </button>
       </form>
 
-      <p>
+      <div className="auth-footer">
         כבר יש לך חשבון? <Link to="/login">התחברות</Link>
-      </p>
-      <p>או</p>
-      <GoogleConnectBtn setUser={setUser}/>
+      </div>
+
+      <div className="auth-divider">או</div>
+
+      <GoogleConnectBtn setUser={setUser} />
     </div>
-    </>
-  );
+  </div>
+);
 }

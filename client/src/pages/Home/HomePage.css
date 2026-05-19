@@ -1,91 +1,145 @@
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
 
+/* GRID */
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  padding: 20px;
-
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  gap: 32px;
 }
 
-/* רספונסיבי */
-@media (max-width: 1024px) {
+/* CARD */
+
+.card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+/* HOVER */
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+}
+
+/* IMAGE */
+
+.images {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  background: #f3f4f6;
+  transition: transform 0.35s ease;
+}
+
+.card:hover .images {
+  transform: scale(1.04);
+}
+
+/* CONTENT */
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px;
+}
+
+/* TITLE */
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #111827;
+  line-height: 1.4;
+}
+
+/* DESCRIPTION */
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+  flex: 1;
+}
+
+/* PRICE */
+
+.card h2 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #0b498c;
+  font-weight: 800;
+}
+
+/* BUTTON */
+
+.card button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0b498c, #0ea5a4);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.card button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.card button:active {
+  transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 }
-@media (max-width: 480px) {
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px 14px;
+  }
+
   .product-grid {
     grid-template-columns: 1fr;
   }
-}
 
-/* כרטיס */
-.card {
-  background: white;
-  /* width: 290px; */
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: all 0.25s ease;
-  /* cursor: pointer; */
-  display: flex;
-  flex-direction: column;
-}
-
-/* hover מקצועי */
-/* .card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
-} */
-
-/* תמונה */
-.images {
-  /* width: 80%;
-  height: 80%; */
-  height: 200px;
-  width: 300px;
-  object-fit: cover;
-}
-
-/* תוכן */
-.card h3 {
-  font-size: 1.1rem;
-  margin: 12px;
-  font-weight: 600;
-}
-
-.card p {
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin: 0 12px 10px;
-}
-
-/* מחיר */
-.card h2 {
-  color: fffff;
-  font-size: 1.2rem;
-  margin: 0 12px 10px;
-}
-
-/* כפתור */
-.card button {
-  margin: 20px;
-  padding: 10px;
-  border: none;
-  border-radius: 7px;
-  background: #0b498c;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.card button:hover {
-  background: #0b498c;
+  .images {
+    height: 220px;
+  }
 }

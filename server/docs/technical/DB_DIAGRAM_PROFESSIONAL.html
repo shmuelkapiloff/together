@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DB_DIAGRAM_PROFESSIONAL.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="-database-diagram---mermaid-professional">📊 Database Diagram - Mermaid Professional</h1>
+<h2 id="דיאגרמת-er-entity-relationship-מלאה">דיאגרמת ER (Entity-Relationship) מלאה</h2>
+<pre><code class="language-mermaid"><div class="mermaid">erDiagram
+    USER ||--o{ CART : "has"
+    USER ||--o{ ORDER : "places"
+    USER ||--o{ ADDRESS : "has"
+    USER ||--o{ AUTH_ATTEMPT : "makes"
+    
+    PRODUCT ||--o{ CART_ITEM : "appears_in"
+    PRODUCT ||--o{ ORDER_ITEM : "appears_in"
+    PRODUCT ||--o{ INVENTORY_LOG : "tracked_by"
+    
+    CART ||--o{ CART_ITEM : "contains"
+    
+    ORDER ||--o{ ORDER_ITEM : "contains"
+    ORDER ||--o{ PAYMENT : "requires"
+    ORDER ||--o{ ADDRESS : "shipped_to"
+    
+    ADDRESS ||--o{ ORDER : "used_in"
+    
+    PAYMENT ||--o{ WEBHOOK_EVENT : "triggers"
+
+    USER {
+        ObjectId _id PK
+        string email UK
+        string name
+        string phone
+        string passwordHash
+        int tokenVersion "for instant logout control"
+        datetime createdAt
+        datetime updatedAt
+        int lockoutAttempts "brute force prevention"
+        datetime lockoutUntil "account lockout time"
+        string role "user | admin"
+    }
+
+    PRODUCT {
+        ObjectId _id PK
+        string name
+        string description
+        number price
+        int quantity "current stock level"
+        string category
+        string[] images "product images URLs"
+        boolean isActive "soft delete flag"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    CART {
+        ObjectId _id PK
+        ObjectId userId FK
+        CartItem[] items "array of cart items"
+        number total "total cart price"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    CART_ITEM {
+        ObjectId productId FK
+        int quantity
+        number priceAtTime "price at add time"
+    }
+
+    ORDER {
+        ObjectId _id PK
+        string orderNumber UK "e.g. ORD-2026-00123"
+        ObjectId userId FK
+        OrderItem[] items
+        Address shippingAddress
+        Address billingAddress
+        string paymentMethod "stripe"
+        string paymentIntentId "from Stripe"
+        string status "pending_payment|confirmed|shipped|delivered|cancelled"
+        number total
+        string notes
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    ORDER_ITEM {
+        ObjectId productId FK
+        string productName
+        int quantity
+        number pricePerUnit "price at order time"
+    }
+
+    PAYMENT {
+        ObjectId _id PK
+        ObjectId orderId FK "unique per order"
+        ObjectId userId FK
+        string providerPaymentId "stripe_pi_..."
+        string provider "stripe"
+        number amount "in cents"
+        string status "pending|succeeded|failed"
+        datetime createdAt
+        datetime webhookReceivedAt
+    }
+
+    ADDRESS {
+        ObjectId _id PK
+        ObjectId userId FK
+        string fullName
+        string phone
+        string street
+        string city
+        string postalCode
+        string country
+        boolean isDefault
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WEBHOOK_EVENT {
+        ObjectId _id PK
+        string eventId UK "from Stripe"
+        string eventType "payment_intent.succeeded"
+        ObjectId paymentId FK
+        object payload "full Stripe event payload"
+        string status "processed|failed|pending"
+        int retryCount
+        datetime processedAt
+        datetime nextRetryAt
+        string error
+        datetime createdAt
+    }
+
+    AUTH_ATTEMPT {
+        ObjectId _id PK
+        string email
+        string result "success|failed"
+        string ipAddress
+        datetime attemptedAt
+    }
+
+    INVENTORY_LOG {
+        ObjectId _id PK
+        ObjectId productId FK
+        int quantityBefore
+        int quantityAfter
+        string reason "order_placed|inventory_updated|cancel"
+        ObjectId orderId FK "if applicable"
+        datetime createdAt
+    }
+</div></code></pre>
+<hr>
+<h2 id="סכמה-טקסטית---מבנה-קבצים">סכמה טקסטית - מבנה קבצים</h2>
+<pre class="hljs"><code><div>Simple Shop MongoDB
+│
+├─ users (אוסף משתמשים)
+│  ├─ _id: ObjectId
+│  ├─ email: string (unique)
+│  ├─ passwordHash: string
+│  ├─ name: string
+│  ├─ tokenVersion: number
+│  ├─ role: &quot;user&quot; | &quot;admin&quot;
+│  ├─ lockoutUntil: datetime (nullable)
+│  ├─ createdAt: datetime
+│  └─ updatedAt: datetime
+│
+├─ products (קטלוג מוצרים)
+│  ├─ _id: ObjectId
+│  ├─ name: string
+│  ├─ description: string
+│  ├─ price: number (בדולרים)
+│  ├─ quantity: number (מלאי)
+│  ├─ category: string
+│  ├─ images: string[]
+│  ├─ isActive: boolean
+│  ├─ createdAt: datetime
+│  └─ updatedAt: datetime
+│
+├─ carts (עגלות קניות)
+│  ├─ _id: ObjectId
+│  ├─ userId: ObjectId (reference)
+│  ├─ items: [
+│  │   {
+│  │     productId: ObjectId,
+│  │     quantity: number,
+│  │     priceAtTime: number
+│  │   }
+│  │ ]
+│  ├─ total: number
+│  ├─ createdAt: datetime
+│  └─ updatedAt: datetime
+│
+├─ orders (הזמנות)
+│  ├─ _id: ObjectId
+│  ├─ orderNumber: string (unique, e.g., &quot;ORD-2026-00123&quot;)
+│  ├─ userId: ObjectId (reference)
+│  ├─ items: [ { productId, quantity, pricePerUnit, productName } ]
+│  ├─ shippingAddress: { fullName, phone, street, city, postalCode, country }
+│  ├─ billingAddress: { ... }
+│  ├─ paymentMethod: &quot;stripe&quot;
+│  ├─ paymentIntentId: string (מ-Stripe)
+│  ├─ status: &quot;pending_payment&quot; | &quot;confirmed&quot; | &quot;shipped&quot; | &quot;delivered&quot; | &quot;cancelled&quot;
+│  ├─ total: number
+│  ├─ notes: string
+│  ├─ createdAt: datetime
+│  └─ updatedAt: datetime
+│
+├─ payments (תשלומים)
+│  ├─ _id: ObjectId
+│  ├─ orderId: ObjectId (unique reference)
+│  ├─ userId: ObjectId (reference)
+│  ├─ providerPaymentId: string (stripe_pi_...)
+│  ├─ provider: &quot;stripe&quot;
+│  ├─ amount: number (בסנטים)
+│  ├─ status: &quot;pending&quot; | &quot;succeeded&quot; | &quot;failed&quot;
+│  ├─ createdAt: datetime
+│  └─ webhookReceivedAt: datetime
+│
+├─ addresses (כתובות משתמשים)
+│  ├─ _id: ObjectId
+│  ├─ userId: ObjectId (reference)
+│  ├─ fullName: string
+│  ├─ phone: string
+│  ├─ street: string
+│  ├─ city: string
+│  ├─ postalCode: string
+│  ├─ country: string
+│  ├─ isDefault: boolean
+│  ├─ createdAt: datetime
+│  └─ updatedAt: datetime
+│
+├─ webhook_events (אירועי Webhook)
+│  ├─ _id: ObjectId
+│  ├─ eventId: string (unique, from Stripe)
+│  ├─ eventType: string
+│  ├─ paymentId: ObjectId (reference)
+│  ├─ payload: object (הודעת Stripe המלאה)
+│  ├─ status: &quot;processed&quot; | &quot;failed&quot; | &quot;pending&quot;
+│  ├─ retryCount: number
+│  ├─ error: string (nullable)
+│  ├─ processedAt: datetime
+│  ├─ nextRetryAt: datetime
+│  └─ createdAt: datetime
+│
+├─ auth_attempts (ניסיונות התחברות)
+│  ├─ _id: ObjectId
+│  ├─ email: string
+│  ├─ result: &quot;success&quot; | &quot;failed&quot;
+│  ├─ ipAddress: string
+│  └─ attemptedAt: datetime
+│
+└─ inventory_logs (רישום שינויי מלאי)
+   ├─ _id: ObjectId
+   ├─ productId: ObjectId (reference)
+   ├─ quantityBefore: number
+   ├─ quantityAfter: number
+   ├─ reason: &quot;order_placed&quot; | &quot;inventory_updated&quot; | &quot;cancel&quot;
+   ├─ orderId: ObjectId (nullable, reference)
+   └─ createdAt: datetime
+</div></code></pre>
+<hr>
+<h2 id="אינדקסים-המומלצים">אינדקסים המומלצים</h2>
+<pre class="hljs"><code><div><span class="hljs-comment">// users collection</span>
+db.<span class="hljs-property">users</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">email</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span> });
+db.<span class="hljs-property">users</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">createdAt</span>: -<span class="hljs-number">1</span> });
+db.<span class="hljs-property">users</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">role</span>: <span class="hljs-number">1</span> });
+
+<span class="hljs-comment">// products collection</span>
+db.<span class="hljs-property">products</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">category</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">products</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">isActive</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">products</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">createdAt</span>: -<span class="hljs-number">1</span> });
+
+<span class="hljs-comment">// orders collection</span>
+db.<span class="hljs-property">orders</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">userId</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">createdAt</span>: -<span class="hljs-number">1</span> });
+db.<span class="hljs-property">orders</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">orderNumber</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span> });
+db.<span class="hljs-property">orders</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">status</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">orders</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">createdAt</span>: -<span class="hljs-number">1</span> });
+
+<span class="hljs-comment">// payments collection</span>
+db.<span class="hljs-property">payments</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">orderId</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span> });
+db.<span class="hljs-property">payments</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">userId</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">payments</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">status</span>: <span class="hljs-number">1</span> });
+
+<span class="hljs-comment">// webhook_events collection</span>
+db.<span class="hljs-property">webhook_events</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">eventId</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span> });
+db.<span class="hljs-property">webhook_events</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">status</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">webhook_events</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">processedAt</span>: -<span class="hljs-number">1</span> });
+db.<span class="hljs-property">webhook_events</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">createdAt</span>: <span class="hljs-number">1</span> }, { 
+  <span class="hljs-attr">expireAfterSeconds</span>: <span class="hljs-number">2592000</span> <span class="hljs-comment">// 30 ימים - מחיקה אוטומטית</span>
+});
+
+<span class="hljs-comment">// addresses collection</span>
+db.<span class="hljs-property">addresses</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">userId</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">isDefault</span>: <span class="hljs-number">1</span> });
+db.<span class="hljs-property">addresses</span>.<span class="hljs-title function_">createIndex</span>({ <span class="hljs-attr">createdAt</span>: -<span class="hljs-number">1</span> });
+</div></code></pre>
+<hr>
+<h2 id="טיפול-בזיכרון-storage">טיפול בזיכרון (Storage)</h2>
+<table>
+<thead>
+<tr>
+<th>Collection</th>
+<th>Typical Docs</th>
+<th>Avg Size</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>users</td>
+<td>10,000</td>
+<td>2 KB</td>
+<td>20 MB</td>
+</tr>
+<tr>
+<td>products</td>
+<td>5,000</td>
+<td>5 KB</td>
+<td>25 MB</td>
+</tr>
+<tr>
+<td>carts</td>
+<td>2,000</td>
+<td>10 KB</td>
+<td>20 MB</td>
+</tr>
+<tr>
+<td>orders</td>
+<td>50,000</td>
+<td>8 KB</td>
+<td>400 MB</td>
+</tr>
+<tr>
+<td>payments</td>
+<td>50,000</td>
+<td>3 KB</td>
+<td>150 MB</td>
+</tr>
+<tr>
+<td>addresses</td>
+<td>20,000</td>
+<td>2 KB</td>
+<td>40 MB</td>
+</tr>
+<tr>
+<td>webhook_events</td>
+<td>100,000</td>
+<td>4 KB</td>
+<td>400 MB</td>
+</tr>
+<tr>
+<td>auth_attempts</td>
+<td>500,000</td>
+<td>0.5 KB</td>
+<td>250 MB</td>
+</tr>
+</tbody>
+</table>
+<p><strong>סה&quot;כ משוער:</strong> ~1.3 GB בעומס בינוני</p>
+<hr>
+<h2 id="transactions---אטומיות">Transactions - אטומיות</h2>
+<p><strong>Order Creation transaction:</strong></p>
+<pre class="hljs"><code><div>1. Create order document (status: pending_payment)
+2. Decrease product quantities
+3. Create payment document
+4. הכל או כלום - אם כשלה שלב, כלום לא השתנה
+</div></code></pre>
+<p><strong>Payment Confirmation transaction:</strong></p>
+<pre class="hljs"><code><div>1. Update payment status to succeeded
+2. Update order status to confirmed
+3. Log inventory change
+4. הכל או כלום
+</div></code></pre>
+
+</body>
+</html>

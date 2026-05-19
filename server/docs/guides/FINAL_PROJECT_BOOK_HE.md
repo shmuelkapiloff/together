@@ -97,20 +97,21 @@
 9. [תרשימי מערכת](#139-תרשימי-מערכת)
 10. [מרכיב אלגוריתמי](#1310-מרכיב-אלגוריתמי)
 11. [אבטחת מידע](#1311-אבטחת-מידע)
+12. [קטעי קוד מרכזיים](#1312-קטעי-קוד-מרכזיים)
 
 ### חלק ג' - ליבה טכנית (Client)
-12. [צד לקוח - סקירה](#2-צד-לקוח-frontend)
+13. [צד לקוח - סקירה](#2-צד-לקוח-frontend)
 
 ### חלק ד' - ניהול פרויקט
-13. [משאבים נדרשים](#1312-משאבים-נדרשים)
-14. [תכנית עבודה](#1313-תכנית-עבודה)
-15. [תכנון בדיקות](#1314-תכנון-בדיקות)
-16. [בקרת גרסאות](#1315-בקרת-גרסאות)
-17. [תכנית הפקה סופית לספר](#1316-תכנית-הפקה-סופית-לספר-מבוסס-קוד-מקור)
-18. [קטעי קוד מומלצים להטמעה](#1317-קטעי-קוד-מומלצים-להטמעה)
+14. [משאבים נדרשים](#1312-משאבים-נדרשים)
+15. [תכנית עבודה](#1313-תכנית-עבודה)
+16. [תכנון בדיקות](#1314-תכנון-בדיקות)
+17. [בקרת גרסאות](#1315-בקרת-גרסאות)
+18. [תכנית הפקה סופית לספר](#1316-תכנית-הפקה-סופית-לספר-מבוסס-קוד-מקור)
+19. [קטעי קוד מומלצים להטמעה](#1317-קטעי-קוד-מומלצים-להטמעה)
 
 ### חלק ה' - סיכום
-19. [מה למדנו](#סיכום---מה-למדנו)
+20. [מה למדנו](#סיכום---מה-למדנו)
 
 ---
 
@@ -357,49 +358,40 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 
 ### 1.3.7.1 טופולוגיית הפתרון
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CLIENTS                                   │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │ Web Browser  │  │ Mobile App   │  │ Admin Panel  │          │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
-└─────────┼─────────────────┼─────────────────┼───────────────────┘
-          │                 │                 │
-          └────────────────┬┴─────────────────┘
-                           │ HTTPS
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     RENDER.COM (PaaS)                           │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                    Node.js Server                         │  │
-│  │  ┌─────────────────────────────────────────────────────┐  │  │
-│  │  │                   Express.js                        │  │  │
-│  │  │  ┌─────────┐  ┌─────────┐  ┌─────────┐            │  │  │
-│  │  │  │ Routes  │→ │ Middle- │→ │  Cont-  │            │  │  │
-│  │  │  │         │  │  wares  │  │ rollers │            │  │  │
-│  │  │  └─────────┘  └─────────┘  └────┬────┘            │  │  │
-│  │  │                                  │                 │  │  │
-│  │  │                           ┌──────▼──────┐          │  │  │
-│  │  │                           │  Services   │          │  │  │
-│  │  │                           │ (Business   │          │  │  │
-│  │  │                           │   Logic)    │          │  │  │
-│  │  │                           └──────┬──────┘          │  │  │
-│  │  └──────────────────────────────────┼────────────────┘  │  │
-│  └─────────────────────────────────────┼────────────────────┘  │
-└────────────────────────────────────────┼────────────────────────┘
-                                         │
-          ┌──────────────────────────────┼───────────────────┐
-          │                              │                   │
-          ▼                              ▼                   ▼
-┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
-│  MongoDB Atlas   │  │   Redis Cloud    │  │     Stripe       │
-│  (Database)      │  │   (Cache)        │  │   (Payments)     │
-│                  │  │                  │  │                  │
-│ • Users          │  │ • Rate limits    │  │ • Checkout       │
-│ • Products       │  │ • Session cache  │  │ • Webhooks       │
-│ • Orders         │  │ • Cart cache     │  │ • Refunds        │
-│ • Payments       │  │                  │  │                  │
-└──────────────────┘  └──────────────────┘  └──────────────────┘
+```mermaid
+flowchart TB
+  subgraph Clients[Clients]
+    Web["Web Browser"]
+    Mobile["Mobile App"]
+    Admin["Admin Panel"]
+  end
+
+  subgraph Render[Render.com (PaaS)]
+    subgraph Node[Node.js Server]
+      Routes[Routes]
+      MW[Middlewares]
+      Ctrl[Controllers]
+      Svc["Services<br/>(Business Logic)"]
+      Routes --> MW --> Ctrl --> Svc
+    end
+  end
+
+  DB[("MongoDB Atlas<br/>Database<br/>- Users<br/>- Products<br/>- Orders<br/>- Payments")]
+  Redis[("Redis Cloud<br/>Cache<br/>- Rate limits<br/>- Session cache<br/>- Cart cache")]
+  Stripe[("Stripe<br/>Payments<br/>- Checkout<br/>- Webhooks<br/>- Refunds")]
+
+  Web -->|HTTPS| Routes
+  Mobile -->|HTTPS| Routes
+  Admin -->|HTTPS| Routes
+
+  Svc --> DB
+  Svc --> Redis
+  Svc --> Stripe
+
+  style Routes fill:#e3f2fd
+  style MW fill:#fff3e0
+  style Ctrl fill:#ede7f6
+  style Svc fill:#e8f5e9
 ```
 
 ### 1.3.7.2 טכנולוגיות בשימוש
@@ -433,34 +425,21 @@ Simple Shop היא מערכת מסחר אלקטרוני מלאה הכוללת ר
 
 **Pattern: Layered Architecture + MVC**
 
-```
-┌─────────────────────────────────────────────────┐
-│                   Routes Layer                   │
-│  • מגדיר URL patterns                           │
-│  • מקשר endpoints ל-controllers                 │
-├─────────────────────────────────────────────────┤
-│                Middleware Layer                  │
-│  • Authentication (JWT verification)            │
-│  • Rate Limiting (brute force protection)       │
-│  • Logging (request/response tracking)          │
-│  • Error Handling (centralized errors)          │
-├─────────────────────────────────────────────────┤
-│               Controller Layer                   │
-│  • מקבל HTTP request                            │
-│  • מפעיל validation                             │
-│  • קורא ל-Service                               │
-│  • מחזיר HTTP response                          │
-├─────────────────────────────────────────────────┤
-│                Service Layer                     │
-│  • Business logic מרוכז                         │
-│  • לא תלוי ב-HTTP                               │
-│  • ניתן לבדיקה בנפרד                            │
-├─────────────────────────────────────────────────┤
-│                 Model Layer                      │
-│  • Mongoose schemas                             │
-│  • Database queries                             │
-│  • Data validation                              │
-└─────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+  R["Routes Layer<br/>- מגדיר URL patterns<br/>- מקשר endpoints ל-controllers"]
+  M["Middleware Layer<br/>- Authentication (JWT verification)<br/>- Rate Limiting (brute force protection)<br/>- Logging (request/response tracking)<br/>- Error Handling (centralized errors)"]
+  C["Controller Layer<br/>- מקבל HTTP request<br/>- מפעיל validation<br/>- קורא ל-Service<br/>- מחזיר HTTP response"]
+  S["Service Layer<br/>- Business logic מרוכז<br/>- לא תלוי ב-HTTP<br/>- ניתן לבדיקה בנפרד"]
+  D["Model Layer<br/>- Mongoose schemas<br/>- Database queries<br/>- Data validation"]
+
+  R --> M --> C --> S --> D
+
+  style R fill:#e3f2fd
+  style M fill:#fff8e1
+  style C fill:#ede7f6
+  style S fill:#e8f5e9
+  style D fill:#fce4ec
 ```
 
 **למה בחרנו בארכיטקטורה זו?**
@@ -989,365 +968,436 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 
 ## 1.3.9 תרשימי מערכת
 
-### 1.3.9.1 Use Case Diagram
+### 1.3.9.0 Database ER Diagram (Mermaid)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Simple Shop                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│    ┌──────────┐                              ┌──────────┐       │
-│    │  Guest   │                              │  Admin   │       │
-│    │ (אורח)   │                              │ (מנהל)   │       │
-│    └────┬─────┘                              └────┬─────┘       │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► צפייה במוצרים      ◄─────────────────┤              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► הרשמה / התחברות   │                 │              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│    ┌────▼─────┐                                  │              │
-│    │   User   │                                  │              │
-│    │ (משתמש)  │                                  │              │
-│    └────┬─────┘                                  │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► ניהול עגלה        │                 │              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► ביצוע הזמנה       │                 │              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► תשלום ב-Stripe    │                 │              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         ├─► צפייה בהזמנות     │                 │              │
-│         │ └────────────────────┘                 │              │
-│         │                                         │              │
-│         │ ┌────────────────────┐                 │              │
-│         └─► ניהול פרופיל      │                 │              │
-│           └────────────────────┘                 │              │
-│                                                   │              │
-│                         ┌────────────────────┐   │              │
-│                         │ ניהול מוצרים       ◄───┤              │
-│                         └────────────────────┘   │              │
-│                                                   │              │
-│                         ┌────────────────────┐   │              │
-│                         │ ניהול הזמנות       ◄───┤              │
-│                         └────────────────────┘   │              │
-│                                                   │              │
-│                         ┌────────────────────┐   │              │
-│                         │ ניהול משתמשים      ◄───┤              │
-│                         └────────────────────┘   │              │
-│                                                   │              │
-│                         ┌────────────────────┐   │              │
-│                         │ צפייה בסטטיסטיקות  ◄───┘              │
-│                         └────────────────────┘                  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+```mermaid
+erDiagram
+    USER ||--o{ CART : "has"
+    USER ||--o{ ORDER : "places"
+    USER ||--o{ ADDRESS : "has"
+    
+    PRODUCT ||--o{ CART_ITEM : "appears_in"
+    PRODUCT ||--o{ ORDER_ITEM : "appears_in"
+    
+    CART ||--o{ CART_ITEM : "contains"
+    
+    ORDER ||--o{ ORDER_ITEM : "contains"
+    ORDER ||--o{ PAYMENT : "requires"
+    ORDER ||--o{ ADDRESS : "shipped_to"
+    
+    PAYMENT ||--o{ WEBHOOK_EVENT : "triggers"
 
-### 1.3.9.2 Sequence Diagram - Checkout Flow
+    USER {
+        ObjectId _id PK
+        string email UK
+        string name
+        string passwordHash
+        int tokenVersion "logout control"
+        int failedLoginAttempts
+        datetime lockoutUntil
+        string role "user | admin"
+        datetime createdAt
+    }
 
-```
-┌────────┐     ┌────────┐     ┌────────┐     ┌────────┐     ┌────────┐
-│ Client │     │ Server │     │ MongoDB│     │ Stripe │     │  User  │
-└───┬────┘     └───┬────┘     └───┬────┘     └───┬────┘     └───┬────┘
-    │              │              │              │              │
-    │ POST /orders │              │              │              │
-    │─────────────►│              │              │              │
-    │              │ Get cart     │              │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │              │ Verify stock │              │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │              │ Create order │              │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │ POST /payments/create-intent               │              │
-    │─────────────►│              │              │              │
-    │              │ Create session              │              │
-    │              │─────────────────────────────►│              │
-    │              │◄─────────────────────────────│              │
-    │              │              │              │              │
-    │◄─────────────│              │              │              │
-    │ { checkoutUrl }             │              │              │
-    │              │              │              │              │
-    │ Redirect to Stripe          │              │              │
-    │─────────────────────────────────────────────►│              │
-    │              │              │              │              │
-    │              │              │              │ Enter card   │
-    │              │              │              │◄─────────────│
-    │              │              │              │              │
-    │              │ Webhook: payment.succeeded  │              │
-    │              │◄─────────────────────────────│              │
-    │              │              │              │              │
-    │              │ Check idempotency           │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │              │ BEGIN TRANSACTION           │              │
-    │              │─────────────►│              │              │
-    │              │              │              │              │
-    │              │ Reduce stock (atomic)       │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │              │ Update order status         │              │
-    │              │─────────────►│              │              │
-    │              │◄─────────────│              │              │
-    │              │              │              │              │
-    │              │ COMMIT TRANSACTION          │              │
-    │              │─────────────►│              │              │
-    │              │              │              │              │
-    │              │ Return 200   │              │              │
-    │              │─────────────────────────────►│              │
-    │              │              │              │              │
-    │ Redirect to success page    │              │              │
-    │◄─────────────────────────────────────────────              │
-    │              │              │              │              │
+    PRODUCT {
+        ObjectId _id PK
+        string name
+        number price
+        int quantity "current stock"
+        string category
+        datetime createdAt
+    }
+
+    CART {
+        ObjectId _id PK
+        ObjectId userId FK
+        CartItem[] items
+        number total
+        datetime createdAt
+    }
+
+    ORDER {
+        ObjectId _id PK
+        string orderNumber UK
+        ObjectId userId FK
+        OrderItem[] items
+        string status "pending_payment|confirmed|delivered"
+        number total
+        datetime createdAt
+    }
+
+    ORDER_ITEM {
+        ObjectId productId FK
+        string productName
+        int quantity
+        number pricePerUnit
+    }
+
+    PAYMENT {
+        ObjectId _id PK
+        ObjectId orderId FK
+        string paymentIntentId "from Stripe"
+        string status "pending|succeeded|failed"
+        number amount "in cents"
+        datetime createdAt
+    }
+
+    ADDRESS {
+        ObjectId _id PK
+        ObjectId userId FK
+        string fullName
+        string street
+        string city
+        boolean isDefault
+    }
+
+    WEBHOOK_EVENT {
+        ObjectId _id PK
+        string eventId UK "from Stripe"
+        string eventType "payment_intent.succeeded"
+        datetime processedAt
+    }
 ```
 
-### 1.3.9.3 Data Flow Diagram
+**Schema Relationships:**
+- **1:N User → Order/Cart/Address** - User can have many orders, carts, addresses
+- **N:N Product ↔ Cart/Order (through CartItem/OrderItem)** - Products appear in carts/orders with quantity snapshot
+- **1:1 Order → Payment** - Each order has exactly one payment record
+- **1:N Payment → WebhookEvent** - Payment can trigger multiple webhook attempts (with idempotency tracking)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    LEVEL 0 - CONTEXT                             │
-│                                                                  │
-│  ┌──────────┐         ┌──────────────┐         ┌──────────┐    │
-│  │          │ Request │              │ Payment │          │    │
-│  │  Client  │────────►│  Simple Shop │────────►│  Stripe  │    │
-│  │          │◄────────│    System    │◄────────│          │    │
-│  └──────────┘ Response└──────────────┘ Webhook └──────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+---
 
-┌─────────────────────────────────────────────────────────────────┐
-│                    LEVEL 1 - PROCESSES                          │
-│                                                                  │
-│  ┌─────────┐                                                    │
-│  │ Client  │                                                    │
-│  └────┬────┘                                                    │
-│       │                                                          │
-│       ▼                                                          │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    Authentication                        │   │
-│  │  Input: email, password                                  │   │
-│  │  Process: validate → check lockout → verify → issue JWT  │   │
-│  │  Output: { token, user }                                 │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│       │                                                          │
-│       ▼                                                          │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    Cart Management                       │   │
-│  │  Input: productId, quantity                              │   │
-│  │  Process: check stock → update cart → calculate total    │   │
-│  │  Output: { items, total }                                │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│       │                                                          │
-│       ▼                                                          │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    Order Processing                      │   │
-│  │  Input: cart, shippingAddress                            │   │
-│  │  Process: validate → create order → init payment         │   │
-│  │  Output: { order, checkoutUrl }                          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│       │                                                          │
-│       ▼                                                          │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    Payment & Fulfillment                 │   │
-│  │  Input: webhook event                                    │   │
-│  │  Process: verify → idempotency → reduce stock → update   │   │
-│  │  Output: order.status = 'confirmed'                      │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+### 1.3.9.1 Use Case Diagram (Mermaid)
+
+```mermaid
+graph LR
+  Guest["👤 Guest"]  
+  User["👤 Registered User"]
+  Admin["🔐 Admin"]
+    
+    Guest -->|Browse| ViewProducts["View Products"]
+    Guest -->|Sign Up| Register["Register/Login"]
+    Register --> User
+    
+    User -->|Manage| CartMgmt["Cart Management"]
+    User -->|Create| OrderFlow["Order Processing"]
+    User -->|Pay| StripePayment["Stripe Payment"]
+    User -->|View| OrderStatus["View Order Status"]
+    User -->|Manage| ProfileMgmt["Profile Management"]
+    
+    Admin -->|Manage| AdminProducts["Product Management"]
+    Admin -->|Manage| AdminOrders["Order Management"]
+    Admin -->|Manage| AdminUsers["User Management"]
+    Admin -->|View| Stats["Statistics Dashboard"]
+    
+    ViewProducts -.->|Track| Stats
+    OrderFlow -.->|Update| AdminOrders
+    
+    style Guest fill:#e1f5ff
+    style User fill:#c8e6c9
+    style Admin fill:#ffccbc
 ```
 
-### 1.3.9.4 תרשים Login עם tokenVersion
+### 1.3.9.2 Sequence Diagram - Checkout Flow (Mermaid)
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                     LOGIN FLOW                                  │
-├────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   User: POST /api/auth/login                                   │
-│         { email, password }                                    │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Check Rate Limit    │                                      │
-│   │ (5 attempts/15min)  │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│       ┌──────▼──────┐                                          │
-│       │ Rate limit  │                                          │
-│       │  exceeded?  │───Yes───► 429 Too Many Requests          │
-│       └──────┬──────┘                                          │
-│              │ No                                               │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Find user by email  │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│       ┌──────▼──────┐                                          │
-│       │    Found?   │───No────► 401 Invalid credentials        │
-│       └──────┬──────┘                                          │
-│              │ Yes                                              │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Check lockedUntil   │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│       ┌──────▼──────┐                                          │
-│       │   Locked?   │───Yes───► 423 Account Locked             │
-│       └──────┬──────┘           (return remaining time)        │
-│              │ No                                               │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Verify password     │                                      │
-│   │ (bcrypt.compare)    │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│       ┌──────▼──────┐                                          │
-│       │   Valid?    │───No────┐                                │
-│       └──────┬──────┘         │                                │
-│              │ Yes            ▼                                 │
-│              │      ┌───────────────────┐                      │
-│              │      │ failedAttempts++  │                      │
-│              │      └─────────┬─────────┘                      │
-│              │                │                                 │
-│              │         ┌──────▼──────┐                         │
-│              │         │  >= 5 ?     │───Yes─► Lock 15 min     │
-│              │         └──────┬──────┘                         │
-│              │                │ No                              │
-│              │                ▼                                 │
-│              │         401 Invalid credentials                 │
-│              │         (X attempts remaining)                  │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Reset failedAttempts│                                      │
-│   │ Update lastLogin    │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Generate JWT        │                                      │
-│   │ payload: {          │                                      │
-│   │   userId,           │                                      │
-│   │   tokenVersion ◄────┼──── מוגבל לגרסה הנוכחית              │
-│   │ }                   │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│              ▼                                                  │
-│   200 OK { token, user }                                       │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    participant Browser as 🌐 Browser<br/>(Client)
+    participant Server as 🔧 Express<br/>(API)
+    participant Database as 💾 MongoDB<br/>(DB)
+    participant PaymentGW as 💳 Stripe<br/>(Payment)
+    
+    Browser->>Server: POST /api/orders
+    activate Server
+    Server->>Database: Get cart
+    activate Database
+    Database-->>Server: Cart items
+    deactivate Database
+    
+    Server->>Database: Start Transaction
+    activate Database
+    Database->>Database: Verify stock
+    Database->>Database: Create order (pending)
+    Database->>Database: Reduce stock (atomic)
+    Database-->>Server: OK Transaction ready
+    deactivate Database
+    
+    Server->>PaymentGW: Create Payment Intent
+    activate PaymentGW
+    PaymentGW-->>Server: clientSecret + sessionId
+    deactivate PaymentGW
+    
+    Server-->>Browser: { clientSecret, checkoutUrl }
+    deactivate Server
+    
+    Browser->>PaymentGW: Redirect to Checkout
+    activate PaymentGW
+    PaymentGW-->>Browser: Checkout form
+    Browser->>Browser: User enters card
+    Browser->>PaymentGW: Submit payment
+    PaymentGW->>PaymentGW: Process payment
+    PaymentGW-->>Browser: OK Success
+    deactivate PaymentGW
+    
+    PaymentGW->>Server: Webhook: payment_intent.succeeded
+    activate Server
+    Server->>Server: Verify HMAC signature
+    Server->>Server: Check idempotency
+    Server->>Database: Get payment + order
+    activate Database
+    Server->>Database: Verify amount matches
+    Note over Database: Amount check: webhook vs DB
+    
+    Server->>Database: BEGIN TRANSACTION
+    Database->>Database: Update payment (succeeded)
+    Database->>Database: Update order (confirmed)
+    Database->>Database: Record webhook event
+    Database-->>Server: OK Committed
+    deactivate Database
+    
+    Server-->>PaymentGW: 200 OK { received: true }
+    deactivate Server
+    
+    Browser->>Server: GET /api/orders/:id
+    activate Server
+    Server->>Database: Query order
+    activate Database
+    Database-->>Server: Order (confirmed)
+    deactivate Database
+    Server-->>Browser: { order, status: confirmed }
+    deactivate Server
+    
+    Browser-->>Browser: ✓ Success page
 ```
 
-### 1.3.9.5 Sequence Diagram - Detailed Webhook Security Flow
+### 1.3.9.3 Data Flow Diagram (Mermaid) - Full Order Flow
 
-```
-┌────────┐     ┌──────────────┐     ┌─────────────────┐     ┌──────────────┐
-│ Stripe │     │ API Endpoint │     │ Payment Service │     │   MongoDB    │
-└───┬────┘     └──────┬───────┘     └────────┬────────┘     └──────┬───────┘
-  │                 │                      │                     │
-  │ POST /api/payments/webhook            │                     │
-  │ (raw body + stripe-signature)         │                     │
-  │────────────────►│                      │                     │
-  │                 │ call webhook()       │                     │
-  │                 │─────────────────────►│                     │
-  │                 │                      │                     │
-  │                 │                      │ LAYER 1: signature verification
-  │                 │                      │ via provider.handleWebhook(req)
-  │                 │                      │                     │
-  │                 │                      │ parse event + normalize ids
-  │                 │                      │                     │
-  │                 │                      │ LAYER 2: idempotency lookup
-  │                 │                      │────────────────────►│ find WebhookEvent
-  │                 │                      │◄────────────────────│ existing?
-  │                 │                      │                     │
-  │                 │                      │ if duplicate -> throw "already processed"
-  │                 │                      │                     │
-  │                 │                      │ lookup payment by priority:
-  │                 │                      │ 1) providerPaymentId
-  │                 │                      │ 2) paymentIntentId/meta.payment_intent
-  │                 │                      │ 3) orderId fallback
-  │                 │                      │────────────────────►│ query Payment
-  │                 │                      │◄────────────────────│ payment found
-  │                 │                      │                     │
-  │                 │                      │ LAYER 3: amount verification
-  │                 │                      │ compare webhook cents vs order.totalAmount*100
-  │                 │                      │ if mismatch -> mark failed + throw
-  │                 │                      │                     │
-  │                 │                      │ if status=succeeded and not fulfilled:
-  │                 │                      │ LAYER 4: atomic fulfillment transaction
-  │                 │                      │ begin transaction
-  │                 │                      │────────────────────►│
-  │                 │                      │ decrement each product stock
-  │                 │                      │ clear user cart
-  │                 │                      │ set order.fulfilled=true
-  │                 │                      │ commit transaction
-  │                 │                      │◄────────────────────│
-  │                 │                      │                     │
-  │                 │                      │ save WebhookEvent processed marker
-  │                 │                      │────────────────────►│ insert eventId
-  │                 │                      │◄────────────────────│ ok
-  │                 │                      │                     │
-  │◄────────────────│ 200 { received: true }                   │
-  │                 │                      │                     │
-  │  (on failure may return 400; failed payload saved for retry)
+```mermaid
+sequenceDiagram
+    participant User as 👤 User<br/>(Browser)
+    participant Client as ⚛️ React App
+    participant API as 🔧 Express API
+    participant DB as 💾 MongoDB
+    participant Redis as ⚡ Redis
+    participant Stripe as 💳 Stripe
+    
+    User->>Client: 1. Browse & Add to Cart
+    Client->>API: POST /api/cart/add
+    API->>DB: Update cart
+    DB-->>API: OK
+    API-->>Client: New cart
+    
+    User->>Client: 2. Checkout
+    Client->>API: POST /api/orders
+    API->>DB: Begin Transaction
+    DB->>DB: Create order (pending)
+    DB->>DB: Reduce stock (atomic)
+    API-->>Client: clientSecret + checkoutUrl
+    
+    User->>Stripe: 3. Enter Card Details
+    Stripe->>Stripe: Process Payment
+    
+    Stripe->>API: 4. Webhook: payment_intent.succeeded
+    API->>API: Verify signature
+    API->>API: Idempotency check
+    API->>DB: Begin Transaction
+    DB->>DB: Update payment status
+    DB->>DB: Update order status
+    DB->>DB: Log webhook event
+    API->>Redis: Invalidate cache
+    API-->>Stripe: 200 OK
+    
+    Client->>API: 5. GET /api/orders/:id
+    API->>DB: Query order
+    DB-->>API: Order (confirmed)
+    API-->>Client: Order data
+    Client-->>User: Order Confirmed
 ```
 
-### 1.3.9.5 תרשים Logout עם tokenVersion
+### 1.3.9.7 System Context & Data Flow (Mermaid)
 
+```mermaid
+flowchart LR
+  Client["🌐 Client<br/>(Browser)"]
+  Shop["🔧 Simple Shop<br/>(Express API)"]
+  Stripe["💳 Stripe<br/>(Payment)"]
+  DB[("💾 MongoDB<br/>(Database)")]
+  Redis[("⚡ Redis<br/>(Cache)")]
+    
+    Client -->|Request| Shop
+    Shop -->|Response| Client
+    
+    Shop <-->|Payment Intent<br/>Webhook| Stripe
+    Shop -->|Query/Update| DB
+    Shop <-->|Get/Set Cache| Redis
+    
+    style Client fill:#e1f5ff
+    style Shop fill:#fff9c4
+    style Stripe fill:#f3e5f5
+    style DB fill:#fce4ec
+    style Redis fill:#e8f5e9
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                     LOGOUT FLOW                                 │
-│                  (Instant Token Revocation)                     │
-├────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   User: POST /api/auth/logout                                  │
-│         Headers: { Authorization: "Bearer <token>" }           │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ Verify JWT          │                                      │
-│   │ Extract userId &    │                                      │
-│   │ tokenVersion        │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────┐                                      │
-│   │ user.tokenVersion++ │  ◄──── הגדלה ב-1                     │
-│   │ await user.save()   │                                      │
-│   └──────────┬──────────┘                                      │
-│              │                                                  │
-│              ▼                                                  │
-│   ┌─────────────────────────────────────────────────────────┐  │
-│   │              ALL EXISTING TOKENS INVALIDATED!            │  │
-│   │                                                          │  │
-│   │  Token in JWT: tokenVersion = 5                          │  │
-│   │  Token in DB:  tokenVersion = 6  ◄── לא תואם!            │  │
-│   │                                                          │  │
-│   │  Any request with old token → 401 Unauthorized           │  │
-│   └─────────────────────────────────────────────────────────┘  │
-│              │                                                  │
-│              ▼                                                  │
-│   200 OK { message: "Logged out successfully" }                │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+
+**System Architecture (Top-Level Flows):**
+
+```mermaid
+graph TD
+  User["👤 User"] -->|1. Browse| Auth{"Authenticated?"}
+  Auth -->|No| Login["Login / Register"]
+  Login -->|Yes| Browse["Browse Products"]
+    
+    Browse -->|2. Add to Cart| Cart["📦 Cart"]
+    Cart -->|3. Checkout| Orders["📋 Create Order"]
+    
+    Orders -->|4. Pay| Payment["💳 Payment Intent"]
+    Payment -->|5. Redirect| Stripe["Stripe Checkout"]
+    
+    Stripe -->|6. Process| PaymentProc["Process Payment"]
+    PaymentProc -->|7. Webhook| Webhook["Webhook Event"]
+    
+    Webhook -->|8. Verify| Security["Verify Signature<br/>Check Idempotency<br/>Verify Amount"]
+    Security -->|9. Fulfill| Fulfillment["Reduce Stock<br/>Update Order<br/>Clear Cart"]
+    
+    Fulfillment -->|10. Confirm| User
+    
+    style User fill:#e1f5ff
+    style Auth fill:#fff9c4
+    style Cart fill:#c8e6c9
+    style Stripe fill:#f3e5f5
+    style Security fill:#ffccbc
+    style Fulfillment fill:#b3e5fc
+```
+
+### 1.3.9.4 Login Flow with tokenVersion (Mermaid)
+
+```mermaid
+flowchart TD
+  Start(["POST /api/auth/login<br/>{ email, password }"])
+    
+    Start --> RateCheck{"Rate Limit Check<br/>(5/15min)"}
+    RateCheck -->|Exceeded| RateLimitErr["429 Too Many Requests"]
+    RateCheck -->|OK| FindUser["Query user by email"]
+    
+    FindUser --> UserFound{"User exists?"}
+    UserFound -->|No| AuthErr["401 Invalid credentials"]
+    UserFound -->|Yes| CheckLock["Check lockedUntil"]
+    
+    CheckLock --> IsLocked{"Account locked?"}
+    IsLocked -->|Yes| LockErr["423 Account Locked<br/>(return remaining time)"]
+    IsLocked -->|No| VerifyPwd["Verify password<br/>bcrypt.compare"]
+    
+    VerifyPwd --> PwdValid{"Password correct?"}
+    PwdValid -->|No| IncAttempts["failedAttempts++"]
+    IncAttempts --> CheckAttempts{"Attempts >= 5?"}
+    CheckAttempts -->|Yes| LockAccount["Lock account 15 min<br/>lockedUntil = now + 15m"]
+    LockAccount --> AuthErr
+    CheckAttempts -->|No| AuthErr
+    
+    PwdValid -->|Yes| ResetAttempts["Reset:<br/>failedAttempts = 0<br/>lockedUntil = null<br/>lastLogin = now"]
+    
+    ResetAttempts --> GenJWT["Generate JWT with:<br/>payload = {<br/>  userId,<br/>  tokenVersion = 5<br/>}"]
+    
+    GenJWT --> Response["200 OK<br/>{ token, refreshToken, user }"]
+    
+    style Start fill:#e1f5ff
+    style RateLimitErr fill:#ffcdd2
+    style AuthErr fill:#ffcdd2
+    style LockErr fill:#ffcdd2
+    style Response fill:#c8e6c9
+    style GenJWT fill:#fff9c4
+```
+
+### 1.3.9.5 Webhook Security Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant Stripe as 💳 Stripe
+    participant API as 🔧 API Endpoint
+    participant PaymentSvc as 🔐 Payment Service
+    participant DB as 💾 MongoDB
+    
+    Stripe->>API: POST /api/payments/webhook
+    Note over API: Raw body + stripe-signature header
+    activate API
+    
+    API->>PaymentSvc: call handleWebhook(req)
+    activate PaymentSvc
+    
+    PaymentSvc->>PaymentSvc: LAYER 1: Verify HMAC signature
+    Note over PaymentSvc: Timing-safe comparison<br/>Prevents spoofed webhooks
+    
+    PaymentSvc->>PaymentSvc: Parse event + normalize IDs
+    
+    PaymentSvc->>DB: LAYER 2: Idempotency check
+    activate DB
+    DB->>DB: Query WebhookEvent by eventId
+    alt Already processed
+        DB-->>PaymentSvc: Found (exists)
+      PaymentSvc-->>API: Throw "already processed"
+        API-->>Stripe: 200 OK (idempotent)
+    else First time
+        DB-->>PaymentSvc: ✗ Not found
+    end
+    deactivate DB
+    
+    PaymentSvc->>DB: Lookup Payment by priority
+    activate DB
+    Note over DB: 1) providerPaymentId<br/>2) paymentIntentId<br/>3) orderId fallback
+    DB-->>PaymentSvc: Payment found
+    deactivate DB
+    
+    PaymentSvc->>DB: LAYER 3: Verify amount
+    Note over PaymentSvc: webhook.amount (cents)<br/>== order.totalAmount * 100 ?
+    
+    PaymentSvc->>DB: LAYER 4: BEGIN TRANSACTION
+    activate DB
+    DB->>DB: Update payment (succeeded)
+    DB->>DB: Update order (confirmed)
+    DB->>DB: Reduce stock (atomic)
+    DB->>DB: Clear cart
+    DB->>DB: Insert WebhookEvent (processed)
+    DB-->>PaymentSvc: COMMIT
+    deactivate DB
+    
+    PaymentSvc-->>API: { status: processed }
+    deactivate PaymentSvc
+    
+    API-->>Stripe: 200 OK { received: true }
+    deactivate API
+```
+
+### 1.3.9.6 Logout Flow - Instant Token Revocation (Mermaid)
+
+```mermaid
+flowchart TD
+  Start(["POST /api/auth/logout<br/>Authorization: Bearer &lt;token&gt;"])
+    
+    Start --> VerifyJWT["Verify JWT signature"]
+    VerifyJWT --> ExtractClaims["Extract:<br/>userId<br/>tokenVersion e.g. 5"]
+    
+    ExtractClaims --> IncrementVersion["Increment version:<br/>user.tokenVersion++<br/>5 -> 6"]
+    
+    IncrementVersion --> SaveDB["await user.save"]
+    
+    SaveDB --> AllInvalidated["ALL existing tokens<br/>invalidated instantly"]
+    
+    AllInvalidated --> Comparison{"JWT token version<br/>vs DB version"}
+    
+    Comparison -->|Token: 5<br/>DB: 6| Mismatch["MISMATCH"]
+    Mismatch --> AllRequests["All subsequent requests<br/>with old token = 401<br/>Unauthorized"]
+    
+    SaveDB --> DeleteRefresh["Optional:<br/>Delete refresh tokens<br/>from DB"]
+    
+    DeleteRefresh --> Response["200 OK<br/>Logged out successfully"]
+    
+    AllRequests -.->|User tries| FailedRequest["GET /api/orders<br/>old token<br/>-> 401"]
+    
+    style Start fill:#e1f5ff
+    style IncrementVersion fill:#fff9c4
+    style AllInvalidated fill:#ffccbc
+    style AllRequests fill:#ffcdd2
+    style Response fill:#c8e6c9
+    style FailedRequest fill:#ffcdd2
 ```
 
 ---
@@ -1359,13 +1409,24 @@ await WebhookEvent.create({ eventId, processedAt: new Date() });
 #### בעיה 1: Race Condition במכירת מוצרים
 
 **הבעיה:**
-```
-Time    User A              User B              Stock
-─────────────────────────────────────────────────────
-T1      Read stock (1)                          1
-T2                          Read stock (1)      1
-T3      Buy (stock--)                           0
-T4                          Buy (stock--)       -1 ❌
+```mermaid
+sequenceDiagram
+  participant A as User A
+  participant B as User B
+  participant DB as Database
+
+  Note over DB: Initial stock = 1
+  A->>DB: Read stock
+  DB-->>A: stock = 1
+
+  B->>DB: Read stock
+  DB-->>B: stock = 1
+
+  A->>DB: Buy 1 item (stock--)
+  DB-->>A: stock = 0
+
+  B->>DB: Buy 1 item (stock--)
+  DB-->>B: stock = -1 (oversell)
 ```
 
 **הפתרון: MongoDB Atomic Update**
@@ -1617,6 +1678,714 @@ const event = stripe.webhooks.constructEvent(
 | 3 | Stolen JWT token used | tokenVersion mismatch after logout | 401 |
 | 4 | Fake Stripe webhook | HMAC signature verification fails | 400 |
 | 5 | Same webhook sent twice | Idempotency check blocks duplicate | 200 (skip) |
+
+---
+
+## 1.3.12 קטעי קוד מרכזיים - ליבה של הפרויקט
+
+### 1.3.12.1 מודל User - אימות וניהול חשבון
+
+```typescript
+// user.model.ts - Schema עם bcrypt hashing ו-tokenVersion
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcryptjs";
+
+export interface IUser extends Document {
+  _id: string;
+  email: string;
+  password?: string;
+  name: string;
+  role: "user" | "admin";
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+  lastLogin?: Date;
+  failedLoginAttempts: number;
+  lockedUntil?: Date | null;
+  tokenVersion: number;  // ← KEY: Invalidates all tokens on logout
+  googleId?: string | null;
+  avatar?: string | null;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+const UserSchema = new Schema<IUser>(
+  {
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: function (this: any) {
+        return !this.googleId;  // Only required for non-OAuth users
+      },
+      minlength: [6, "Password must be at least 6 characters"],
+      select: false,  // 🔒 Don't include by default in queries
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
+      minlength: [2, "Name must be at least 2 characters"],
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    lastLogin: {
+      type: Date,
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    lockedUntil: {
+      type: Date,
+      default: null,
+      index: true,  // For efficient lockout queries
+    },
+    tokenVersion: {
+      type: Number,
+      default: 0,
+    },
+    googleId: {
+      type: String,
+      default: null,
+      index: true,
+      sparse: true,
+    },
+    avatar: {
+      type: String,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete (ret as any).password;
+        delete (ret as any).failedLoginAttempts;
+        delete (ret as any).lockedUntil;
+        delete (ret as any).__v;
+        return ret;
+      },
+    },
+  },
+);
+
+// 🔐 Pre-save middleware: Hash password with bcrypt (12 rounds ~250ms)
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password") || !this.password) {
+    return next();
+  }
+  try {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error as Error);
+  }
+});
+
+// 🔍 Instance method: Compare input password with stored hash
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+): Promise<boolean> {
+  if (!this.password) return false;
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    throw new Error("Password comparison failed");
+  }
+};
+
+export const UserModel = model<IUser>("User", UserSchema);
+```
+
+**מרכיבים חשובים:**
+- `password: { select: false }` - שדה סודי, לא נשלח בשאילתות בברירת מחדל
+- `bcrypt.hash(..., 12)` - 12 rounds = ~250ms זמן עיבוד, מונע brute-force
+- `tokenVersion: number` - כל גדלת הגרסה מבטלת את כל ה-tokens
+- `lockedUntil: Date with index` - חיפוש מהיר של משתמשים נעולים
+
+---
+
+### 1.3.12.2 מודל Order - הזמנה עם מעקב
+
+```typescript
+// order.model.ts - Schema הזמנה עם nested items ו-tracking history
+import { Schema, model, Document } from "mongoose";
+
+export interface IOrder extends Document {
+  _id: string;
+  orderNumber: string;
+  user: string;  // Reference to User
+  items: Array<{
+    product: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image?: string;
+  }>;
+  totalAmount: number;
+  status: "pending" | "pending_payment" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled";
+  paymentStatus: "pending" | "paid" | "failed" | "refunded";
+  paymentMethod: string;
+  shippingAddress: {
+    fullName: string;
+    phone: string;
+    street: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  trackingHistory: Array<{
+    status: string;
+    timestamp: Date;
+    message?: string;
+  }>;
+  paymentIntentId?: string;
+  paymentIntentStripeId?: string;  // Real Stripe pi_... ID
+  paymentVerifiedAt?: Date;
+  fulfilled?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const OrderSchema = new Schema<IOrder>(
+  {
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    user: {
+      type: String,
+      required: true,
+      ref: "User",
+      index: true,
+    },
+    items: [
+      {
+        product: {
+          type: String,
+          ref: "Product",
+          required: true,
+        },
+        name: { type: String, required: true },
+        price: { type: Number, required: true, min: 0 },
+        quantity: { type: Number, required: true, min: 1 },
+        image: String,
+      },
+    ],
+    totalAmount: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    status: {
+      type: String,
+      enum: [
+        "pending",
+        "pending_payment",
+        "confirmed",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled",
+      ],
+      default: "pending",
+      index: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed", "refunded"],
+      default: "pending",
+    },
+    paymentMethod: {
+      type: String,
+      required: true,
+      enum: ["credit_card", "paypal", "cash_on_delivery", "stripe"],
+    },
+    shippingAddress: {
+      fullName: { type: String, required: true },
+      phone: { type: String, required: true },
+      street: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      country: { type: String, default: "Israel" },
+    },
+    trackingHistory: [
+      {
+        status: {
+          type: String,
+          enum: [
+            "pending",
+            "pending_payment",
+            "confirmed",
+            "processing",
+            "shipped",
+            "delivered",
+            "cancelled",
+          ],
+          required: true,
+        },
+        timestamp: { type: Date, default: Date.now },
+        message: String,
+      },
+    ],
+    paymentIntentId: String,
+    paymentIntentStripeId: String,
+    paymentVerifiedAt: Date,
+    fulfilled: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+export const OrderModel = model<IOrder>("Order", OrderSchema);
+```
+
+**מרכיבים חשובים:**
+- `items: [{ product, name, price, quantity }]` - Nested array (denormalization לביצועים)
+- `trackingHistory: [{ status, timestamp, message }]` - היסטוריה של שינויים בהזמנה
+- `paymentIntentStripeId: string` - ID אמיתי מ-Stripe לתחקור webhook
+- `fulfilled: boolean` - סימון גם בוואן ניטענו המוצרים מהמלאי (אטומי)
+
+---
+
+### 1.3.12.3 Payment Service - Webhook Handler (המשך בעמוד הבא)
+
+```typescript
+// payment.service.ts - handleWebhook() - הקור של בטיחות התשלום
+static async handleWebhook(req: Request) {
+  const provider = this.getProvider();
+  
+  // ✅ LAYER 1: Signature verification (inside provider)
+  const result = await provider.handleWebhook(req);
+  
+  // ✅ LAYER 2: Idempotency check - prevent duplicate processing
+  const existingEvent = await WebhookEventModel.findOne({
+    eventId: result.providerPaymentId,
+    provider: provider.name,
+  });
+  
+  if (existingEvent) {
+    // Event already processed - return success so Stripe stops retrying
+    throw new Error(`Webhook event ${result.providerPaymentId} already processed`);
+  }
+  
+  // 🔍 Find payment in database
+  let payment = await PaymentModel.findOne({
+    providerPaymentId: result.providerPaymentId,
+  });
+  
+  // Fallback: Try payment_intent ID
+  if (!payment && result.providerPaymentIntentId) {
+    payment = await PaymentModel.findOne({
+      $or: [
+        { paymentIntentId: result.providerPaymentIntentId },
+        { "meta.payment_intent": result.providerPaymentIntentId },
+      ],
+    });
+  }
+  
+  // Fallback: Try orderId
+  if (!payment && result.orderId) {
+    payment = await PaymentModel.findOne({ order: result.orderId })
+      .sort({ createdAt: -1 });
+  }
+  
+  if (!payment) {
+    throw new Error(
+      `Payment not found for provider ID: ${result.providerPaymentId}`
+    );
+  }
+  
+  // ✅ LAYER 3: Amount verification - CRITICAL security check
+  // Ensure webhook amount matches order amount in OUR database
+  const order = await OrderModel.findById(payment.order);
+  if (!order) {
+    throw new Error(`Order not found: ${payment.order}`);
+  }
+  
+  // Amount from webhook (in cents/smallest unit)
+  const webhookAmount = result.amount;
+  // Amount from our database (in cents)
+  const expectedAmount = Math.round(order.totalAmount * 100);
+  
+  if (webhookAmount !== expectedAmount) {
+    log.error("❌ Amount mismatch - potential attack!", {
+      webhookAmount,
+      expectedAmount,
+      orderId: order._id,
+    });
+    throw new Error(
+      `Amount mismatch: webhook says ${webhookAmount}, expected ${expectedAmount}`
+    );
+  }
+  
+  // ✅ LAYER 4: Atomic transaction - reduce stock atomically
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  
+  try {
+    // Update payment status
+    payment.status = mapToOrderStatus(result.status);
+    payment.paymentVerifiedAt = new Date();
+    payment.meta = result.raw;
+    await payment.save({ session });
+    
+    // Update order status
+    order.paymentStatus = mapToOrderPaymentStatus(result.status);
+    order.status = "confirmed";  // Payment confirmed → ready to process
+    order.trackingHistory.push({
+      status: "confirmed",
+      timestamp: new Date(),
+      message: "Payment verified by Stripe webhook",
+    });
+    await order.save({ session });
+    
+    // Reduce stock atomically for each item
+    for (const item of order.items) {
+      const result = await ProductModel.findOneAndUpdate(
+        {
+          _id: item.product,
+          stock: { $gte: item.quantity }  // ← Condition in query
+        },
+        {
+          $inc: { stock: -item.quantity }  // ← Atomic decrement
+        },
+        { new: true, session }
+      );
+      
+      if (!result) {
+        throw new Error(
+          `Insufficient stock for product ${item.product}`
+        );
+      }
+    }
+    
+    // Mark webhook as processed (idempotency)
+    await WebhookEventModel.create(
+      [
+        {
+          eventId: result.providerPaymentId,
+          eventType: result.eventType,
+          provider: provider.name,
+          orderId: order._id,
+          processedAt: new Date(),
+        },
+      ],
+      { session }
+    );
+    
+    await session.commitTransaction();
+    
+    log.info("✅ Webhook processed successfully", {
+      orderId: order._id,
+      amount: webhookAmount,
+    });
+    
+  } catch (error) {
+    await session.abortTransaction();
+    throw error;
+  } finally {
+    session.endSession();
+  }
+  
+  return {
+    eventType: result.eventType,
+    status: "processed",
+  };
+}
+```
+
+**שכבות בטיחות:**
+- **Layer 1 (Signature):** Stripe חותמת ב-HMAC-SHA256 → אנחנו מאמתים חתימה
+- **Layer 2 (Idempotency):** Track `eventId` ב-DB → אם כבר ראינו את הイחועה, דילג
+- **Layer 3 (Amount):** חזק חתימה בדוק שהסכום מתאים ל-DB שלנו (הגנה מפני compromised Stripe)
+- **Layer 4 (Transactions):** MongoDB transaction → אם stock נגמר, rollback הכל
+
+---
+
+### 1.3.12.4 Auth Controller - Login עם Account Lockout
+
+```typescript
+// auth.controller.ts - Login method with rate limiting & lockout
+static login = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  
+  // Find user by email
+  const user = await UserModel.findByEmail(email).select("+password");
+  
+  if (!user) {
+    return sendError(res, 401, "Invalid email or password");
+  }
+  
+  // ✅ Check if account is locked
+  if (user.lockedUntil && user.lockedUntil > new Date()) {
+    const remainingMinutes = Math.ceil(
+      (user.lockedUntil.getTime() - Date.now()) / 60000
+    );
+    log.warn("Account locked - login attempt", {
+      email,
+      remainingMinutes,
+    });
+    return sendError(
+      res,
+      423,  // 423 Locked
+      `Account locked. Try again in ${remainingMinutes} minutes.`
+    );
+  }
+  
+  // ✅ Compare password
+  const isPasswordValid = await user.comparePassword(password);
+  
+  if (!isPasswordValid) {
+    // Increment failed attempts
+    user.failedLoginAttempts += 1;
+    
+    // Lock account if 5 failed attempts
+    if (user.failedLoginAttempts >= 5) {
+      user.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);  // 15 minutes
+      log.error("Account locked - too many attempts", {
+        email,
+        attempts: user.failedLoginAttempts,
+      });
+    }
+    
+    await user.save();
+    
+    return sendError(res, 401, "Invalid email or password");
+  }
+  
+  // ✅ Password correct - reset failed attempts
+  user.failedLoginAttempts = 0;
+  user.lockedUntil = null;
+  user.lastLogin = new Date();
+  await user.save();
+  
+  // ✅ Generate JWT with tokenVersion
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      tokenVersion: user.tokenVersion,  // ← Include version
+    },
+    process.env.JWT_SECRET!,
+    { expiresIn: "1h" }
+  );
+  
+  // Generate refresh token
+  const refreshToken = jwt.sign(
+    {
+      userId: user._id,
+      tokenVersion: user.tokenVersion,
+    },
+    process.env.REFRESH_TOKEN_SECRET!,
+    { expiresIn: "7d" }
+  );
+  
+  // Store refresh token in database or Redis
+  await RefreshTokenModel.create({
+    userId: user._id,
+    token: refreshToken,
+    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  });
+  
+  return sendSuccess(
+    res,
+    {
+      user: user.toJSON(),
+      token,
+      refreshToken,
+    },
+    "Login successful",
+    200
+  );
+});
+
+// ✅ Logout - invalidate all tokens by incrementing tokenVersion
+static logout = asyncHandler(async (req: Request, res: Response) => {
+  const userId = req.userId;
+  
+  const user = await UserModel.findById(userId);
+  if (!user) {
+    return sendError(res, 404, "User not found");
+  }
+  
+  // Increment version → All existing tokens become invalid
+  user.tokenVersion += 1;
+  await user.save();
+  
+  // Optional: Delete refresh tokens
+  await RefreshTokenModel.deleteMany({ userId });
+  
+  log.info("User logged out", {
+    userId,
+    newTokenVersion: user.tokenVersion,
+  });
+  
+  return sendSuccess(res, null, "Logout successful", 200);
+});
+```
+
+**מנגנוני הגנה:**
+- `lockedUntil` - נעילת 15 דקות לאחר 5 ניסיונות כושלים
+- `tokenVersion` - כל logout מגביר את הגרסה → כל הטוקנים הישנים בטלים מיידית
+- `refreshToken` - Stored in DB, ניתן למחוק כל הטוקנים של משתמש בבת אחת
+
+---
+
+### 1.3.12.5 Order Service - Create Order עם MongoDB Transaction
+
+```typescript
+// order.service.ts - Create order with atomic stock reduction
+static async createOrder(userId: string, cartId: string) {
+  const user = await UserModel.findById(userId);
+  if (!user) throw new Error("User not found");
+  
+  const cart = await CartModel.findById(cartId);
+  if (!cart || cart.user.toString() !== userId) {
+    throw new Error("Cart not found");
+  }
+  
+  if (cart.items.length === 0) {
+    throw new Error("Cart is empty");
+  }
+  
+  // ✅ Start atomic transaction
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  
+  try {
+    // Calculate total amount
+    let totalAmount = 0;
+    const orderItems = [];
+    
+    // Verify stock for all items
+    for (const cartItem of cart.items) {
+      const product = await ProductModel.findById(cartItem.product).session(session);
+      
+      if (!product) {
+        throw new Error(`Product not found: ${cartItem.product}`);
+      }
+      
+      if (product.stock < cartItem.quantity) {
+        throw new Error(
+          `Insufficient stock for ${product.name}. Available: ${product.stock}, Requested: ${cartItem.quantity}`
+        );
+      }
+      
+      totalAmount += product.price * cartItem.quantity;
+      
+      orderItems.push({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: cartItem.quantity,
+        image: product.image,
+      });
+    }
+    
+    // Generate unique order number
+    const sequenceDoc = await SequenceModel.findByIdAndUpdate(
+      "orderNumber",
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true, session }
+    );
+    
+    const orderNumber = `ORD-${new Date().getFullYear()}-${String(sequenceDoc.seq).padStart(6, "0")}`;
+    
+    // Create order with pending status
+    const order = await OrderModel.create(
+      [
+        {
+          orderNumber,
+          user: userId,
+          items: orderItems,
+          totalAmount,
+          status: "pending",
+          paymentStatus: "pending",
+          paymentMethod: "stripe",
+          shippingAddress: cart.shippingAddress,
+          trackingHistory: [
+            {
+              status: "pending",
+              timestamp: new Date(),
+              message: "Order created",
+            },
+          ],
+        },
+      ],
+      { session }
+    );
+    
+    // ✅ Atomically reduce stock for all items
+    for (const orderItem of orderItems) {
+      const updateResult = await ProductModel.findOneAndUpdate(
+        {
+          _id: orderItem.product,
+          stock: { $gte: orderItem.quantity }  // ← Condition prevents overselling
+        },
+        {
+          $inc: { stock: -orderItem.quantity }
+        },
+        { new: true, session }
+      );
+      
+      if (!updateResult) {
+        throw new Error(
+          `Failed to reduce stock for ${orderItem.name} (concurrent order?)`
+        );
+      }
+    }
+    
+    // Empty cart
+    cart.items = [];
+    await cart.save({ session });
+    
+    // Commit transaction
+    await session.commitTransaction();
+    
+    log.info("✅ Order created successfully", {
+      orderId: order[0]._id,
+      orderNumber,
+      totalAmount,
+      itemCount: orderItems.length,
+    });
+    
+    return order[0];
+    
+  } catch (error) {
+    // Rollback on error - stock is restored, order is NOT created
+    await session.abortTransaction();
+    log.error("❌ Order creation failed - transaction rolled back", {
+      error: (error as Error).message,
+    });
+    throw error;
+  } finally {
+    session.endSession();
+  }
+}
+```
+
+**תכונות עיקריות:**
+- **Transaction:** כל הפעולות atomically או לא בכלל
+- **Stock verification:** בדיקה כי מספיק stock למוצרים
+- **Stock reduction:** `$gte` condition + `$inc` atomic operator
+- **Rollback:** אם כשל בכלל - כל הפעולות מבוטלות
 
 ---
 

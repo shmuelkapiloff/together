@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AUTH_REQUEST_STRUCTURE_SIMPLE_HE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="auth---מבנה-בקשות-בטבלאות">AUTH - מבנה בקשות בטבלאות</h1>
+<p>מטרה: להבין מהר מה כל endpoint צריך לקבל בבקשה (Request).</p>
+<p>Base Path: /api/auth</p>
+<hr>
+<h2 id="טבלת-על---כל-endpoints-של-auth">טבלת על - כל endpoints של AUTH</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Authorization</th>
+<th>Token - האם נדרש</th>
+<th>Token - מיקום</th>
+<th>Headers חובה</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>מה עובר ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>דוגמת Success Response</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>/register</td>
+<td>POST</td>
+<td>לא</td>
+<td>לא</td>
+<td>אין</td>
+<td>Content-Type: application/json</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>registerSchema (body)</td>
+<td>authRateLimiter</td>
+<td>400, 409, 429</td>
+<td><code>{ success, data: { user, token, refreshToken }, message }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.register -&gt; AuthService.register</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>/login</td>
+<td>POST</td>
+<td>לא</td>
+<td>לא</td>
+<td>אין</td>
+<td>Content-Type: application/json</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>loginSchema (body)</td>
+<td>authRateLimiter</td>
+<td>400, 401, 423, 429</td>
+<td><code>{ success, data: { user, token, refreshToken }, message }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.login -&gt; AuthService.login</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>/forgot-password</td>
+<td>POST</td>
+<td>לא</td>
+<td>לא</td>
+<td>אין</td>
+<td>Content-Type: application/json</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>forgotPasswordSchema (body)</td>
+<td>authRateLimiter</td>
+<td>400, 429</td>
+<td><code>{ success, message }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.forgotPassword -&gt; AuthService.forgotPassword</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>/reset-password/:token</td>
+<td>POST</td>
+<td>לא</td>
+<td>לא</td>
+<td>token הוא URL param, לא JWT auth</td>
+<td>Content-Type: application/json</td>
+<td>token (חובה)</td>
+<td>אין</td>
+<td>יש</td>
+<td>resetPasswordSchema (body) + token check (params)</td>
+<td>authRateLimiter</td>
+<td>400</td>
+<td><code>{ success, message }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.resetPassword -&gt; AuthService.resetPassword</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>/refresh</td>
+<td>POST</td>
+<td>לא</td>
+<td>כן</td>
+<td>body.refreshToken</td>
+<td>Content-Type: application/json</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>בדיקה ידנית ב-controller: refreshToken חובה</td>
+<td>authRateLimiter</td>
+<td>400, 401, 429</td>
+<td><code>{ success, message, data: { token, refreshToken } }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.refreshToken -&gt; AuthService.refreshAccessToken</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>/google</td>
+<td>POST</td>
+<td>לא</td>
+<td>כן</td>
+<td>body.idToken</td>
+<td>Content-Type: application/json</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>בדיקה ידנית ב-controller: idToken חובה</td>
+<td>authRateLimiter</td>
+<td>400, 403, 429</td>
+<td><code>{ success, data: { user, token, refreshToken }, message }</code></td>
+<td><code>authRateLimiter -&gt; AuthController.googleLogin -&gt; findOrCreateGoogleUser</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>/verify</td>
+<td>GET</td>
+<td>כן</td>
+<td>כן</td>
+<td>header Authorization: Bearer &lt;access_token&gt;</td>
+<td>Authorization: Bearer &lt;access_token&gt;</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>authenticate middleware + verifyToken</td>
+<td>authenticate</td>
+<td>401</td>
+<td><code>{ success, data: { user } }</code></td>
+<td><code>authenticate -&gt; AuthController.verify -&gt; AuthService.verifyToken</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>/profile</td>
+<td>GET</td>
+<td>כן</td>
+<td>כן</td>
+<td>header Authorization: Bearer &lt;access_token&gt;</td>
+<td>Authorization: Bearer &lt;access_token&gt;</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>authenticate middleware</td>
+<td>authenticate</td>
+<td>401</td>
+<td><code>{ success, data: { user } }</code></td>
+<td><code>authenticate -&gt; AuthController.getProfile -&gt; AuthService.getProfile</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>/profile</td>
+<td>PUT</td>
+<td>כן</td>
+<td>כן</td>
+<td>header Authorization: Bearer &lt;access_token&gt;</td>
+<td>Authorization + Content-Type</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>authenticate middleware + updateProfileSchema (body)</td>
+<td>authenticate</td>
+<td>400, 401</td>
+<td><code>{ success, data: { user }, message }</code></td>
+<td><code>authenticate -&gt; AuthController.updateProfile -&gt; AuthService.updateProfile</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>/change-password</td>
+<td>POST</td>
+<td>כן</td>
+<td>כן</td>
+<td>header Authorization: Bearer &lt;access_token&gt;</td>
+<td>Authorization + Content-Type</td>
+<td>אין</td>
+<td>אין</td>
+<td>יש</td>
+<td>authenticate middleware + changePasswordSchema (body)</td>
+<td>authenticate</td>
+<td>400, 401</td>
+<td><code>{ success, message }</code></td>
+<td><code>authenticate -&gt; AuthController.changePassword -&gt; AuthService.changePassword</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>/logout</td>
+<td>POST</td>
+<td>כן</td>
+<td>כן</td>
+<td>header Authorization: Bearer &lt;access_token&gt;</td>
+<td>Authorization: Bearer &lt;access_token&gt;</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>authenticate middleware</td>
+<td>authenticate</td>
+<td>401</td>
+<td><code>{ success, message }</code></td>
+<td><code>authenticate -&gt; AuthController.logout -&gt; AuthService.logout</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="טבלאות-body-לפי-endpoint">טבלאות Body לפי Endpoint</h2>
+<h2 id="1-post-register">1) POST /register</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>חובה</td>
+<td>לפחות 2 תווים</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>חובה</td>
+<td>פורמט אימייל תקין</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>חובה</td>
+<td>לפחות 6 תווים</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;name&quot;: &quot;Shmuel&quot;,
+&quot;email&quot;: &quot;shmuel@example.com&quot;,
+&quot;password&quot;: &quot;SecurePass123!&quot;
+}</p>
+<h2 id="2-post-login">2) POST /login</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>חובה</td>
+<td>פורמט אימייל תקין</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>חובה</td>
+<td>לא ריק</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;email&quot;: &quot;shmuel@example.com&quot;,
+&quot;password&quot;: &quot;SecurePass123!&quot;
+}</p>
+<h2 id="3-post-forgot-password">3) POST /forgot-password</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>חובה</td>
+<td>פורמט אימייל תקין</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;email&quot;: &quot;shmuel@example.com&quot;
+}</p>
+<h2 id="4-post-reset-passwordtoken">4) POST /reset-password/:token</h2>
+<table>
+<thead>
+<tr>
+<th>רכיב</th>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>params</td>
+<td>token</td>
+<td>string</td>
+<td>חובה</td>
+<td>נשלח בתוך ה-URL</td>
+</tr>
+<tr>
+<td>body</td>
+<td>password</td>
+<td>string</td>
+<td>חובה</td>
+<td>לפחות 6 תווים</td>
+</tr>
+<tr>
+<td>body</td>
+<td>confirmPassword</td>
+<td>string</td>
+<td>חובה</td>
+<td>חייב להיות זהה ל-password</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה URL:
+POST /api/auth/reset-password/abc123-reset-token</p>
+<p>דוגמה Body:
+{
+&quot;password&quot;: &quot;NewSecurePass123!&quot;,
+&quot;confirmPassword&quot;: &quot;NewSecurePass123!&quot;
+}</p>
+<h2 id="5-post-refresh">5) POST /refresh</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>refreshToken</td>
+<td>string</td>
+<td>חובה</td>
+<td>חייב להישלח בבקשה</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;refreshToken&quot;: &quot;eyJhbGciOi...&quot;
+}</p>
+<h2 id="6-post-google">6) POST /google</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>idToken</td>
+<td>string</td>
+<td>חובה</td>
+<td>Google ID Token</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;idToken&quot;: &quot;google-id-token-from-client&quot;
+}</p>
+<h2 id="7-get-verify">7) GET /verify</h2>
+<table>
+<thead>
+<tr>
+<th>רכיב</th>
+<th>שדה</th>
+<th>חובה/רשות</th>
+<th>ערך צפוי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td>Authorization</td>
+<td>חובה</td>
+<td>Bearer &lt;access_token&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-get-profile">8) GET /profile</h2>
+<table>
+<thead>
+<tr>
+<th>רכיב</th>
+<th>שדה</th>
+<th>חובה/רשות</th>
+<th>ערך צפוי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td>Authorization</td>
+<td>חובה</td>
+<td>Bearer &lt;access_token&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-put-profile">9) PUT /profile</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>רשות</td>
+<td>לפחות 2 תווים</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>רשות</td>
+<td>פורמט אימייל תקין</td>
+</tr>
+</tbody>
+</table>
+<p>כלל חשוב: חייב להיות לפחות שדה אחד בבקשה (name או email).</p>
+<p>דוגמה:
+{
+&quot;name&quot;: &quot;Shmuel K&quot;
+}</p>
+<h2 id="10-post-change-password">10) POST /change-password</h2>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>כלל ולידציה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>currentPassword</td>
+<td>string</td>
+<td>חובה</td>
+<td>לא ריק</td>
+</tr>
+<tr>
+<td>newPassword</td>
+<td>string</td>
+<td>חובה</td>
+<td>לפחות 6 תווים</td>
+</tr>
+<tr>
+<td>confirmPassword</td>
+<td>string</td>
+<td>חובה</td>
+<td>חייב להיות זהה ל-newPassword</td>
+</tr>
+</tbody>
+</table>
+<p>דוגמה:
+{
+&quot;currentPassword&quot;: &quot;OldPass123!&quot;,
+&quot;newPassword&quot;: &quot;NewPass123!&quot;,
+&quot;confirmPassword&quot;: &quot;NewPass123!&quot;
+}</p>
+<h2 id="11-post-logout">11) POST /logout</h2>
+<table>
+<thead>
+<tr>
+<th>רכיב</th>
+<th>שדה</th>
+<th>חובה/רשות</th>
+<th>ערך צפוי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td>Authorization</td>
+<td>חובה</td>
+<td>Bearer &lt;access_token&gt;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="הרחבה-לכל-ה-api-באותו-פורמט">הרחבה לכל ה-API (באותו פורמט)</h2>
+<p>כאן הרחבנו את אותו מבנה לכל המודולים במערכת, כדי לראות את כל הבקשות במקום אחד.</p>
+<hr>
+<h2 id="products-api-apiproducts">PRODUCTS API (<code>/api/products</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>category,minPrice,maxPrice,search,featured,sort</code></td>
+<td>אין</td>
+<td>פרסור query ב-controller</td>
+<td>publicReadRateLimiter</td>
+<td>400</td>
+<td><code>{ success, data: Product[] }</code></td>
+<td><code>publicReadRateLimiter -&gt; ProductController.getProducts -&gt; product.service.listProducts</code></td>
+</tr>
+<tr>
+<td><code>/categories/list</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין ולידציה ייעודית</td>
+<td>publicReadRateLimiter</td>
+<td>400</td>
+<td><code>{ success, data: string[] }</code></td>
+<td><code>publicReadRateLimiter -&gt; ProductController.getCategoriesList -&gt; product.service.getCategories</code></td>
+</tr>
+<tr>
+<td><code>/:id</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td><code>id</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateProductId</code></td>
+<td>publicReadRateLimiter + validateProductId</td>
+<td>400, 404</td>
+<td><code>{ success, data: Product }</code></td>
+<td><code>publicReadRateLimiter -&gt; validateProductId -&gt; ProductController.getProduct</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="cart-api-apicart">CART API (<code>/api/cart</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth + apiRateLimiter</td>
+<td>401</td>
+<td><code>{ success, data: Cart }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.getCart -&gt; CartService.getCart</code></td>
+</tr>
+<tr>
+<td><code>/count</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth + apiRateLimiter</td>
+<td>401</td>
+<td><code>{ success, data: { count } }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.getCartCount</code></td>
+</tr>
+<tr>
+<td><code>/add</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ productId, quantity }</code></td>
+<td>בדיקה ידנית ב-controller + <code>isValidObjectId</code></td>
+<td>requireAuth + apiRateLimiter</td>
+<td>400, 401</td>
+<td><code>{ success, data: Cart, message }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.addToCart -&gt; CartService.addToCart</code></td>
+</tr>
+<tr>
+<td><code>/update</code></td>
+<td>PUT</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ productId, quantity }</code></td>
+<td>בדיקה ידנית ב-controller</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: Cart, message }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.updateQuantity -&gt; CartService.updateQuantity</code></td>
+</tr>
+<tr>
+<td><code>/remove</code></td>
+<td>DELETE</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ productId }</code></td>
+<td>בדיקה ידנית ב-controller</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: Cart, message }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.removeFromCart -&gt; CartService.removeFromCart</code></td>
+</tr>
+<tr>
+<td><code>/clear</code></td>
+<td>DELETE</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth + apiRateLimiter</td>
+<td>401, 500</td>
+<td><code>{ success, data: { userId, items: [], total: 0 }, message }</code></td>
+<td><code>requireAuth -&gt; apiRateLimiter -&gt; CartController.clearCart -&gt; CartService.clearCart</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="orders-api-apiorders">ORDERS API (<code>/api/orders</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/track/:orderId</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td><code>orderId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateOrderId</code></td>
+<td>publicReadRateLimiter + validateOrderId</td>
+<td>400, 404, 429</td>
+<td><code>{ success, data: tracking }</code></td>
+<td><code>publicReadRateLimiter -&gt; validateOrderId -&gt; OrderController.trackOrder</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ shippingAddress, billingAddress?, paymentMethod?, notes? }</code></td>
+<td><code>createOrderSchema</code> + idempotency middleware</td>
+<td>requireAuth + idempotencyMiddleware('order')</td>
+<td>400, 401</td>
+<td><code>{ success, data: { order, payment }, message }</code></td>
+<td><code>requireAuth -&gt; idempotencyMiddleware('order') -&gt; OrderController.createOrder</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>status?</code></td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth</td>
+<td>401</td>
+<td><code>{ success, data: { orders } }</code></td>
+<td><code>requireAuth -&gt; OrderController.getUserOrders -&gt; OrderService.getUserOrders</code></td>
+</tr>
+<tr>
+<td><code>/:orderId</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>orderId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateOrderId</code></td>
+<td>requireAuth + validateOrderId</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: { order } }</code></td>
+<td><code>requireAuth -&gt; validateOrderId -&gt; OrderController.getOrderById</code></td>
+</tr>
+<tr>
+<td><code>/:orderId/cancel</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>orderId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateOrderId</code></td>
+<td>requireAuth + validateOrderId</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: { order }, message }</code></td>
+<td><code>requireAuth -&gt; validateOrderId -&gt; OrderController.cancelOrder</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="addresses-api-apiaddresses">ADDRESSES API (<code>/api/addresses</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth</td>
+<td>401</td>
+<td><code>{ success, data: Address[] }</code></td>
+<td><code>requireAuth -&gt; AddressController.getAddresses -&gt; AddressService.getAddresses</code></td>
+</tr>
+<tr>
+<td><code>/default</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth</td>
+<td>401, 404</td>
+<td><code>{ success, data: Address }</code></td>
+<td><code>requireAuth -&gt; AddressController.getDefaultAddress -&gt; AddressService.getDefaultAddress</code></td>
+</tr>
+<tr>
+<td><code>/:addressId</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>addressId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateAddressId</code></td>
+<td>requireAuth + validateAddressId</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: Address }</code></td>
+<td><code>requireAuth -&gt; validateAddressId -&gt; AddressController.getAddressById</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ fullName, phone, street, city, postalCode, country, isDefault? }</code></td>
+<td><code>addressSchema</code></td>
+<td>requireAuth</td>
+<td>400, 401</td>
+<td><code>{ success, data: Address, message }</code></td>
+<td><code>requireAuth -&gt; AddressController.createAddress -&gt; AddressService.createAddress</code></td>
+</tr>
+<tr>
+<td><code>/:addressId</code></td>
+<td>PUT</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>addressId</code> חובה</td>
+<td>אין</td>
+<td>partial address fields</td>
+<td><code>validateAddressId</code> + <code>updateAddressSchema</code></td>
+<td>requireAuth + validateAddressId</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: Address, message }</code></td>
+<td><code>requireAuth -&gt; validateAddressId -&gt; AddressController.updateAddress</code></td>
+</tr>
+<tr>
+<td><code>/:addressId</code></td>
+<td>DELETE</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>addressId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateAddressId</code></td>
+<td>requireAuth + validateAddressId</td>
+<td>400, 401, 404</td>
+<td><code>204 No Content</code></td>
+<td><code>requireAuth -&gt; validateAddressId -&gt; AddressController.deleteAddress</code></td>
+</tr>
+<tr>
+<td><code>/:addressId/set-default</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>addressId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateAddressId</code></td>
+<td>requireAuth + validateAddressId</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: Address, message }</code></td>
+<td><code>requireAuth -&gt; validateAddressId -&gt; AddressController.setDefaultAddress</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="payments-api-apipayments">PAYMENTS API (<code>/api/payments</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/webhook</code></td>
+<td>POST</td>
+<td>לא (Stripe signature)</td>
+<td>אין JWT</td>
+<td>אין</td>
+<td>אין</td>
+<td>raw body</td>
+<td><code>webhookRateLimiter</code> + signature verify בשירות</td>
+<td>webhookRateLimiter</td>
+<td>400</td>
+<td><code>{ received: true }</code></td>
+<td><code>webhookRateLimiter -&gt; PaymentController.webhook -&gt; PaymentService.handleWebhook</code></td>
+</tr>
+<tr>
+<td><code>/create-intent</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ orderId }</code></td>
+<td><code>validateRequest({ body: createPaymentIntentSchema })</code></td>
+<td>requireAuth + validateRequest(body)</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: { payment, status, clientSecret, checkoutUrl }, message }</code></td>
+<td><code>requireAuth -&gt; validateRequest(body) -&gt; PaymentController.createIntent</code></td>
+</tr>
+<tr>
+<td><code>/checkout</code></td>
+<td>POST</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td><code>{ orderId }</code></td>
+<td><code>validateRequest({ body: createPaymentIntentSchema })</code></td>
+<td>requireAuth + validateRequest(body)</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: { payment, status, clientSecret, checkoutUrl }, message }</code></td>
+<td><code>requireAuth -&gt; validateRequest(body) -&gt; PaymentController.createIntent</code></td>
+</tr>
+<tr>
+<td><code>/:orderId/status</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>orderId</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateRequest({ params: paymentStatusParamsSchema })</code></td>
+<td>requireAuth + validateRequest(params)</td>
+<td>400, 401, 404</td>
+<td><code>{ success, data: statusPayload, message }</code></td>
+<td><code>requireAuth -&gt; validateRequest(params) -&gt; PaymentController.getStatus</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="admin-api-apiadmin">ADMIN API (<code>/api/admin</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/stats/summary</code></td>
+<td>GET</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAdmin</code></td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>401, 403</td>
+<td><code>{ success, data: { stats } }</code></td>
+<td><code>requireAdmin -&gt; apiRateLimiter -&gt; AdminController.getStats</code></td>
+</tr>
+<tr>
+<td><code>/products</code></td>
+<td>GET</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>includeInactive?</code></td>
+<td>אין</td>
+<td><code>requireAdmin</code></td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>401, 403</td>
+<td><code>{ success, data: { products } }</code></td>
+<td><code>requireAdmin -&gt; apiRateLimiter -&gt; AdminController.listProducts</code></td>
+</tr>
+<tr>
+<td><code>/products</code></td>
+<td>POST</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>product payload</td>
+<td>ולידציה עסקית בשירות</td>
+<td>requireAdmin + apiRateLimiter + autoLogAction</td>
+<td>400, 401, 403</td>
+<td><code>{ success, data: { product } }</code></td>
+<td><code>requireAdmin -&gt; apiRateLimiter -&gt; autoLogAction -&gt; AdminController.createProduct</code></td>
+</tr>
+<tr>
+<td><code>/products/:id</code></td>
+<td>PUT</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>id</code> חובה</td>
+<td>אין</td>
+<td>patch payload</td>
+<td><code>validateProductId</code></td>
+<td>requireAdmin + validateProductId + autoLogAction</td>
+<td>400, 401, 403, 404</td>
+<td><code>{ success, data: { product } }</code></td>
+<td><code>requireAdmin -&gt; validateProductId -&gt; autoLogAction -&gt; AdminController.updateProduct</code></td>
+</tr>
+<tr>
+<td><code>/products/:id</code></td>
+<td>DELETE</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>id</code> חובה</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>validateProductId</code></td>
+<td>requireAdmin + validateProductId + autoLogAction</td>
+<td>400, 401, 403, 404</td>
+<td><code>{ success, data: { product }, message }</code></td>
+<td><code>requireAdmin -&gt; validateProductId -&gt; autoLogAction -&gt; AdminController.deleteProduct</code></td>
+</tr>
+<tr>
+<td><code>/users</code></td>
+<td>GET</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>page?,limit?</code></td>
+<td>אין</td>
+<td><code>requireAdmin</code></td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>401, 403</td>
+<td><code>{ success, data: { users, total, page, pages } }</code></td>
+<td><code>requireAdmin -&gt; apiRateLimiter -&gt; AdminController.listUsers</code></td>
+</tr>
+<tr>
+<td><code>/users/:id/role</code></td>
+<td>PUT</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>id</code> חובה</td>
+<td>אין</td>
+<td><code>{ role }</code></td>
+<td><code>validateObjectId('id')</code></td>
+<td>requireAdmin + validateObjectId + autoLogAction</td>
+<td>400, 401, 403, 404</td>
+<td><code>{ success, data: { user } }</code></td>
+<td><code>requireAdmin -&gt; validateObjectId -&gt; autoLogAction -&gt; AdminController.updateUserRole</code></td>
+</tr>
+<tr>
+<td><code>/orders</code></td>
+<td>GET</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>status?,userId?</code></td>
+<td>אין</td>
+<td><code>requireAdmin</code></td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>401, 403</td>
+<td><code>{ success, data: { orders } }</code></td>
+<td><code>requireAdmin -&gt; apiRateLimiter -&gt; AdminController.listOrders</code></td>
+</tr>
+<tr>
+<td><code>/orders/:id/status</code></td>
+<td>PUT</td>
+<td>כן (Admin)</td>
+<td><code>Authorization Bearer</code></td>
+<td><code>id</code> חובה</td>
+<td>אין</td>
+<td><code>{ status, message? }</code></td>
+<td><code>validateObjectId('id')</code></td>
+<td>requireAdmin + validateObjectId + autoLogAction</td>
+<td>400, 401, 403, 404</td>
+<td><code>{ success, data: { order } }</code></td>
+<td><code>requireAdmin -&gt; validateObjectId -&gt; autoLogAction -&gt; AdminController.updateOrderStatus</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="health--metrics-api">HEALTH + METRICS API</h2>
+<h3 id="health">Health</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/health</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>500</td>
+<td><code>{ success, status, timestamp }</code></td>
+<td><code>app route -&gt; inline handler</code></td>
+</tr>
+<tr>
+<td><code>/api/health</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>500</td>
+<td><code>{ success, data: { status, mongodb, redis, webhooks, uptime } }</code></td>
+<td><code>HealthController.getHealth</code></td>
+</tr>
+<tr>
+<td><code>/api/health/ping</code></td>
+<td>GET</td>
+<td>לא</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td>500</td>
+<td><code>{ success, message: 'pong', data: { time } }</code></td>
+<td><code>HealthController.ping</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="metrics-apimetrics">Metrics (<code>/api/metrics</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Token</th>
+<th>URL Params</th>
+<th>Query</th>
+<th>Body</th>
+<th>ולידציה</th>
+<th>Middleware</th>
+<th>שגיאות נפוצות</th>
+<th>Success (קצר)</th>
+<th>שכבות (בקצרה)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/payment</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>lastN?</code></td>
+<td>אין</td>
+<td><code>requireAuth</code> + parseInt query</td>
+<td>requireAuth</td>
+<td>401</td>
+<td><code>{ success, data: PaymentMetrics }</code></td>
+<td><code>requireAuth -&gt; metrics.controller inline -&gt; PaymentMetricsService.getMetrics</code></td>
+</tr>
+<tr>
+<td><code>/webhook</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td><code>lastN?</code></td>
+<td>אין</td>
+<td><code>requireAuth</code> + parseInt query</td>
+<td>requireAuth</td>
+<td>401</td>
+<td><code>{ success, data: WebhookMetrics }</code></td>
+<td><code>requireAuth -&gt; metrics.controller inline -&gt; PaymentMetricsService.getWebhookMetrics</code></td>
+</tr>
+<tr>
+<td><code>/all</code></td>
+<td>GET</td>
+<td>כן</td>
+<td><code>Authorization Bearer</code></td>
+<td>אין</td>
+<td>אין</td>
+<td>אין</td>
+<td><code>requireAuth</code></td>
+<td>requireAuth</td>
+<td>401</td>
+<td><code>{ success, data: ExportedMetrics }</code></td>
+<td><code>requireAuth -&gt; metrics.controller inline -&gt; PaymentMetricsService.exportMetrics</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="הרחבה-אפשרית-לסבב-הבא">הרחבה אפשרית לסבב הבא</h2>
+<ul>
+<li>עמודת Error Response Example לכל שגיאה מרכזית</li>
+<li>עמודת Status Code Success (200/201/204)</li>
+<li>עמודת הערות עסקיות (למה endpoint הזה חשוב ל-flow)</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REQUEST_LAYER_FLOW_DEEP_DIVE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="request-layer-flow-deep-dive">Request Layer Flow Deep Dive</h1>
+<p>מטרה: לתעד בצורה עמוקה את הזרימה של בקשה דרך כל שכבות השרת, כולל חוזה קלט (מה חובה ומה רשות), לוגיקה פנימית, תלויות, שגיאות ותוצר סופי.</p>
+<hr>
+<h2 id="endpoint-01-לפי-סדר-לוגי-הרשמת-משתמש">Endpoint 01 (לפי סדר לוגי): הרשמת משתמש</h2>
+<p>שם תרחיש: משתמש חדש נרשם למערכת</p>
+<p>Method: POST<br>
+Path: /api/auth/register<br>
+Full URL (שרת מקומי): http://localhost:5000/api/auth/register<br>
+Auth: לא נדרש<br>
+Rate limit: כן, authRateLimiter</p>
+<hr>
+<h2 id="1-חוזה-בקשה-מפורט-input-contract">1) חוזה בקשה מפורט (Input Contract)</h2>
+<h3 id="11-body-json">1.1 Body JSON</h3>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>סוג</th>
+<th>חובה/רשות</th>
+<th>חוקי ולידציה</th>
+<th>הערות עומק</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>חובה</td>
+<td>מינימום 2 תווים</td>
+<td>נשמר ב-User.name</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>חובה</td>
+<td>חייב פורמט אימייל תקין</td>
+<td>מנורמל ל-lowercase לפני שמירה</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>חובה</td>
+<td>מינימום 6 תווים</td>
+<td>יעבור hashing ב-pre-save middleware</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-שדות-שנשלחים-אך-לא-נצרכים-ב-register-הנוכחי">1.2 שדות שנשלחים אך לא נצרכים ב-Register הנוכחי</h3>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>מצב בפועל</th>
+<th>השפעה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>confirmPassword</td>
+<td>לא מוגדר בסכימת registerSchema</td>
+<td>לא נלקח ל-service (מתעלם)</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>לא מוגדר בסכימת registerSchema</td>
+<td>לא נלקח ל-service (מתעלם)</td>
+</tr>
+<tr>
+<td>כל שדה נוסף</td>
+<td>לא מוגדר בסכימת registerSchema</td>
+<td>לא נלקח ל-service (מתעלם)</td>
+</tr>
+</tbody>
+</table>
+<p>הערת עומק: בזרימה הנוכחית, נקודת הכניסה היא parse על registerSchema ולכן רק name/email/password ממשיכים הלאה.</p>
+<h3 id="13-headersparamsquery">1.3 Headers/Params/Query</h3>
+<table>
+<thead>
+<tr>
+<th>רכיב</th>
+<th>חובה/רשות</th>
+<th>ערך נדרש</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authorization</td>
+<td>לא נדרש</td>
+<td>אין</td>
+</tr>
+<tr>
+<td>URL params</td>
+<td>אין</td>
+<td>אין</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td>אין</td>
+<td>אין</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>מומלץ</td>
+<td>application/json</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-שכבות-הזרימה-layer-by-layer">2) שכבות הזרימה (Layer by Layer)</h2>
+<h2 id="21-שכבת-app-גלובלית-לפני-router">2.1 שכבת App גלובלית (לפני Router)</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>helmet</td>
+<td>src/app.ts</td>
+<td>מוסיף Security Headers</td>
+<td>HTTP Request</td>
+<td>Response headers קשיחים יותר</td>
+<td>לרוב לא נכשל בתרחיש תקין</td>
+</tr>
+<tr>
+<td>2</td>
+<td>corsConfig</td>
+<td>src/app.ts</td>
+<td>בודק הרשאות CORS</td>
+<td>Origin/Method/Header</td>
+<td>מאשר/חוסם cross-origin</td>
+<td>חסימת CORS בדפדפן</td>
+</tr>
+<tr>
+<td>3</td>
+<td>express.json</td>
+<td>src/app.ts</td>
+<td>פרסור JSON body</td>
+<td>Raw body</td>
+<td>req.body אובייקט</td>
+<td>JSON לא תקין או גדול מדי</td>
+</tr>
+<tr>
+<td>4</td>
+<td>express.urlencoded</td>
+<td>src/app.ts</td>
+<td>תמיכה ב-urlencoded</td>
+<td>Form body</td>
+<td>req.body</td>
+<td>לא רלוונטי ל-JSON רגיל</td>
+</tr>
+<tr>
+<td>5</td>
+<td>requestIdMiddleware</td>
+<td>src/app.ts</td>
+<td>יוצר מזהה בקשה</td>
+<td>req</td>
+<td>X-Request-ID + הקשר לוגים</td>
+<td>ללא השפעה עסקית</td>
+</tr>
+<tr>
+<td>6</td>
+<td>auditLoggingMiddleware</td>
+<td>src/app.ts</td>
+<td>מעשיר context audit</td>
+<td>IP, UA</td>
+<td>נתוני מעקב</td>
+<td>ללא השפעה עסקית</td>
+</tr>
+<tr>
+<td>7</td>
+<td>requestLoggerMiddleware</td>
+<td>src/app.ts</td>
+<td>לוג בקשה/תגובה</td>
+<td>req/res</td>
+<td>תיעוד מלא בלוגים</td>
+<td>ללא השפעה עסקית</td>
+</tr>
+<tr>
+<td>8</td>
+<td>metricsMiddleware</td>
+<td>src/app.ts</td>
+<td>מדדי Prometheus</td>
+<td>req/res</td>
+<td>counters/histograms</td>
+<td>ללא השפעה עסקית</td>
+</tr>
+</tbody>
+</table>
+<h2 id="22-שכבת-routing">2.2 שכבת Routing</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>route mount</td>
+<td>src/app.ts</td>
+<td>ממפה /api/auth ל-authRoutes</td>
+<td>path</td>
+<td>מעביר ל-router נכון</td>
+<td>404 אם path שגוי</td>
+</tr>
+<tr>
+<td>10</td>
+<td>auth route</td>
+<td>src/routes/auth.routes.ts</td>
+<td>מזהה POST /register</td>
+<td>method + path</td>
+<td>מפעיל middleware+controller</td>
+<td>404/405 אם מתודה שגויה</td>
+</tr>
+</tbody>
+</table>
+<h2 id="23-שכבת-middleware-ייעודית-ל-endpoint">2.3 שכבת Middleware ייעודית ל-endpoint</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>authRateLimiter</td>
+<td>src/middlewares/rate-limiter.middleware.ts</td>
+<td>מגביל ניסיונות על auth endpoints</td>
+<td>req.ip (או userId אם קיים)</td>
+<td>מאפשר/חוסם המשך</td>
+<td>429 RATE_LIMITED</td>
+</tr>
+</tbody>
+</table>
+<p>מדיניות בתרחיש זה: אם חרגנו מהחלון המותר, מוחזר 429 עם success=false וקוד RATE_LIMITED.</p>
+<h2 id="24-שכבת-controller">2.4 שכבת Controller</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12</td>
+<td>asyncHandler wrapper</td>
+<td>src/utils/asyncHandler.ts</td>
+<td>עוטף שגיאות async ומעביר ל-error middleware</td>
+<td>Promise errors</td>
+<td>next(error) במקום crash</td>
+<td>ללא wrapper עלול להיות unhandled rejection</td>
+</tr>
+<tr>
+<td>13</td>
+<td>AuthController.register</td>
+<td>src/controllers/auth.controller.ts</td>
+<td>parse ל-body ואז קריאה ל-service</td>
+<td>req.body</td>
+<td>response 201 עם data</td>
+<td>Zod validation error 400</td>
+</tr>
+</tbody>
+</table>
+<p>פירוק Controller.register:</p>
+<ol>
+<li>registerSchema.parse על req.body</li>
+<li>AuthService.register עם נתונים שעברו ולידציה</li>
+<li>מחזיר 201 עם success=true, data=result, message</li>
+</ol>
+<h2 id="25-שכבת-validation">2.5 שכבת Validation</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>חוקים</th>
+<th>כישלון</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>registerSchema (Zod)</td>
+<td>src/validators/auth.validator.ts</td>
+<td>מאמת name/email/password</td>
+<td>name min 2, email format, password min 6</td>
+<td>ZodError -&gt; 400 VALIDATION_ERROR</td>
+</tr>
+</tbody>
+</table>
+<h2 id="26-שכבת-service-business-logic">2.6 שכבת Service (Business Logic)</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>AuthService.register</td>
+<td>src/services/auth.service.ts</td>
+<td>לוגיקת הרשמה מלאה</td>
+<td>CreateUserInput</td>
+<td>user + token + refreshToken</td>
+<td>409 CONFLICT אם אימייל קיים</td>
+</tr>
+</tbody>
+</table>
+<p>פירוק לוגי בתוך AuthService.register:</p>
+<ol>
+<li>חיפוש משתמש קיים לפי email lowercase</li>
+<li>אם קיים: זריקת ApiError עם 409 ו-code CONFLICT</li>
+<li>יצירת משתמש חדש ב-UserModel.create</li>
+<li>הנפקת access token עם tokenVersion נוכחי</li>
+<li>הנפקת refresh token עם tokenVersion נוכחי</li>
+<li>עדכון lastLogin ושמירה</li>
+<li>החזרת sanitizeUser + tokens</li>
+</ol>
+<h2 id="27-שכבת-model--mongodb">2.7 שכבת Model + MongoDB</h2>
+<table>
+<thead>
+<tr>
+<th>סדר</th>
+<th>שכבה</th>
+<th>קובץ</th>
+<th>מה היא עושה</th>
+<th>קלט</th>
+<th>פלט/השפעה</th>
+<th>תקלות אפשריות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>UserModel.create</td>
+<td>src/models/user.model.ts</td>
+<td>יוצר מסמך משתמש חדש</td>
+<td>name/email/password</td>
+<td>מסמך חדש ב-collection users</td>
+<td>duplicate key, schema validation</td>
+</tr>
+<tr>
+<td>17</td>
+<td>pre-save hash</td>
+<td>src/models/user.model.ts</td>
+<td>מבצע hashing לסיסמה</td>
+<td>password raw</td>
+<td>password hashed עם bcrypt salt 12</td>
+<td>כשל hashing נדיר</td>
+</tr>
+<tr>
+<td>18</td>
+<td>timestamps/toJSON transform</td>
+<td>src/models/user.model.ts</td>
+<td>מוסיף createdAt/updatedAt ומסתיר שדות רגישים</td>
+<td>doc</td>
+<td>output נקי לצרכן</td>
+<td>ללא השפעה על persistence</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-שכבת-error-handling-חוצה-מערכת">3) שכבת Error Handling חוצה מערכת</h2>
+<table>
+<thead>
+<tr>
+<th>מקור שגיאה</th>
+<th>דוגמה</th>
+<th>תרגום ל-HTTP</th>
+<th>מבנה תגובה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ApiError</td>
+<td>duplicate email</td>
+<td>statusCode מהשגיאה (למשל 409)</td>
+<td>success=false, message, errors, code</td>
+</tr>
+<tr>
+<td>ZodError</td>
+<td>email לא תקין</td>
+<td>400</td>
+<td>success=false, message=Validation failed, errors, code=VALIDATION_ERROR</td>
+</tr>
+<tr>
+<td>שגיאה כללית</td>
+<td>DB/network runtime</td>
+<td>500 (או status קיים)</td>
+<td>success=false, code=INTERNAL_ERROR</td>
+</tr>
+</tbody>
+</table>
+<p>error middleware: src/middlewares/error.middleware.ts</p>
+<hr>
+<h2 id="4-תגובות-צפויות-response-contract">4) תגובות צפויות (Response Contract)</h2>
+<h3 id="41-success-201">4.1 Success 201</h3>
+<table>
+<thead>
+<tr>
+<th>שדה</th>
+<th>תיאור</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td>true</td>
+</tr>
+<tr>
+<td>data.user</td>
+<td>פרטי משתמש מסוננים (ללא password)</td>
+</tr>
+<tr>
+<td>data.token</td>
+<td>JWT access token</td>
+</tr>
+<tr>
+<td>data.refreshToken</td>
+<td>JWT refresh token</td>
+</tr>
+<tr>
+<td>message</td>
+<td>User registered successfully</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-error-400">4.2 Error 400</h3>
+<table>
+<thead>
+<tr>
+<th>סיבה</th>
+<th>דוגמה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>שדה חסר/לא תקין</td>
+<td>email חסר, name קצר מדי, password קצר מדי</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-error-409">4.3 Error 409</h3>
+<table>
+<thead>
+<tr>
+<th>סיבה</th>
+<th>דוגמה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>אימייל כבר קיים</td>
+<td>אותו email נרשם כבר במערכת</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-error-429">4.4 Error 429</h3>
+<table>
+<thead>
+<tr>
+<th>סיבה</th>
+<th>דוגמה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>קצב בקשות גבוה מדי</td>
+<td>יותר מדי ניסיונות הרשמה בפרק זמן מוגדר</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-מטריצת-מעקב-תמציתית-request-trace-matrix">5) מטריצת מעקב תמציתית (Request Trace Matrix)</h2>
+<table>
+<thead>
+<tr>
+<th>שלב</th>
+<th>Endpoint</th>
+<th>שכבה</th>
+<th>קומפוננטה</th>
+<th>חובה/רשות רלוונטי בשלב</th>
+<th>תוצאה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>POST /api/auth/register</td>
+<td>App Global</td>
+<td>helmet/cors/parsers/logging/metrics</td>
+<td>Body JSON תקין (מעשית חובה)</td>
+<td>ממשיך ל-router</td>
+</tr>
+<tr>
+<td>2</td>
+<td>POST /api/auth/register</td>
+<td>Route</td>
+<td>authRoutes.register</td>
+<td>Method=POST, Path נכון</td>
+<td>ממשיך ל-rate limiter</td>
+</tr>
+<tr>
+<td>3</td>
+<td>POST /api/auth/register</td>
+<td>Middleware</td>
+<td>authRateLimiter</td>
+<td>לא תלוי ב-body, תלוי בקצב לפי IP</td>
+<td>429 או ממשיך</td>
+</tr>
+<tr>
+<td>4</td>
+<td>POST /api/auth/register</td>
+<td>Controller</td>
+<td>AuthController.register</td>
+<td>name/email/password חובה</td>
+<td>parse + קריאה ל-service</td>
+</tr>
+<tr>
+<td>5</td>
+<td>POST /api/auth/register</td>
+<td>Validation</td>
+<td>registerSchema</td>
+<td>name&gt;=2, email תקין, password&gt;=6</td>
+<td>400 או ממשיך</td>
+</tr>
+<tr>
+<td>6</td>
+<td>POST /api/auth/register</td>
+<td>Service</td>
+<td>AuthService.register</td>
+<td>email לא קיים</td>
+<td>409 או יצירה</td>
+</tr>
+<tr>
+<td>7</td>
+<td>POST /api/auth/register</td>
+<td>Model/DB</td>
+<td>UserModel + pre-save hash</td>
+<td>password נשמר hashed</td>
+<td>יצירת משתמש + timestamps</td>
+</tr>
+<tr>
+<td>8</td>
+<td>POST /api/auth/register</td>
+<td>Response</td>
+<td>Controller output</td>
+<td>success payload</td>
+<td>201 עם user+token+refreshToken</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="6-בדיקות-מהירות-לולידציה-ידנית">6) בדיקות מהירות לולידציה ידנית</h2>
+<h3 id="case-a-בקשה-תקינה">Case A: בקשה תקינה</h3>
+<p>Body:
+{
+&quot;name&quot;: &quot;Test User&quot;,
+&quot;email&quot;: &quot;test.user@example.com&quot;,
+&quot;password&quot;: &quot;SecurePass123!&quot;
+}</p>
+<p>צפוי:
+201 + success=true + data.token + data.refreshToken</p>
+<h3 id="case-b-אימייל-חסר">Case B: אימייל חסר</h3>
+<p>Body:
+{
+&quot;name&quot;: &quot;Test User&quot;,
+&quot;password&quot;: &quot;SecurePass123!&quot;
+}</p>
+<p>צפוי:
+400 + code=VALIDATION_ERROR</p>
+<h3 id="case-c-אימייל-כפול">Case C: אימייל כפול</h3>
+<p>Body:
+{
+&quot;name&quot;: &quot;Another User&quot;,
+&quot;email&quot;: &quot;test.user@example.com&quot;,
+&quot;password&quot;: &quot;SecurePass123!&quot;
+}</p>
+<p>צפוי:
+409 + code=CONFLICT</p>
+<hr>
+<h2 id="7-תבנית-להמשך-לשכפול-לכל-endpoint-הבא">7) תבנית להמשך (לשכפול לכל endpoint הבא)</h2>
+<p>להמשך העבודה על כל שאר האנדפוינטים, נשכפל את אותו מבנה:</p>
+<ol>
+<li>Endpoint metadata</li>
+<li>Input Contract (חובה/רשות)</li>
+<li>Layer by Layer flow</li>
+<li>Error mapping</li>
+<li>Response Contract</li>
+<li>Request Trace Matrix</li>
+<li>Validation cases</li>
+</ol>
+<p>ה-endpoint הבא בסדר לוגי מוצע: POST /api/auth/login</p>
+
+</body>
+</html>

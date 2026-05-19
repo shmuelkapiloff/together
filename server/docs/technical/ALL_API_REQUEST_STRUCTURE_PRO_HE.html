@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ALL_API_REQUEST_STRUCTURE_PRO_HE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="all-api---request-structure-professional-he">ALL API - Request Structure Professional (HE)</h1>
+<p>מטרה: מסמך מקצועי אחד שמציג גם את סדר ה-flow העסקי וגם את חוזה ה-API המלא, בלי לפספס פרטים.</p>
+<p>Scope: Auth, Products, Cart, Orders, Addresses, Payments, Admin, Health, Metrics.</p>
+<hr>
+<h2 id="1-flow-ראשון-מה-קורה-ובאיזה-סדר">1) Flow ראשון: מה קורה ובאיזה סדר</h2>
+<h3 id="11-הרשמההתחברות-משתמש">1.1 הרשמה/התחברות משתמש</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Actor</th>
+<th>Middleware קריטי</th>
+<th>Output לשלב הבא</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>/api/auth/register</td>
+<td>POST</td>
+<td>Client</td>
+<td>authRateLimiter</td>
+<td>token + refreshToken + user</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>/api/auth/login</td>
+<td>POST</td>
+<td>Client</td>
+<td>authRateLimiter</td>
+<td>token + refreshToken + user</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>/api/auth/verify</td>
+<td>GET</td>
+<td>Client</td>
+<td>authenticate</td>
+<td>user context מאומת</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>/api/auth/profile</td>
+<td>GET/PUT</td>
+<td>Client</td>
+<td>authenticate</td>
+<td>user profile מעודכן</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>/api/auth/refresh</td>
+<td>POST</td>
+<td>Client</td>
+<td>authRateLimiter</td>
+<td>access token חדש</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>/api/auth/logout</td>
+<td>POST</td>
+<td>Client</td>
+<td>authenticate</td>
+<td>session/token invalidation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-מסע-רכישה-מלא-catalog---cart---order---payment">1.2 מסע רכישה מלא (Catalog -&gt; Cart -&gt; Order -&gt; Payment)</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Actor</th>
+<th>Middleware קריטי</th>
+<th>Output לשלב הבא</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>/api/products</td>
+<td>GET</td>
+<td>Client</td>
+<td>publicReadRateLimiter</td>
+<td>רשימת מוצרים</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>/api/products/:id</td>
+<td>GET</td>
+<td>Client</td>
+<td>publicReadRateLimiter + validateProductId</td>
+<td>פרטי מוצר</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>/api/cart/add</td>
+<td>POST</td>
+<td>Client</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>cart מעודכן</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>/api/cart</td>
+<td>GET</td>
+<td>Client</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>cart סופי לתשלום</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>/api/orders</td>
+<td>POST</td>
+<td>Client</td>
+<td>requireAuth + idempotencyMiddleware('order')</td>
+<td>order pending_payment</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>/api/payments/create-intent</td>
+<td>POST</td>
+<td>Client</td>
+<td>requireAuth + validateRequest(body)</td>
+<td>clientSecret/checkoutUrl</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>/api/payments/webhook</td>
+<td>POST</td>
+<td>Stripe</td>
+<td>webhookRateLimiter + signature verification</td>
+<td>אישור/כשל תשלום</td>
+</tr>
+<tr>
+<td>C8</td>
+<td>/api/payments/:orderId/status</td>
+<td>GET</td>
+<td>Client</td>
+<td>requireAuth + validateRequest(params)</td>
+<td>סטטוס תשלום מעודכן</td>
+</tr>
+<tr>
+<td>C9</td>
+<td>/api/orders/:orderId</td>
+<td>GET</td>
+<td>Client</td>
+<td>requireAuth + validateOrderId</td>
+<td>order state final</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-תפעול-וניהול">1.3 תפעול וניהול</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Actor</th>
+<th>Middleware קריטי</th>
+<th>Output לשלב הבא</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O1</td>
+<td>/api/admin/stats/summary</td>
+<td>GET</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>KPI dashboard</td>
+</tr>
+<tr>
+<td>O2</td>
+<td>/api/admin/products</td>
+<td>POST/PUT/DELETE</td>
+<td>Admin</td>
+<td>requireAdmin + validations + autoLogAction</td>
+<td>catalog management</td>
+</tr>
+<tr>
+<td>O3</td>
+<td>/api/admin/orders/:id/status</td>
+<td>PUT</td>
+<td>Admin</td>
+<td>requireAdmin + validateObjectId + autoLogAction</td>
+<td>lifecycle update</td>
+</tr>
+<tr>
+<td>O4</td>
+<td>/api/health, /health</td>
+<td>GET</td>
+<td>Ops/Monitoring</td>
+<td>none</td>
+<td>service health</td>
+</tr>
+<tr>
+<td>O5</td>
+<td>/api/metrics/*</td>
+<td>GET</td>
+<td>Internal user</td>
+<td>requireAuth</td>
+<td>payment/webhook metrics</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-endpoint-contract-מלא-מקור-אמת">2) Endpoint Contract מלא (מקור אמת)</h2>
+<p>Legend:</p>
+<ul>
+<li>Auth: None | Bearer | Admin</li>
+<li>Idempotency: Yes/No</li>
+<li>RL: Rate limit layer</li>
+</ul>
+<h3 id="21-auth-apiauth">2.1 AUTH (<code>/api/auth</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/register</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>body: name,email,password</td>
+<td>registerSchema</td>
+<td>201 + user/token/refreshToken</td>
+<td>400,409,429</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/login</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>body: email,password</td>
+<td>loginSchema</td>
+<td>200 + user/token/refreshToken</td>
+<td>400,401,423,429</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/forgot-password</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>body: email</td>
+<td>forgotPasswordSchema</td>
+<td>200 + success message</td>
+<td>400,429</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/reset-password/:token</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>params: token, body: password,confirmPassword</td>
+<td>resetPasswordSchema + token param check</td>
+<td>200 + success message</td>
+<td>400</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/refresh</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>body: refreshToken</td>
+<td>manual controller check</td>
+<td>200 + new token pair</td>
+<td>400,401,429</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/google</td>
+<td>POST</td>
+<td>None</td>
+<td>authRateLimiter</td>
+<td>body: idToken</td>
+<td>manual controller check</td>
+<td>200 + user/token/refreshToken</td>
+<td>400,403,429</td>
+<td>No</td>
+<td>authRateLimiter</td>
+</tr>
+<tr>
+<td>/verify</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>authenticate</td>
+<td>header: Authorization</td>
+<td>authenticate + verifyToken</td>
+<td>200 + user</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/profile</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>authenticate</td>
+<td>header: Authorization</td>
+<td>authenticate</td>
+<td>200 + user</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/profile</td>
+<td>PUT</td>
+<td>Bearer</td>
+<td>authenticate</td>
+<td>header + body: name/email</td>
+<td>updateProfileSchema</td>
+<td>200 + user + message</td>
+<td>400,401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/change-password</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>authenticate</td>
+<td>header + body: currentPassword,newPassword,confirmPassword</td>
+<td>changePasswordSchema</td>
+<td>200 + message</td>
+<td>400,401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/logout</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>authenticate</td>
+<td>header: Authorization</td>
+<td>authenticate</td>
+<td>200 + message</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-products-apiproducts">2.2 PRODUCTS (<code>/api/products</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>GET</td>
+<td>None</td>
+<td>publicReadRateLimiter</td>
+<td>query: category,minPrice,maxPrice,search,featured,sort</td>
+<td>controller query parsing</td>
+<td>200 + Product[]</td>
+<td>400</td>
+<td>No</td>
+<td>publicReadRateLimiter</td>
+</tr>
+<tr>
+<td>/categories/list</td>
+<td>GET</td>
+<td>None</td>
+<td>publicReadRateLimiter</td>
+<td>none</td>
+<td>none</td>
+<td>200 + string[]</td>
+<td>400</td>
+<td>No</td>
+<td>publicReadRateLimiter</td>
+</tr>
+<tr>
+<td>/:id</td>
+<td>GET</td>
+<td>None</td>
+<td>publicReadRateLimiter + validateProductId</td>
+<td>params: id</td>
+<td>validateProductId</td>
+<td>200 + Product</td>
+<td>400,404</td>
+<td>No</td>
+<td>publicReadRateLimiter</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-cart-apicart">2.3 CART (<code>/api/cart</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + Cart</td>
+<td>401</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/count</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + {count}</td>
+<td>401</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/add</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>body: productId,quantity</td>
+<td>manual + ObjectId check + quantity&gt;0</td>
+<td>200 + Cart + message</td>
+<td>400,401</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/update</td>
+<td>PUT</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>body: productId,quantity</td>
+<td>manual controller checks</td>
+<td>200 + Cart + message</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/remove</td>
+<td>DELETE</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>body: productId</td>
+<td>manual controller checks</td>
+<td>200 + Cart + message</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/clear</td>
+<td>DELETE</td>
+<td>Bearer</td>
+<td>requireAuth + apiRateLimiter</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + empty cart + message</td>
+<td>401,500</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-orders-apiorders">2.4 ORDERS (<code>/api/orders</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/track/:orderId</td>
+<td>GET</td>
+<td>None</td>
+<td>publicReadRateLimiter + validateOrderId</td>
+<td>params: orderId</td>
+<td>validateOrderId</td>
+<td>200 + tracking</td>
+<td>400,404,429</td>
+<td>No</td>
+<td>publicReadRateLimiter</td>
+</tr>
+<tr>
+<td>/</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + idempotencyMiddleware('order')</td>
+<td>body: shippingAddress,billingAddress?,paymentMethod?,notes?</td>
+<td>createOrderSchema</td>
+<td>201 + {order,payment}</td>
+<td>400,401</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>query: status?</td>
+<td>requireAuth</td>
+<td>200 + orders</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:orderId</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth + validateOrderId</td>
+<td>params: orderId</td>
+<td>validateOrderId</td>
+<td>200 + order</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:orderId/cancel</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + validateOrderId</td>
+<td>params: orderId</td>
+<td>validateOrderId</td>
+<td>200 + order + message</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-addresses-apiaddresses">2.5 ADDRESSES (<code>/api/addresses</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + Address[]</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/default</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + default address</td>
+<td>401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:addressId</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth + validateAddressId</td>
+<td>params: addressId</td>
+<td>validateAddressId</td>
+<td>200 + Address</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>body: fullName,phone,street,city,postalCode,country,isDefault?</td>
+<td>addressSchema</td>
+<td>201 + Address + message</td>
+<td>400,401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:addressId</td>
+<td>PUT</td>
+<td>Bearer</td>
+<td>requireAuth + validateAddressId</td>
+<td>params: addressId + body: partial fields</td>
+<td>updateAddressSchema</td>
+<td>200 + Address + message</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:addressId</td>
+<td>DELETE</td>
+<td>Bearer</td>
+<td>requireAuth + validateAddressId</td>
+<td>params: addressId</td>
+<td>validateAddressId</td>
+<td>204</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:addressId/set-default</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + validateAddressId</td>
+<td>params: addressId</td>
+<td>validateAddressId</td>
+<td>200 + Address + message</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="26-payments-apipayments">2.6 PAYMENTS (<code>/api/payments</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/webhook</td>
+<td>POST</td>
+<td>None (Stripe signature)</td>
+<td>webhookRateLimiter</td>
+<td>raw body + stripe-signature header</td>
+<td>signature check in service</td>
+<td>200 + {received:true}</td>
+<td>400</td>
+<td>Event-level dedupe</td>
+<td>webhookRateLimiter</td>
+</tr>
+<tr>
+<td>/create-intent</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + validateRequest(body)</td>
+<td>body: orderId</td>
+<td>createPaymentIntentSchema</td>
+<td>200 + payment/clientSecret/checkoutUrl</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/checkout</td>
+<td>POST</td>
+<td>Bearer</td>
+<td>requireAuth + validateRequest(body)</td>
+<td>body: orderId</td>
+<td>createPaymentIntentSchema</td>
+<td>200 + payment/clientSecret/checkoutUrl</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/:orderId/status</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth + validateRequest(params)</td>
+<td>params: orderId</td>
+<td>paymentStatusParamsSchema</td>
+<td>200 + status payload</td>
+<td>400,401,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="27-admin-apiadmin">2.7 ADMIN (<code>/api/admin</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/stats/summary</td>
+<td>GET</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>none</td>
+<td>requireAdmin</td>
+<td>200 + stats</td>
+<td>401,403</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/products</td>
+<td>GET</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>query: includeInactive?</td>
+<td>requireAdmin</td>
+<td>200 + products</td>
+<td>401,403</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/products</td>
+<td>POST</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter + autoLogAction</td>
+<td>body: product payload</td>
+<td>business validation in service</td>
+<td>201 + product</td>
+<td>400,401,403</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/products/:id</td>
+<td>PUT</td>
+<td>Admin</td>
+<td>requireAdmin + validateProductId + autoLogAction</td>
+<td>params: id + body: patch</td>
+<td>validateProductId</td>
+<td>200 + product</td>
+<td>400,401,403,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/products/:id</td>
+<td>DELETE</td>
+<td>Admin</td>
+<td>requireAdmin + validateProductId + autoLogAction</td>
+<td>params: id</td>
+<td>validateProductId</td>
+<td>200 + product + message</td>
+<td>400,401,403,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/users</td>
+<td>GET</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>query: page?,limit?</td>
+<td>requireAdmin</td>
+<td>200 + paginated users</td>
+<td>401,403</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/users/:id/role</td>
+<td>PUT</td>
+<td>Admin</td>
+<td>requireAdmin + validateObjectId('id') + autoLogAction</td>
+<td>params: id + body: role</td>
+<td>validateObjectId('id')</td>
+<td>200 + user</td>
+<td>400,401,403,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/orders</td>
+<td>GET</td>
+<td>Admin</td>
+<td>requireAdmin + apiRateLimiter</td>
+<td>query: status?,userId?</td>
+<td>requireAdmin</td>
+<td>200 + orders</td>
+<td>401,403</td>
+<td>No</td>
+<td>apiRateLimiter</td>
+</tr>
+<tr>
+<td>/orders/:id/status</td>
+<td>PUT</td>
+<td>Admin</td>
+<td>requireAdmin + validateObjectId('id') + autoLogAction</td>
+<td>params: id + body: status,message?</td>
+<td>validateObjectId('id')</td>
+<td>200 + order</td>
+<td>400,401,403,404</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="28-health--metrics">2.8 HEALTH + METRICS</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Auth</th>
+<th>Middleware</th>
+<th>Input Contract</th>
+<th>Validation</th>
+<th>Success</th>
+<th>Errors</th>
+<th>Idempotency</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/health</td>
+<td>GET</td>
+<td>None</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>200 + status</td>
+<td>500</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/api/health</td>
+<td>GET</td>
+<td>None</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>200 + mongo/redis/webhook health</td>
+<td>500</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/api/health/ping</td>
+<td>GET</td>
+<td>None</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>200 + pong</td>
+<td>500</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/api/metrics/payment</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>query: lastN?</td>
+<td>requireAuth + parseInt(lastN)</td>
+<td>200 + PaymentMetrics</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/api/metrics/webhook</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>query: lastN?</td>
+<td>requireAuth + parseInt(lastN)</td>
+<td>200 + WebhookMetrics</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td>/api/metrics/all</td>
+<td>GET</td>
+<td>Bearer</td>
+<td>requireAuth</td>
+<td>none</td>
+<td>requireAuth</td>
+<td>200 + ExportedMetrics</td>
+<td>401</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-error-matrix-מקצועי-רוחבי">3) Error Matrix מקצועי (רוחבי)</h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>מתי זה קורה</th>
+<th>איפה בולט</th>
+<th>מה חייב להופיע בתגובה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>פורמט/שדות לא תקינים</td>
+<td>Auth, Cart, Payments, Validators</td>
+<td>success=false + message ברור + field hints</td>
+</tr>
+<tr>
+<td>401</td>
+<td>אין token או token לא תקף</td>
+<td>Auth protected, Cart, Orders, Addresses, Payments, Metrics</td>
+<td>הודעת authentication ברורה</td>
+</tr>
+<tr>
+<td>403</td>
+<td>הרשאה לא מספיקה</td>
+<td>Admin endpoints, Google auth edge</td>
+<td>הודעת forbidden + context</td>
+</tr>
+<tr>
+<td>404</td>
+<td>משאב לא נמצא</td>
+<td>Product/Order/Address by id</td>
+<td>entity name + identifier context</td>
+</tr>
+<tr>
+<td>409</td>
+<td>קונפליקט עסקי</td>
+<td>register (email קיים)</td>
+<td>conflict reason מדויק</td>
+</tr>
+<tr>
+<td>423</td>
+<td>user lockout</td>
+<td>login</td>
+<td>lockout explanation</td>
+</tr>
+<tr>
+<td>429</td>
+<td>rate limit</td>
+<td>Auth, public tracking/read</td>
+<td>retry hint אם יש</td>
+</tr>
+<tr>
+<td>500</td>
+<td>תקלת שרת</td>
+<td>health/cart clear edge/unknown</td>
+<td>generic safe error + internal logging</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-checklist-כיסוי-definition-of-done-למסמך">4) Checklist כיסוי (Definition of Done למסמך)</h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>מצב</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>לכל endpoint יש Auth + Token source</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>לכל endpoint יש Middleware מפורש</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>לכל endpoint יש Input Contract (params/query/body)</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>לכל endpoint יש מקור ולידציה</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>לכל endpoint יש Success + Error codes</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>מסלול ה-flow העסקי מכוסה מקצה לקצה</td>
+<td>כן</td>
+</tr>
+<tr>
+<td>Admin/Ops/Monitoring מכוסים</td>
+<td>כן</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-איך-לעבוד-עם-המסמך-בפועל">5) איך לעבוד עם המסמך בפועל</h2>
+<ol>
+<li>להתחיל ב-Flow (סעיף 1) כדי להבין סדר עבודה.</li>
+<li>לעבור ל-Contract (סעיף 2) כדי לממש לקוח או בדיקות.</li>
+<li>להשתמש ב-Error Matrix (סעיף 3) ל-QA ולבדיקות שליליות.</li>
+<li>לסיים עם Checklist (סעיף 4) כדי לוודא שלא חסר כלום.</li>
+</ol>
+
+</body>
+</html>
